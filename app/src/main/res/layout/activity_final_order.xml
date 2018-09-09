@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".Order.Activity.FinalOrderActivity">
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar"></include>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_white_blue_square"
+        android:gravity="center"
+        android:orientation="vertical">
+            <android.support.design.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/card_margin"
+                android:layout_marginVertical="@dimen/card_margin"
+                app:cardCornerRadius="@dimen/card_radius"
+                android:layout_gravity="bottom|center_horizontal"
+                app:cardElevation="4dp"
+                app:strokeColor="@color/bgBlue"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/final_order_qr_code"
+                    android:layout_margin="@dimen/margin_item"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerInside"
+                        android:layout_margin="@dimen/card_margin"
+                        android:src="@drawable/qr_code" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@string/thanks"
+                        android:textAllCaps="true"
+                        android:fontFamily="sans-serif-black"
+                        android:textSize="@dimen/font_size_topic"
+                        android:layout_margin="@dimen/margin_item"
+                        android:textColor="@color/textColorHeader"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@string/your_code"
+                        android:fontFamily="sans-serif"
+                        android:textSize="@dimen/font_size_text"
+                        android:layout_margin="@dimen/margin_item"
+                        android:textColor="@color/textColor"/>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@string/succefful_order"
+                        android:fontFamily="sans-serif-black"
+                        android:textSize="@dimen/font_size_title"
+
+                        android:textColor="@color/textColor"/>
+
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/card_margin"
+                        android:textAlignment="center"
+                        android:background="@drawable/btn_bg"
+                        android:textColor="@color/textColorBtn"
+                        android:textSize="@dimen/font_size_btn"
+                        android:text="@string/confirm"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:layout_margin="@dimen/margin_item"
+                        android:text="@string/back_to_home"
+                        android:textColor="@color/textColorHeader"
+                        android:textSize="@dimen/font_size_text"
+                        android:textAllCaps="true"
+                        android:fontFamily="sans-serif-black"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+
+            </android.support.design.card.MaterialCardView>
+
+    </LinearLayout>
+</LinearLayout>
