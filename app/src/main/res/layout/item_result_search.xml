@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/bgWhite"
+    app:cardCornerRadius="@dimen/card_radius"
+    android:layout_marginHorizontal="@dimen/card_margin"
+    android:foreground="?selectableItemBackground"
+    android:clickable="true"
+    app:cardElevation="@dimen/card_elevation"
+    >
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_item"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_item"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/icon_result_size"
+                android:layout_height="@dimen/icon_result_size"
+                android:src="@color/colorAccent"
+                android:layout_gravity="center"
+                android:id="@+id/item_result_search_img"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:id="@+id/item_result_search_txt_title"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="@dimen/font_size_title_item"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:textColor="@color/textColor"
+                    android:id="@+id/item_result_search_txt_sub_title"
+                    android:text="@string/sub_title"
+                    android:textSize="@dimen/font_size_sub_title"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/margin_item"
+            android:layout_gravity="end">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/icon_info_size"
+                android:layout_height="@dimen/icon_info_size"
+                android:src="@color/bgBlue"
+                android:layout_marginLeft="@dimen/margin_item"
+                android:layout_gravity="center"
+                android:id="@+id/item_info_one"
+                />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/icon_info_size"
+                android:layout_height="@dimen/icon_info_size"
+                android:src="@color/bgBlue"
+                android:layout_marginLeft="@dimen/margin_item"
+                android:layout_gravity="center"
+                android:id="@+id/item_info_two"
+                />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/icon_info_size"
+                android:layout_height="@dimen/icon_info_size"
+                android:src="@color/bgBlue"
+                android:layout_marginLeft="@dimen/margin_item"
+                android:layout_gravity="center"
+                android:id="@+id/item_info_three"
+                />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/icon_info_size"
+                android:layout_height="@dimen/icon_info_size"
+                android:src="@color/bgBlue"
+                android:layout_marginLeft="@dimen/margin_item"
+                android:layout_gravity="center"
+                android:id="@+id/item_info_four"
+                />
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</android.support.v7.widget.CardView>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2699FB</color>
+    <color name="colorPrimaryDark">#2699FB</color>
+    <color name="colorAccent">#2699FB</color>
+    <color name="startGradient">#2699FB</color>
+    <color name="endGradient">#80BEF2</color>
+    <color name="startGradientFail">#FF1010</color>
+    <color name="endGradientFail">#EE5D5D</color>
+    <!--background color-->
+    <color name="bgWhite">#FFFFFF</color>
+    <color name="bgLightBlue">#BCE0FD</color>
+    <color name="bgBlue">#2699FB</color>
+    <color name="bgInputBlue">#F1F9FF</color>
+    <color name="bgInputRed">#ffebee</color>
+    <!--text color-->
+    <color name="textColor">@android:color/black</color>
+    <color name="textColorBtn">@android:color/white</color>
+    <color name="textColorHeader">#2699FB</color>
+    <color name="textColorHint">#CFDEF3</color>
+    <color name="textColorHintFail">#FFAFBD</color>
+
+</resources>

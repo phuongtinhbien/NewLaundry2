@@ -1,0 +1,109 @@
+<resources>
+    <string name="app_name">NewLaundry</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Laundry</string>
+    <string name="nav_header_subtitle">Laundry.store@Laundry.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="title">Name of agency</string>
+    <string name="sub_title">497 Evergreen Rd.</string>
+    <!--gender-->
+    <string-array name="arr_gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <!--notify-->
+    <string name="notify_successfully_saved">Your information has been saved</string>
+    <string name="notify_fail">Something went wrong\nPlease check!</string>
+    <string name="notify_lost_connection">Lost the connection\nPlease check!</string>
+    <string name="notify_loading">Loading...</string>
+    <string name="notify_cant_choose">Not available</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_fail">FAIL</string>
+
+    <!--input hint-->
+    <string name="input_user_name">User name</string>
+    <string name="input_your_name">Your name</string>
+    <string name="input_email">Email</string>
+    <string name="input_password">Password</string>
+    <string name="input_date">dd / mm / yyyy</string>
+    <string name="input_location">Your address</string>
+    <string name="input_gender">Your gender</string>
+    <!--login/sign up-->
+    <string name="btn_login">LOGIN</string>
+    <string name="login_create">Create a new account?</string>
+    <string name="sign_up_have_account">Already have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="yout_info">Your information</string>
+    <string name="login">Login</string>
+    <string name="btn_continue">Continue</string>
+    <string name="btn_finish">Finish</string>
+    <string name="service">Service</string>
+    <string name="title_service">Name of the service</string>
+    <string name="service_sub_title">Short description</string>
+    <string name="promotion">Promotion</string>
+    <string name="notification">Notification</string>
+    <string name="home">Home</string>
+    <string name="user_profile">User Profile</string>
+    <string name="my_order">My order</string>
+    <string name="history">History</string>
+    <string name="pricing">Pricing</string>
+    <string name="log_out">Log out</string>
+    <string name="help">Help</string>
+    <string name="input_time_pick_up">Time pick up</string>
+    <string name="input_time_draff_off">Time draff off</string>
+    <string name="yout_order">Your Order</string>
+    <string name="title_category">Category 1</string>
+    <string name="category_price">VND 10.000</string>
+    <string name="input_material">Material (Optional)</string>
+    <string name="input_production">Production (Optional)</string>
+    <string name="input_note">Note</string>
+    <string name="input_color">Color</string>
+    <string name="input_number">1</string>
+    <string name="notify_choose_more">Please choose more than 0</string>
+    <string name="category">All Categories</string>
+    <string name="input_location_pickup">Pick up place</string>
+    <string name="input_location_dropoff">Drop off place</string>
+    <string name="title_your_address">Hi, John Doe</string>
+    <string name="TimePickDraff">Schedule</string>
+    <string name="date_time_pick_up">Pick up</string>
+    <string name="date_time_drop_off">Date delivery</string>
+    <string name="input_location_customer">Who takes this order?</string>
+    <string name="input_location_contact">Your phone number</string>
+    <string name="payment">Payment</string>
+    <string name="cash_payment">Money cash</string>
+    <string name="title_choose_service">Choose service you want</string>
+    <string name="title_choose_payment">Choose payment you want</string>
+    <string name="amount">Amount</string>
+    <string name="total">Total</string>
+    <string name="delivery">Delivery</string>
+    <string name="input_promotion">Enter your promotion</string>
+    <string name="title_all_your_clothes">All your clothes here</string>
+    <string name="confirm">Confirm</string>
+
+    <string name="succefful_order">Your order have been saved</string>
+    <string name="thanks">Thank you!!!</string>
+    <string name="your_code">Above is your order\'s QR Code</string>
+    <string name="back_to_home">Back to home</string>
+    <string name="checkout">Check out</string>
+    <string name="total_items">Your Items </string>
+    <string name="add_more">Add more</string>
+    <string name="title_activity_product">ProductActivity</string>
+    <string name="title_person">Your account</string>
+    <string name="title_your_order">Your order</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_order_active">Active</string>
+    <string name="tab_order_history">History</string>
+    <string name="place_a_order">Place an order</string>
+    <string name="try_this_service">Try this</string>
+    <string name="read_more">Read more</string>
+    <string name="tab_new_service">New service</string>
+    <string name="tab_promotion">Promotion</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/bgInputRed"></solid>
+    <corners android:radius="20dp"></corners>
+    <padding
+        android:right="@dimen/input_padding"
+        android:left="@dimen/input_padding"
+        android:top="@dimen/input_padding"
+        android:bottom="@dimen/input_padding"></padding>
+
+</shape>

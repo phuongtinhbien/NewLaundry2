@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.robertlevonyan.views.chip.Chip
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:mcv_chipText="List all"
+        app:mcv_backgroundColor="@color/bgInputBlue"
+        app:mcv_selectedBackgroundColor="@color/bgBlue"
+        app:mcv_textColor="@color/textColorHint"
+        android:id="@+id/chip"
+        app:mcv_selectable="true"
+        app:mcv_selectedTextColor="@color/white">
+    </com.robertlevonyan.views.chip.Chip>
+</android.support.constraint.ConstraintLayout>
