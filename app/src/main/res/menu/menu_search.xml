@@ -7,4 +7,8 @@
         android:icon="@drawable/ic_search"
         android:id="@+id/menu_search_action"
         app:showAsAction="always"></item>
+    <item tools:ignore="MenuTitle"
+        android:icon="@drawable/ic_bag"
+        android:id="@+id/menu_bag_action"
+        app:showAsAction="always"></item>
 </menu>

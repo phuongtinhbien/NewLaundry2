@@ -1,5 +1,6 @@
 package com.example.vuphu.newlaundry.Main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,6 +15,7 @@ import com.example.vuphu.newlaundry.Main.Fragment.AccountFragment;
 import com.example.vuphu.newlaundry.Main.Fragment.HomeFragment;
 import com.example.vuphu.newlaundry.Main.Fragment.NotificationFragment;
 import com.example.vuphu.newlaundry.Main.Fragment.OrderFragment;
+import com.example.vuphu.newlaundry.Order.Activity.BagActivity;
 import com.example.vuphu.newlaundry.R;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -101,4 +103,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_bag_action){
+            startActivity(new Intent(getApplicationContext(), BagActivity.class));
+        }
+        return true;
+    }
 }

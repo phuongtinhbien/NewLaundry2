@@ -20,25 +20,23 @@
         </activity>
         <activity android:name=".Promotion.PromotionActivity" />
         <activity android:name=".Payment.PaymentActivity" />
-        <activity android:name=".Clothes.ClothesActivity"
-            android:parentActivityName=".Main.MainActivity"
-            ></activity>
-
+        <activity
+            android:name=".Clothes.ClothesActivity"
+            android:parentActivityName=".Main.MainActivity" />
         <activity
             android:name=".Order.Activity.InfoOrderActivity"
             android:parentActivityName=".Order.Activity.PrepareOrderAddressActivity" />
         <activity
             android:name=".Order.Activity.PrepareOrderActivity"
-            android:label="Choose your clothes"
             android:parentActivityName=".Main.MainActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Order.Activity.PrepareOrderAddressActivity" />
+        <activity android:name=".Order.Activity.PrepareOrderAddressActivity" />
         <activity android:name=".Order.Activity.PrepareOrderPaymentActivity" />
         <activity
             android:name=".Order.Activity.FinalOrderActivity"
             android:parentActivityName=".Order.Activity.InfoOrderActivity" />
-
+        <activity android:name=".Order.Activity.BagActivity" />
+        <activity android:name=".ServiceActivity"></activity>
     </application>
 
 </manifest>

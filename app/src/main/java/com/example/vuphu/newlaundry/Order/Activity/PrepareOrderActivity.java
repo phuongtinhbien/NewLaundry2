@@ -1,6 +1,7 @@
 package com.example.vuphu.newlaundry.Order.Activity;
 
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,12 +12,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
-import com.example.vuphu.luandry.Categories.OBCategory;
-import com.example.vuphu.luandry.Order.ApdapterList.ListChipAdapter;
-import com.example.vuphu.luandry.Order.ApdapterList.ListOrderDetailAdapter;
-import com.example.vuphu.luandry.Order.OBOrderDetail;
-import com.example.vuphu.luandry.R;
+import com.example.vuphu.newlaundry.Categories.OBCategory;
+import com.example.vuphu.newlaundry.Order.Adapter.ListChipAdapter;
+import com.example.vuphu.newlaundry.Order.Adapter.ListOrderDetailAdapter;
+import com.example.vuphu.newlaundry.Order.OBOrderDetail;
+import com.example.vuphu.newlaundry.R;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class PrepareOrderActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
+    private Button seeYourBag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +51,9 @@ public class PrepareOrderActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        toolbar =  findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Choose your clothes");
+        setTitle("Choose clothes");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -67,13 +70,16 @@ public class PrepareOrderActivity extends AppCompatActivity {
         adapter = new ListOrderDetailAdapter(this, orderDetailFilterList);
         listPrepareOrder.setAdapter(adapter);
         listPrepareOrder.invalidate();
-        /*floatingActionButton = findViewById(R.id.prepare_order_next);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), PrepareOrderAddressActivity.class));
-            }
-        });*/
+
+        seeYourBag = findViewById(R.id.see_your_bag);
+        seeYourBag.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  startActivity(new Intent(getApplicationContext(), BagActivity.class));
+              }
+          }
+
+        );
         //Tag Filter
         prepareCategory();
         listFilter = findViewById(R.id.list_chip);
@@ -89,6 +95,7 @@ public class PrepareOrderActivity extends AppCompatActivity {
                 //Do some magic
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 //Do some magic
@@ -113,7 +120,7 @@ public class PrepareOrderActivity extends AppCompatActivity {
 
         for (int i = 0; i < 10; i++) {
             OBOrderDetail detail = new OBOrderDetail();
-            detail.setTitle("Product " + i);
+            detail.setTitle("T-Shirt " + i);
             detail.setPricing("200" + i);
             if (i % 2 == 0)
                 detail.setCategory("Category Type 1");
@@ -146,6 +153,8 @@ public class PrepareOrderActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
         MenuItem item = menu.findItem(R.id.menu_search_action);
+        MenuItem item1 = menu.findItem(R.id.menu_bag_action);
+        item1.setVisible(false);
         searchView.setMenuItem(item);
 
         return true;

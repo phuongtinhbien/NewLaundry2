@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.vuphu.luandry.R;
+import com.example.vuphu.newlaundry.R;
 import com.mapfit.android.MapView;
 import com.mapfit.android.Mapfit;
 import com.mapfit.android.MapfitMap;
@@ -31,7 +31,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity {
     MapfitMap mapfitMap;
     private EditText pickUp,dropOff;
 
-    private FloatingActionButton prepareBack, prepareNext;
+    private FloatingActionButton prepareNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +58,8 @@ public class PrepareOrderAddressActivity extends AppCompatActivity {
     }
 
     private void init() {
-        prepareBack = findViewById(R.id.prepare_order_back);
         prepareNext = findViewById(R.id.prepare_order_next);
 
-        prepareBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
         prepareNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -18,12 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingVertical="12dp"
+            android:gravity="center_horizontal|center_vertical"
             android:weightSum="3">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2.5"
+                android:layout_weight="2.7"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -77,10 +79,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="32dp"
                 android:layout_weight="1.5"
                 app:srcCompat="@drawable/ic_expand_more" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/cool_grey"
+            android:layout_gravity="bottom"
+            android:layout_marginVertical="@dimen/margin_item"
+            android:layout_marginHorizontal="@dimen/margin_item_horizontal"
+            android:layout_height="0.1dp"/>
     </com.github.florent37.expansionpanel.ExpansionHeader>
 
     <com.github.florent37.expansionpanel.ExpansionLayout

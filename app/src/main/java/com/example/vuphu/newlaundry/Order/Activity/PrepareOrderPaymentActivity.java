@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.example.vuphu.luandry.R;
+import com.example.vuphu.newlaundry.R;
 
 public class PrepareOrderPaymentActivity extends AppCompatActivity {
 

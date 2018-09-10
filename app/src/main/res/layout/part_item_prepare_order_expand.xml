@@ -69,8 +69,16 @@
             android:id="@+id/item_prepare_order_color"
             android:background="@drawable/bg_input"/>
 
+
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/cool_grey"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/margin_item"
+        android:layout_marginHorizontal="@dimen/margin_item_horizontal"
+        android:layout_height="0.1dp"/>
 
 <!--    <EditText
         android:layout_width="match_parent"

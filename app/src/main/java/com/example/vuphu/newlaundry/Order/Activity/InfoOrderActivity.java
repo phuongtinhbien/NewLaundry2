@@ -1,25 +1,21 @@
 package com.example.vuphu.newlaundry.Order.Activity;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
-import com.example.vuphu.luandry.Order.ApdapterList.ListClothesAdapter;
-import com.example.vuphu.luandry.Order.OBOrderDetail;
-import com.example.vuphu.luandry.Payment.AdapterList.ListPaymentAdapter;
-import com.example.vuphu.luandry.Payment.OBPayment;
-import com.example.vuphu.luandry.R;
-import com.example.vuphu.luandry.Service.AdapterList.ListServiceChooseAdapter;
-import com.example.vuphu.luandry.Service.OBService;
-import com.example.vuphu.luandry.Utils.Util;
+import com.example.vuphu.newlaundry.Order.Adapter.ListClothesAdapter;
+import com.example.vuphu.newlaundry.Order.OBOrderDetail;
+import com.example.vuphu.newlaundry.Payment.OBPayment;
+import com.example.vuphu.newlaundry.R;
+import com.example.vuphu.newlaundry.Service.ListServiceChooseAdapter;
+import com.example.vuphu.newlaundry.Service.OBService;
+import com.example.vuphu.newlaundry.Utils.Util;
 import com.github.florent37.androidslidr.Slidr;
 
 import java.util.ArrayList;
@@ -29,8 +25,7 @@ public class InfoOrderActivity extends AppCompatActivity {
 
 
     private Toolbar toolbar;
-    private RecyclerView listService, listPayment, listClothes;
-    private FloatingActionButton serviceNext;
+    private RecyclerView listService, listClothes;
     private Slidr deliveryDate;
     private TextView deliveryYourChoice;
 
@@ -45,25 +40,21 @@ public class InfoOrderActivity extends AppCompatActivity {
 
     }
     private void init() {
-        serviceNext = findViewById(R.id.service_next);
         listService = findViewById(R.id.list_service);
-        listPayment = findViewById(R.id.list_service_payment);
+//        listPayment = findViewById(R.id.list_service_payment);
         listClothes = findViewById(R.id.list_prepare_order_clothes);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         listService.setLayoutManager(linearLayoutManager);
-        listPayment.setLayoutManager(linearLayoutManager1);
+//        listPayment.setLayoutManager(linearLayoutManager1);
         listClothes.setLayoutManager(linearLayoutManager2);
         listService.setHasFixedSize(true);
-        listPayment.setHasFixedSize(true);
+//        listPayment.setHasFixedSize(true);
         listClothes.setHasFixedSize(true);
 
         List<OBService> listItem = new ArrayList<>();
@@ -85,14 +76,6 @@ public class InfoOrderActivity extends AppCompatActivity {
         ListServiceChooseAdapter listServiceAdapter = new ListServiceChooseAdapter(this, listItem);
         listService.setAdapter(listServiceAdapter);
 
-        serviceNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), FinalOrderActivity.class));
-            }
-        });
-
-
         List<OBPayment> paymentList = new ArrayList<>();
         OBPayment itemPayment = new OBPayment();
         itemPayment.setName("Money Cash");
@@ -101,8 +84,8 @@ public class InfoOrderActivity extends AppCompatActivity {
         paymentList.add(itemPayment);
         paymentList.add(itemPayment);
 
-        ListPaymentAdapter listPaymentAdapter = new ListPaymentAdapter(this, paymentList);
-        listPayment.setAdapter(listPaymentAdapter);
+//        ListPaymentAdapter listPaymentAdapter = new ListPaymentAdapter(this, paymentList);
+//        listPayment.setAdapter(listPaymentAdapter);
 
 
         orderDetailList = new ArrayList<>();

@@ -62,7 +62,7 @@
     <com.github.florent37.expansionpanel.ExpansionLayout
         android:id="@+id/expansion_prepare_order_address"
         android:layout_width="match_parent"
-        app:expansion_expanded="false"
+        app:expansion_expanded="true"
         android:layout_height="wrap_content">
 
         <include

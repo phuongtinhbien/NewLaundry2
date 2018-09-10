@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.vuphu.newlaundry.Clothes.ClothesActivity;
+import com.example.vuphu.newlaundry.Order.Activity.PrepareOrderActivity;
 import com.example.vuphu.newlaundry.R;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -23,7 +24,6 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 public class HomeFragment extends Fragment {
 
 
-    private MaterialSearchView searchView;
     private Button placeAnOrder;
     public HomeFragment() {
         // Required empty public constructor
@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
         placeAnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ClothesActivity.class));
+                startActivity(new Intent(getActivity(), PrepareOrderActivity.class));
             }
         });
         return v;
@@ -54,10 +54,4 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search, menu);
-        MenuItem item = menu.findItem(R.id.menu_search_action);
-        searchView.setMenuItem(item);
-    }
 }
