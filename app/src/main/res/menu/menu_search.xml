@@ -11,4 +11,5 @@
         android:icon="@drawable/ic_bag"
         android:id="@+id/menu_bag_action"
         app:showAsAction="always"></item>
+
 </menu>

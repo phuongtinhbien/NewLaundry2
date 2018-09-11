@@ -142,15 +142,6 @@
 
                     </LinearLayout>
 
-                 <!--   <android.support.design.button.MaterialButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:backgroundTint="@color/bgWhite"
-                        android:textColor="@color/colorAccent"
-                        android:textAllCaps="false"
-                        android:layout_margin="@dimen/margin_item"
-                        android:layout_gravity="center_horizontal|bottom"
-                        android:text="@string/see_your_clothes"/>-->
 
 
                 </android.support.design.card.MaterialCardView>
@@ -173,7 +164,7 @@
 
                 </android.support.design.card.MaterialCardView>
 
-                <android.support.design.card.MaterialCardView
+               <!-- <android.support.design.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/card_margin"
@@ -185,17 +176,14 @@
 
                     <include layout="@layout/part_item_service"></include>
 
-                </android.support.design.card.MaterialCardView>
+                </android.support.design.card.MaterialCardView>-->
 
                 <android.support.design.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/card_margin"
-                    android:layout_marginHorizontal="@dimen/card_margin"
                     app:cardCornerRadius="@dimen/card_radius"
-                    app:cardElevation="4dp"
-                    app:strokeColor="@color/bgBlue"
-                    app:strokeWidth="2dp">
+                    app:cardElevation="4dp">
 
                     <include layout="@layout/part_item_prepare_order_clothes"></include>
 

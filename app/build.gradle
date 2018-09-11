@@ -44,4 +44,5 @@ dependencies {
     implementation 'com.github.florent37:android-slidr:1.0.3'
     implementation 'com.uniquestudio:checkbox:1.0.10'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+    implementation 'gr.escsoft.michaelprimez.searchablespinner:SearchableSpinner:1.0.9'
 }

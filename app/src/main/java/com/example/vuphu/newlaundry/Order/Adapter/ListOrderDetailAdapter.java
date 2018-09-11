@@ -1,12 +1,15 @@
 package com.example.vuphu.newlaundry.Order.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.vuphu.newlaundry.Order.Activity.DetailPrepareOrderClothesActivity;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 import com.example.vuphu.newlaundry.R;
 
@@ -31,7 +34,7 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
     @Override
     public ListOrderDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(context).inflate(R.layout.item_prepare_order,parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_cloth_mini,parent, false);
         return new ListOrderDetailViewHolder(v) ;
     }
 
@@ -39,9 +42,14 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
     public void onBindViewHolder(@NonNull ListOrderDetailViewHolder holder, int position) {
 
         holder.title.setText(list.get(position).getTitle());
-        holder.price.setText(CURRENCY + " " + list.get(position).getPricing());
-        holder.processData(list.get(position));
+        holder.price.setChipText(CURRENCY + " " + list.get(position).getPricing());
         Log.i("data", list.get(position).getCount()+"");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, DetailPrepareOrderClothesActivity.class));
+            }
+        });
 
     }
 

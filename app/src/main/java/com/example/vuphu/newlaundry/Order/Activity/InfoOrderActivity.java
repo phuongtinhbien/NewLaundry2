@@ -25,7 +25,7 @@ public class InfoOrderActivity extends AppCompatActivity {
 
 
     private Toolbar toolbar;
-    private RecyclerView listService, listClothes;
+    private RecyclerView listClothes;
     private Slidr deliveryDate;
     private TextView deliveryYourChoice;
 
@@ -40,8 +40,6 @@ public class InfoOrderActivity extends AppCompatActivity {
 
     }
     private void init() {
-        listService = findViewById(R.id.list_service);
-//        listPayment = findViewById(R.id.list_service_payment);
         listClothes = findViewById(R.id.list_prepare_order_clothes);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -50,31 +48,8 @@ public class InfoOrderActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        listService.setLayoutManager(linearLayoutManager);
-//        listPayment.setLayoutManager(linearLayoutManager1);
         listClothes.setLayoutManager(linearLayoutManager2);
-        listService.setHasFixedSize(true);
-//        listPayment.setHasFixedSize(true);
         listClothes.setHasFixedSize(true);
-
-        List<OBService> listItem = new ArrayList<>();
-
-        OBService item = new OBService();
-        item.setName("Washing your clothes");
-        item.setDesc("A lot type of washing for you choose");
-        item.setIcon(String.valueOf(R.drawable.ic_app));
-
-        OBService item1 = new OBService();
-        item1.setName("Washing your clothes");
-        item1.setDesc("A lot type of washing for you choose");
-        item1.setIcon(String.valueOf(R.drawable.ic_app));
-        listItem.add(item);
-        listItem.add(item1);
-        listItem.add(item1);
-
-
-        ListServiceChooseAdapter listServiceAdapter = new ListServiceChooseAdapter(this, listItem);
-        listService.setAdapter(listServiceAdapter);
 
         List<OBPayment> paymentList = new ArrayList<>();
         OBPayment itemPayment = new OBPayment();
@@ -83,10 +58,6 @@ public class InfoOrderActivity extends AppCompatActivity {
         paymentList.add(itemPayment);
         paymentList.add(itemPayment);
         paymentList.add(itemPayment);
-
-//        ListPaymentAdapter listPaymentAdapter = new ListPaymentAdapter(this, paymentList);
-//        listPayment.setAdapter(listPaymentAdapter);
-
 
         orderDetailList = new ArrayList<>();
         prepareList();

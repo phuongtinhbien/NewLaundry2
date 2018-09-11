@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -33,6 +36,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity {
 
     private FloatingActionButton prepareNext;
 
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity {
         });
 
         init();
+        initToolbar();
 
 
     }
@@ -108,5 +113,29 @@ public class PrepareOrderAddressActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    private void initToolbar() {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.your_address);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home){
+            onBackPressed();
+        }
+        if (item.getItemId() == R.id.menu_location_action){
+
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_location, menu);
+        return true;
     }
 }

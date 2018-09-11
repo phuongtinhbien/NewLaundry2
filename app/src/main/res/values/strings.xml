@@ -17,6 +17,24 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string-array name="arr_production">
+        <item>REN</item>
+        <item>NOSBYN</item>
+        <item>THE BLUE T-SHIRT</item>
+        <item>COCOSIN</item>
+        <item>WEPHOBIA</item>
+        <item>MAGONN</item>
+    </string-array>
+    <string-array name="arr_color">
+        <item></item>
+    </string-array>
+    <string-array name="arr_material">
+        <item>Cotton</item>
+        <item>Kaki</item>
+        <item>Kate</item>
+        <item>Jean</item>
+        <item>Denim</item>
+    </string-array>
     <!--notify-->
     <string name="notify_successfully_saved">Your information has been saved</string>
     <string name="notify_fail">Something went wrong\nPlease check!</string>
@@ -60,8 +78,8 @@
     <string name="yout_order">Your Order</string>
     <string name="title_category">Category 1</string>
     <string name="category_price">VND 10.000</string>
-    <string name="input_material">Material (Optional)</string>
-    <string name="input_production">Production (Optional)</string>
+    <string name="input_material">Material</string>
+    <string name="input_production">Production</string>
     <string name="input_note">Note</string>
     <string name="input_color">Color</string>
     <string name="input_number">1</string>
@@ -108,4 +126,7 @@
     <string name="tab_promotion">Promotion</string>
     <string name="see_your_clothes">See your clothes</string>
     <string name="see_your_bag">See your bag</string>
+    <string name="add_to_your_bag">Add to your bag</string>
+    <string name="add_bag">Add</string>
+    <string name="your_address">Your address</string>
 </resources>

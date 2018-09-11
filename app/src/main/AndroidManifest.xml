@@ -21,9 +21,6 @@
         <activity android:name=".Promotion.PromotionActivity" />
         <activity android:name=".Payment.PaymentActivity" />
         <activity
-            android:name=".Clothes.ClothesActivity"
-            android:parentActivityName=".Main.MainActivity" />
-        <activity
             android:name=".Order.Activity.InfoOrderActivity"
             android:parentActivityName=".Order.Activity.PrepareOrderAddressActivity" />
         <activity
@@ -36,7 +33,8 @@
             android:name=".Order.Activity.FinalOrderActivity"
             android:parentActivityName=".Order.Activity.InfoOrderActivity" />
         <activity android:name=".Order.Activity.BagActivity" />
-        <activity android:name=".ServiceActivity"></activity>
+        <activity android:name=".ServiceActivity" />
+        <activity android:name=".Order.Activity.DetailPrepareOrderClothesActivity"></activity>
     </application>
 
 </manifest>

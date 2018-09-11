@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/prepare_order_list_category"
-        tools:listitem="@layout/item_prepare_order">
+        tools:listitem="@layout/item_cloth_mini">
     </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

@@ -8,14 +8,15 @@
     android:background="@drawable/bg"
     tools:context=".Order.Activity.PrepareOrderActivity">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_layout">
         <include
             layout="@layout/prepare_order_include"
             >
         </include>
-    </FrameLayout>
+    </LinearLayout>
 
 
 
