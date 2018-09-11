@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/card_margin"
+    app:cardElevation="@dimen/card_elevation"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_item"
+        android:orientation="vertical">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow>
+                <com.robertlevonyan.views.chip.Chip
+                    android:textColor="@color/white"
+                    app:mcv_chipText="@string/stt_on_going"
+                    app:mcv_textColor="@color/white"
+                    app:mcv_backgroundColor="@color/colorAccent"
+                    app:mcv_cornerRadius="8dp"
+                    android:layout_column="1"
+                    android:layout_gravity="center_vertical|start"
+                    android:textAllCaps="false"/>
+                <TextView
+                    android:id="@+id/item_order_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:fontFamily="sans-serif"
+                    android:textAlignment="textEnd"
+                    android:text="07 / 08 /2018"
+                    android:layout_column="2"
+                    android:layout_weight="1.5"
+                    android:textColor="@color/black_de"
+                    android:textSize="@dimen/font_size_text" />
+            </TableRow>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_item"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/branch"
+                    android:textColor="@color/charcoal_grey"
+
+                    android:textSize="@dimen/font_size_title_item" />
+                <TextView
+                    android:id="@+id/item_order_branch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:fontFamily="sans-serif"
+                    android:text="Branch A - 123st, A Street, D dist"
+                    android:layout_weight="1.5"
+                    android:textColor="@color/black_de"
+                    android:textSize="@dimen/font_size_text" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_item"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/recievcer"
+                    android:textColor="@color/charcoal_grey"
+                    android:textSize="@dimen/font_size_title_item" />
+                <TextView
+                    android:id="@+id/item_order_reciever"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:fontFamily="sans-serif"
+                    android:text="John Doe"
+                    android:layout_weight="1.5"
+                    android:textColor="@color/black_de"
+                    android:textSize="@dimen/font_size_text" />
+
+
+            </LinearLayout>
+
+        </TableLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/card_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/info_order_pickup_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/card_margin"
+                android:drawableLeft="@drawable/ic_person_location_white"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/colorAccent"
+                android:fontFamily="sans-serif"
+                android:textSize="@dimen/font_size_title"
+                android:text="278, Nam Ki Khoi Nghia, P.8, Q.3, TP.HCM"
+                android:textColor="@color/textColor" />
+
+            <TextView
+                android:id="@+id/info_order_delivery_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/margin_item"
+                android:drawableLeft="@drawable/ic_location_white"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/colorAccent"
+                android:fontFamily="sans-serif"
+                android:textSize="@dimen/font_size_title"
+                android:layoutDirection="inherit"
+                android:text="278, Nam Ki Khoi Nghia, P.8, Q.4, TP.HCM"
+                android:textColor="@color/textColor" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.design.card.MaterialCardView>

@@ -25,8 +25,7 @@
                 app:cardCornerRadius="@dimen/card_radius"
                 android:layout_gravity="bottom|center_horizontal"
                 app:cardElevation="4dp"
-                app:strokeColor="@color/bgBlue"
-                app:strokeWidth="2dp">
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"

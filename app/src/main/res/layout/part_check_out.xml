@@ -102,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|start"
                     android:layout_weight="1"
+                    android:id="@+id/check_out_note"
                     android:foreground="?selectableItemBackground"
                     android:clickable="true"
                     android:gravity="center_vertical|start"
@@ -133,6 +134,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/check_out_promotion"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:foreground="?selectableItemBackground"
@@ -171,6 +173,7 @@
                     android:layout_gravity="center_vertical|end"
                     android:layout_column="3"
                     android:layout_weight="1"
+                    android:id="@+id/check_out_payment"
                     android:foreground="?selectableItemBackground"
                     android:clickable="true"
                     android:gravity="center_vertical|end"
@@ -214,6 +217,7 @@
             android:textSize="@dimen/font_size_text"
             android:fontFamily="sans-serif"
             android:letterSpacing="0.3"
+            android:id="@+id/btn_check_out"
             android:background="@color/colorAccent"/>
     </LinearLayout>
 </android.support.design.card.MaterialCardView>

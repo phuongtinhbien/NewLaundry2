@@ -26,7 +26,10 @@
         <item>MAGONN</item>
     </string-array>
     <string-array name="arr_color">
-        <item></item>
+        <item>Light Blue</item>
+        <item>Light Red</item>
+        <item>Green</item>
+        <item>Brown</item>
     </string-array>
     <string-array name="arr_material">
         <item>Cotton</item>
@@ -34,6 +37,10 @@
         <item>Kate</item>
         <item>Jean</item>
         <item>Denim</item>
+    </string-array>
+    <string-array name="arr_payment">
+        <item>Cash</item>
+        <item>VISA</item>
     </string-array>
     <!--notify-->
     <string name="notify_successfully_saved">Your information has been saved</string>
@@ -129,4 +136,7 @@
     <string name="add_to_your_bag">Add to your bag</string>
     <string name="add_bag">Add</string>
     <string name="your_address">Your address</string>
+    <string name="stt_on_going">On going</string>
+    <string name="branch">Branch:</string>
+    <string name="recievcer">Reciever:</string>
 </resources>
