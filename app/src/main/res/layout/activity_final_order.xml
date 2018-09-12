@@ -73,12 +73,11 @@
                         android:textColor="@color/textColor"/>
 
 
-                    <Button
+                    <android.support.design.button.MaterialButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/card_margin"
                         android:textAlignment="center"
-                        android:background="@drawable/btn_bg"
                         android:textColor="@color/textColorBtn"
                         android:textSize="@dimen/font_size_btn"
                         android:text="@string/confirm"/>

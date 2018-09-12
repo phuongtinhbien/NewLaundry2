@@ -10,7 +10,6 @@
     <com.github.florent37.expansionpanel.ExpansionHeader
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:expansion_headerIndicator="@id/headerIndicator"
         app:expansion_layout="@id/expansion_clothes"
         app:expansion_toggleOnClick="true">
 

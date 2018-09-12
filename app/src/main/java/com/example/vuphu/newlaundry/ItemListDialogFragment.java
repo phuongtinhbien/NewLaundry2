@@ -72,7 +72,7 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
             super(inflater.inflate(R.layout.fragment_item_list_dialog_item, parent, false));
             text = (TextView) itemView.findViewById(R.id.text);
             color = (CircleImageView) itemView.findViewById(R.id.color);
-            text.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {

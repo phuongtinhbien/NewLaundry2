@@ -20,4 +20,6 @@
     <color name="textColorHint">#CFDEF3</color>
     <color name="textColorHintFail">#FFAFBD</color>
 
+    <color name="yellow">#ffe000</color>
+    <color name="green">#38ef7d</color>
 </resources>

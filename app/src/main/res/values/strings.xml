@@ -139,4 +139,6 @@
     <string name="stt_on_going">On going</string>
     <string name="branch">Branch:</string>
     <string name="recievcer">Reciever:</string>
+    <string name="choose_time">Choose your schedule</string>
+    <string name="enter_note">Enter your note</string>
 </resources>

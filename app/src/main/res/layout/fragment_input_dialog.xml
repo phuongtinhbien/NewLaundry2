@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/card_radius">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="@dimen/margin_item_horizontal"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/input_title"
+            android:layout_marginBottom="@dimen/card_margin"
+            android:drawablePadding="@dimen/margin_item"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/enter_note"
+            android:textColor="@color/textColor"
+            android:textSize="18dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:id="@+id/input_dialog_edt"
+            android:textColor="@color/black_de"
+            android:textColorHint="@color/textColorHint"
+            android:layout_marginBottom="@dimen/margin_item_horizontal"
+            android:textSize="@dimen/font_size_text"
+            android:background="@drawable/bg_input"
+            android:hint="@string/input_note"/>
+        <android.support.design.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/colorAccent"
+            android:id="@+id/input_dialog_confirm"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+</android.support.design.card.MaterialCardView>

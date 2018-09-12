@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardBackgroundColor="@color/bgWhite"
+    app:cardCornerRadius="@dimen/card_radius"
+    android:clickable="true"
+    android:foreground="?selectableItemBackground"
+    android:layout_margin="@dimen/card_margin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_margin">
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="centerInside"
+
+            android:id="@+id/img_promotion"
+            android:layout_margin="@dimen/card_margin"
+            android:src="@drawable/ic_sale"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_toRightOf="@id/img_promotion"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/margin_item"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5% off Ride Economy Class"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:id="@+id/item_promotion_title"
+                    android:textColor="@color/textColor"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="@dimen/font_size_title_item"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:textColor="@color/cool_grey"
+                    android:id="@+id/item_promotion_time"
+                    android:text="16 Jun 2018 - 7 Sep 2018"
+                    android:layout_marginTop="@dimen/margin_item"
+                    android:layout_marginBottom="@dimen/margin_item"
+                    android:fontFamily="sans-serif"
+                    android:textSize="@dimen/font_size_sub_title"/>
+                <com.robertlevonyan.views.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:mcv_textColor="@color/white"
+                    app:mcv_chipText="PROMOECONOMYS"
+                    android:id="@+id/item_promotion_code"
+                    app:mcv_cornerRadius="@dimen/card_margin"
+                    app:mcv_backgroundColor="@color/colorAccent"></com.robertlevonyan.views.chip.Chip>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</android.support.design.card.MaterialCardView>

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditText
+   <!-- <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -33,7 +33,7 @@
             android:textSize="@dimen/font_size_input"
             android:textColor="@color/textColor"
             android:id="@+id/prepare_order_address_contact_phone"
-            android:background="@drawable/bg_input"/>
+            android:background="@drawable/bg_input"/>-->
 
         <EditText
             android:layout_width="match_parent"

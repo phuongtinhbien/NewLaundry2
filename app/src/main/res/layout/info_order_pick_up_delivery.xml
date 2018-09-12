@@ -9,10 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/margin_item_horizontal"
         android:orientation="horizontal"
         android:weightSum="2">
-
 
     <LinearLayout
 
@@ -20,8 +19,9 @@
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_layout"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:id="@+id/pickup_time_panel"
 
+        android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             android:layout_marginBottom="4dp"
             android:fontFamily="sans-serif-black"
             android:text="Today, AUG 30"
-            android:textSize="@dimen/font_size_text_mini" />
+            android:textSize="@dimen/font_size_text" />
 
         <TextView
             android:id="@+id/prepare_order_time_pick_up"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:text="9:30 AM"
-            android:textSize="@dimen/font_size_text_mini" />
+            android:textSize="@dimen/font_size_text" />
     </LinearLayout>
 
     <LinearLayout
@@ -70,98 +70,34 @@
             android:text="@string/delivery"
             android:textColor="@color/textColor"
             android:textSize="18dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/prepare_order_date_delivery"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:orientation="horizontal">
+            android:fontFamily="sans-serif-black"
+            android:text="Today, AUG 30"
+            android:textSize="@dimen/font_size_text" />
 
-            <com.uniquestudio.library.CircleCheckBox
-                android:id="@+id/prepare_order_delivery_1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/margin_item"
-                app:animation_duration="10"
-                app:background_color="@color/bgInputBlue"
-                app:border_color="@color/bgInputBlue"
-                app:tick_color="@color/bgBlue"
-                app:tick_width="2dp" />
-
-            <TextView
-                android:id="@+id/prepare_order_devlivery_1_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="in 2 - 3 days"
-                android:textSize="@dimen/font_size_text_mini" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/prepare_order_time_delivery"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:orientation="horizontal">
+            android:fontFamily="sans-serif"
+            android:text="9:30 AM"
+            android:textSize="@dimen/font_size_text" />
 
-            <com.uniquestudio.library.CircleCheckBox
-                android:id="@+id/prepare_order_delivery_2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/margin_item"
-                app:animation_duration="10"
-                app:background_color="@color/bgInputBlue"
-                app:border_color="@color/bgInputBlue"
-                app:tick_color="@color/bgBlue"
-                app:tick_width="2dp" />
 
-            <TextView
-                android:id="@+id/prepare_order_devlivery_2_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="in 1 days"
-                android:textSize="@dimen/font_size_text_mini" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:orientation="horizontal">
-
-            <com.uniquestudio.library.CircleCheckBox
-                android:id="@+id/prepare_order_delivery_3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/margin_item"
-                app:animation_duration="10"
-                app:background_color="@color/bgInputBlue"
-                app:border_color="@color/bgInputBlue"
-                app:tick_color="@color/bgBlue"
-                app:tick_width="2dp" />
-
-            <TextView
-                android:id="@+id/prepare_order_devlivery_3_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="your choice"
-                android:textSize="@dimen/font_size_text_mini" />
-        </LinearLayout>
     </LinearLayout>
     </LinearLayout>
 
-    <com.github.florent37.androidslidr.Slidr
+    <android.support.design.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:slidr_regions_centerText="false"
+        android:text="@string/choose_time"
+        android:textAllCaps="false"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="@dimen/margin_item"
-        app:slidr_regions="false"
-        android:id="@+id/item_prepare_order_seek_day"
-        app:slidr_region_leftColor="@color/colorAccent"
-        app:slidr_backgroundColor="@color/bgInputBlue"/>
+        android:layout_marginBottom="20dp"
+        android:id="@+id/item_prepare_order_btn_schedule"
+      />
 </LinearLayout>

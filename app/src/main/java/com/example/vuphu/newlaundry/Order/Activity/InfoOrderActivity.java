@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.vuphu.newlaundry.InputDialogFragment;
 import com.example.vuphu.newlaundry.ItemListDialogFragment;
 import com.example.vuphu.newlaundry.Order.Adapter.ListClothesAdapter;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 import com.example.vuphu.newlaundry.Payment.OBPayment;
+import com.example.vuphu.newlaundry.PickupTimeDeliveryDialogFragment;
+import com.example.vuphu.newlaundry.Promotion.ItemPromotionListDialogFragment;
+import com.example.vuphu.newlaundry.Promotion.OBPromotion;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Service.ListServiceChooseAdapter;
 import com.example.vuphu.newlaundry.Service.OBService;
@@ -27,7 +32,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class InfoOrderActivity extends AppCompatActivity implements ItemListDialogFragment.Listener {
+public class InfoOrderActivity extends AppCompatActivity implements ItemListDialogFragment.Listener,
+        ItemPromotionListDialogFragment.Listener, InputDialogFragment.InputListener,
+        PickupTimeDeliveryDialogFragment.PickupTimeDeliveryListener{
 
     private static final String TYPE_LIST_PAYMENT = "PM";
     ArrayList<String> paymentList = new ArrayList<>();
@@ -36,12 +43,12 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
     private Slidr deliveryDate;
     private TextView deliveryYourChoice;
     private Button checkOut;
-
+    final ArrayList<OBPromotion> promotionList = new ArrayList<>();
     private ListClothesAdapter adapter;
     private List<OBOrderDetail> orderDetailList = new ArrayList<>();
-
     private TextView paymentValue, promotionValue, noteValue;
     private LinearLayout payment, promotion, note;
+    private MaterialButton chooseSchedule;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +75,6 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
         adapter = new ListClothesAdapter(this, orderDetailList);
 
         listClothes.setAdapter(adapter);
-        //Delivery Date
-        deliveryDate = findViewById(R.id.item_prepare_order_seek_day);
-        deliveryYourChoice = findViewById(R.id.prepare_order_devlivery_3_name);
-        setDeliveryYourChoice();
 
         checkOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,32 +102,34 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
 
 
 
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    public void setDeliveryYourChoice(){
-        deliveryDate.setMax(Util.getDayOfMonth());
-        deliveryDate.setMin(Util.getToDay());
-        deliveryDate.setCurrentValue(Util.getToDay());
-        deliveryDate.setTextFormatter(new Slidr.TextFormatter() {
+        for (int i=0;i<5;i++)
+            promotionList.add(new OBPromotion("5% off Ride Economy Class",null,"PROMOTIONCODE",null,null));
+        promotion.setOnClickListener(new View.OnClickListener() {
             @Override
-            public String format(float value) {
-
-                return "Delivery on "+String.valueOf((int)value) + "/"+Util.getMonth();
+            public void onClick(View view) {
+                ItemPromotionListDialogFragment promotionListDialogFragment = ItemPromotionListDialogFragment.newInstance(promotionList);
+                promotionListDialogFragment.show(getSupportFragmentManager(),promotionListDialogFragment.getTag());
             }
         });
-        deliveryDate.setListener(new Slidr.Listener() {
+
+        note .setOnClickListener(new View.OnClickListener() {
             @Override
-            public void valueChanged(Slidr slidr, float currentValue) {
-                    deliveryYourChoice.setText((int)currentValue+"/"+Util.getMonth()+"/"+Util.getYear());
-
-            }
-
-            @Override
-            public void bubbleClicked(Slidr slidr) {
-
+            public void onClick(View view) {
+                InputDialogFragment inputDialogFragment = InputDialogFragment.newInstance();
+                inputDialogFragment.show(getSupportFragmentManager(), inputDialogFragment.getTag());
             }
         });
+
+        chooseSchedule = findViewById(R.id.item_prepare_order_btn_schedule);
+        chooseSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PickupTimeDeliveryDialogFragment pickupTimeDeliveryDialogFragment = PickupTimeDeliveryDialogFragment.newInstance();
+                pickupTimeDeliveryDialogFragment.show(getSupportFragmentManager(), pickupTimeDeliveryDialogFragment.getTag());
+            }
+        });
+
+
     }
 
     private void initToolbar() {
@@ -151,6 +156,21 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
     @Override
     public void onItemClicked(String type, int position) {
         paymentValue.setText(paymentList.get(position));
+
+    }
+
+    @Override
+    public void onItemPromotionClicked(int position) {
+        promotionValue.setText(promotionList.get(position).getCode());
+    }
+
+    @Override
+    public void onInputClicked(String value) {
+        noteValue.setText(value);
+    }
+
+    @Override
+    public void onPickupTimeDeliveryClicked(int position) {
 
     }
 }
