@@ -1,7 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="0.2dp"
+    app:cardElevation="@dimen/card_elevation"
+    android:clickable="true"
+    android:foreground="?selectableItemBackground"
     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/item_notify_content_short"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_item"
+        android:layout_marginBottom="@dimen/margin_item"
+        android:fontFamily="sans-serif"
+        android:text="Hailey Hodges commented on Mornong Ride. Aliquam lectus sed, blandit augue. cras ullamcor per bib en dum Cras ullamc orper"
+        android:layout_weight="1.5"
+        android:textColor="@color/black_de"
+        android:textSize="@dimen/font_size_text" />
+        <TextView
+            android:id="@+id/item_notify_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_item"
+            android:layout_marginTop="@dimen/margin_item"
+            android:fontFamily="sans-serif"
+            android:text="25 minute ago"
+            android:layout_weight="1.5"
+            android:drawableLeft="@drawable/ic_time"
+            android:drawablePadding="@dimen/margin_item"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/font_size_text_mini" />
+    </LinearLayout>
 
 
 </android.support.design.card.MaterialCardView>
