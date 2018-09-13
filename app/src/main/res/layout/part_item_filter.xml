@@ -30,7 +30,7 @@
                 android:textAlignment="textStart"
                 android:fontFamily="sans-serif"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/font_size_text" />
+                android:textSize="@dimen/font_size_title" />
         </LinearLayout>
 
         <ImageView

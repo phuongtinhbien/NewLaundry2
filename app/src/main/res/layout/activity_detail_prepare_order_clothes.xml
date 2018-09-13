@@ -23,7 +23,7 @@
                 <ImageView
                     android:id="@+id/cloth_image"
                     android:layout_width="match_parent"
-                    android:layout_height="320dp"
+                    android:layout_height="280dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/specific_clothes"
                     />
@@ -47,7 +47,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|start"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginHorizontal="@dimen/card_margin">
                     <TextView
                         android:id="@+id/item_prepare_order_txt_title"
                         android:layout_width="wrap_content"

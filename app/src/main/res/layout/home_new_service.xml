@@ -8,6 +8,8 @@
         android:orientation="vertical">
         <include layout="@layout/item_service_full"></include>
         <include layout="@layout/item_service_full"></include>
+        <include layout="@layout/item_service_full"></include>
+        <include layout="@layout/item_service_full"></include>
     </android.support.v7.widget.LinearLayoutCompat>
 
 </android.support.v4.widget.NestedScrollView>
