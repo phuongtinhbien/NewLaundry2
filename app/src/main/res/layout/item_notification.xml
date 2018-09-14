@@ -5,8 +5,9 @@
     android:layout_marginBottom="0.2dp"
     app:cardElevation="@dimen/card_elevation"
     android:clickable="true"
+    app:cardCornerRadius="0dp"
     android:foreground="?selectableItemBackground"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +21,7 @@
         android:layout_marginHorizontal="@dimen/margin_item"
         android:layout_marginBottom="@dimen/margin_item"
         android:fontFamily="sans-serif"
-        android:text="Hailey Hodges commented on Mornong Ride. Aliquam lectus sed, blandit augue. cras ullamcor per bib en dum Cras ullamc orper"
+        android:text="@string/notification_content"
         android:layout_weight="1.5"
         android:textColor="@color/black_de"
         android:textSize="@dimen/font_size_text" />

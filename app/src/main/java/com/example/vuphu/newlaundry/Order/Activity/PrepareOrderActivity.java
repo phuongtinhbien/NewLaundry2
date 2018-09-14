@@ -158,6 +158,7 @@ public class PrepareOrderActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.menu_search_action);
         MenuItem item1 = menu.findItem(R.id.menu_bag_action);
         item1.setVisible(false);
+        menu.findItem(R.id.menu_read_action).setVisible(false);
         searchView.setMenuItem(item);
 
         return true;

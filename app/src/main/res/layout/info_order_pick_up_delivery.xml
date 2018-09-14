@@ -92,10 +92,11 @@
     </LinearLayout>
 
     <android.support.design.button.MaterialButton
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/choose_time"
         android:textAllCaps="false"
+        android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
         android:id="@+id/item_prepare_order_btn_schedule"

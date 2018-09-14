@@ -14,6 +14,8 @@
         android:layout_above="@id/bottom_layout"
         android:orientation="vertical">
         <include layout="@layout/toolbar">
+    </include>
+        <include layout="@layout/item_cloth">
         </include>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

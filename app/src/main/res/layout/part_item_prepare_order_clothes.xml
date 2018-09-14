@@ -10,6 +10,7 @@
     <com.github.florent37.expansionpanel.ExpansionHeader
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:expansion_headerIndicator="@id/headerIndicator"
         app:expansion_layout="@id/expansion_clothes"
         app:expansion_toggleOnClick="true">
 
@@ -40,7 +41,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_item"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="sans-serif-light"
+                    android:textStyle="bold"
                     android:text="@string/title_all_your_clothes"
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/textColor"
@@ -62,7 +64,7 @@
     <com.github.florent37.expansionpanel.ExpansionLayout
         android:id="@+id/expansion_clothes"
         android:layout_width="match_parent"
-        app:expansion_expanded="true"
+        app:expansion_expanded="false"
         android:layout_height="wrap_content">
 
         <include

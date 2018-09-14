@@ -153,4 +153,5 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
             materialValue.setText(materialList.get(position));
         }
     }
+
 }

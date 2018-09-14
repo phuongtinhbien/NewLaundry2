@@ -142,4 +142,9 @@
     <string name="choose_time">Choose your schedule</string>
     <string name="enter_note">Enter your note</string>
     <string name="tab_our_service">Our service</string>
+    <string name="notification_content">Hailey Hodges commented on Mornong Ride. Aliquam lectus sed, blandit augue. cras ullamcor per bib en dum Cras ullamc orper</string>
+    <string name="input_phone_number">Phone</string>
+    <string name="input_address">Address</string>
+    <string name="edit_your_profile">Edit your profile</string>
+    <string name="about">About us</string>
 </resources>

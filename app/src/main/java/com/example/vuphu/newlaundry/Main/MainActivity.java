@@ -32,22 +32,31 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment = null;
+            toolbar.getMenu().findItem(R.id.menu_read_action).setVisible(true);
+            toolbar.getMenu().findItem(R.id.menu_search_action).setVisible(true);
+            toolbar.getMenu().findItem(R.id.menu_bag_action).setVisible(true);
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     setTitle("Home");
+                    toolbar.getMenu().findItem(R.id.menu_read_action).setVisible(false);
                    fragment = HomeFragment.newInstance();
                    break;
                 case R.id.navigation_dashboard:
                     setTitle("Your Order");
+                    toolbar.getMenu().findItem(R.id.menu_read_action).setVisible(false);
                     fragment = OrderFragment.newInstance();
                     break;
                 case R.id.navigation_notifications:
                     setTitle("Notification");
+                    toolbar.getMenu().findItem(R.id.menu_search_action).setVisible(false);
+                    toolbar.getMenu().findItem(R.id.menu_bag_action).setVisible(false);
                     fragment = NotificationFragment.newInstance();
                     break;
                 case R.id.navigation_person:
                     setTitle("Your acount");
                     fragment = AccountFragment.newInstance();
+                    toolbar.getMenu().findItem(R.id.menu_read_action).setVisible(false);
+                    toolbar.getMenu().findItem(R.id.menu_search_action).setVisible(false);
                     break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.message,fragment).commit();
@@ -99,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem item = menu.findItem(R.id.menu_search_action);
+        menu.findItem(R.id.menu_read_action).setVisible(false);
         searchView.setMenuItem(item);
         return true;
     }

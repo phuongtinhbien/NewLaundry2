@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     tools:context=".Main.Fragment.NotificationFragment">
-<android.support.v7.widget.LinearLayoutCompat
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <include layout="@layout/item_notification"></include>
-    <include layout="@layout/item_notification"></include>
-    <include layout="@layout/item_notification"></include>
-    <include layout="@layout/item_notification"></include>
-    <include layout="@layout/item_notification"></include>
-    <include layout="@layout/item_notification"></include>
 
-</android.support.v7.widget.LinearLayoutCompat>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swipe_notification">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/list_notification"
+            tools:listitem="@layout/item_notification">
+        </android.support.v7.widget.RecyclerView>
 
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v7.widget.LinearLayoutCompat>

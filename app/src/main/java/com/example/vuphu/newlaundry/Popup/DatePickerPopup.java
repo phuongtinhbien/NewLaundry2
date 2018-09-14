@@ -1,4 +1,4 @@
-package com.example.vuphu.newlaundry.Notification;
+package com.example.vuphu.newlaundry.Popup;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

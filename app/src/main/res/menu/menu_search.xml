@@ -11,5 +11,9 @@
         android:icon="@drawable/ic_bag"
         android:id="@+id/menu_bag_action"
         app:showAsAction="always"></item>
+    <item tools:ignore="MenuTitle"
+        android:icon="@drawable/ic_read"
+        android:id="@+id/menu_read_action"
+        app:showAsAction="always"></item>
 
 </menu>

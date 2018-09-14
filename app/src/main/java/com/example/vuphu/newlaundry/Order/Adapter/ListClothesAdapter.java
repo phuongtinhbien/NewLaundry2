@@ -29,7 +29,7 @@ public class ListClothesAdapter extends RecyclerView.Adapter<ListClothesViewHold
     @Override
     public ListClothesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(context).inflate(R.layout.item_prepare_order_clothes,parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.item_cloth,parent, false);
         return new ListClothesViewHolder(v) ;
     }
 

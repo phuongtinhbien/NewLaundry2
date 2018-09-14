@@ -1,4 +1,4 @@
-package com.example.vuphu.newlaundry.Notification;
+package com.example.vuphu.newlaundry.Popup;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
