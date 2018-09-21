@@ -1,0 +1,11 @@
+query CustomerQuery ( $id: String!) {
+      customerEntries: customerById ( id:$id){
+            id
+            customerNo
+            fullName
+            email
+            address
+            phone
+            gender
+      }
+}

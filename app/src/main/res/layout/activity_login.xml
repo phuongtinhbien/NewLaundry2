@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_white_blue"
+    tools:context=".LoginActivity">
+    
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/margin_item_horizontal"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="128dp"
+            android:src="@drawable/ic_laundry_mini"
+            android:layout_height="128dp"
+            android:scaleType="centerInside"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome"
+            android:fontFamily="sans-serif-black"
+            android:textSize="@dimen/font_size_header"
+            android:textColor="@color/white"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_in_for_continue"
+            android:fontFamily="sans-serif"
+            android:textSize="@dimen/font_size_topic"
+            android:textColor="@color/white"
+            />
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/margin_item_horizontal"
+        android:orientation="vertical">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_user"
+            android:drawablePadding="@dimen/input_drawable_padding"
+            android:hint="@string/input_email"
+            android:inputType="text"
+            android:textColorHint="@color/textColorHint"
+            android:textSize="@dimen/font_size_input"
+            android:textColor="@color/textColor"
+            android:id="@+id/login_email"
+            android:background="@drawable/bg_input"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:drawableLeft="@drawable/ic_password"
+            android:drawablePadding="@dimen/input_drawable_padding"
+            android:hint="@string/input_password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/textColorHint"
+            android:textSize="@dimen/font_size_input"
+            android:textColor="@color/textColor"
+            android:id="@+id/login_password"
+            android:background="@drawable/bg_input"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/forgot_pass"
+            android:textSize="@dimen/font_size_text" />
+        <android.support.design.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            app:cornerRadius="4dp"
+            android:onClick="login"
+            android:layout_marginTop="@dimen/card_margin"
+            android:paddingBottom="@dimen/margin_item"
+            app:backgroundTint="@color/colorAccent"
+            android:id="@+id/btn_login"
+            android:textAllCaps="false"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+    
+    
+
+</RelativeLayout>
