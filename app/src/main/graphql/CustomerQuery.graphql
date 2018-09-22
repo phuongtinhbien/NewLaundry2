@@ -1,7 +1,6 @@
-query CustomerQuery ( $id: String!) {
+query CustomerQuery ( $id: BigFloat!) {
       customerEntries: customerById ( id:$id){
             id
-            customerNo
             fullName
             email
             address

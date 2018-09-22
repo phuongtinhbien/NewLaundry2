@@ -8,9 +8,10 @@ public class GraphqlClient {
 
     private static final String BASE_URL = "http://localhost:3000/graphql";
 
-    private static OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+    static OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 
-    private static ApolloClient apolloClient = ApolloClient.builder()
+
+    static ApolloClient apolloClient = ApolloClient.builder()
             .serverUrl(BASE_URL)
             .okHttpClient(okHttpClient)
             .build();

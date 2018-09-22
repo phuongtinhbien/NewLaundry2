@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.apollographql.android'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -49,4 +49,5 @@ dependencies {
     implementation 'com.apollographql.apollo:apollo-runtime:1.0.0-alpha2'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.apollographql.apollo:apollo-http-cache:1.0.0-alpha2'
 }
