@@ -30,7 +30,7 @@ public class Util {
     }
 
     public static boolean isEmptyorNull(String s){
-        if (s.isEmpty() || s == null)
+        if (s == "" || s == null)
             return false;
         return true;
     }

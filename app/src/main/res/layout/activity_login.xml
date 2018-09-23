@@ -87,7 +87,6 @@
             android:text="@string/login"
             android:textColor="@color/white"
             app:cornerRadius="4dp"
-            android:onClick="login"
             android:layout_marginTop="@dimen/card_margin"
             android:paddingBottom="@dimen/margin_item"
             app:backgroundTint="@color/colorAccent"

@@ -1,6 +1,7 @@
 package com.example.vuphu.newlaundry.Main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,9 +9,13 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.vuphu.newlaundry.CurrentUserQuery;
+import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Main.Fragment.AccountFragment;
 import com.example.vuphu.newlaundry.Main.Fragment.HomeFragment;
 import com.example.vuphu.newlaundry.Main.Fragment.NotificationFragment;
@@ -25,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
-
+    private GraphqlClient graphqlClient;
+    private SharedPreferences token;
+    private SharedPreferences.Editor editor;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -97,11 +104,25 @@ public class MainActivity extends AppCompatActivity {
                 //Do some magic
             }
         });
+
+        init();
+        graphqlClient = new GraphqlClient(token.getString("customer_token",""));
+
+        CurrentUserQuery.CurrentUser currentUser= graphqlClient.currentUser();
+
+        if (currentUser!= null)
+        Log.i("current_user", currentUser.toString());
+
     }
 
     private void initToolbar() {
         toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    private void init(){
+        token = getSharedPreferences("customer", MODE_PRIVATE);
+        editor = token.edit();
     }
 
     @Override
