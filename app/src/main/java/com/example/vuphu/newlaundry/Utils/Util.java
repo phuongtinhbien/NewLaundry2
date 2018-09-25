@@ -31,8 +31,8 @@ public class Util {
 
     public static boolean isEmptyorNull(String s){
         if (s == "" || s == null)
-            return false;
-        return true;
+            return true;
+        return false;
     }
 
     public static String formatDate (String format, Date date){

@@ -12,10 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.vuphu.newlaundry.CurrentUserQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
+import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
+import com.example.vuphu.newlaundry.Graphql.Services;
 import com.example.vuphu.newlaundry.Main.Fragment.AccountFragment;
 import com.example.vuphu.newlaundry.Main.Fragment.HomeFragment;
 import com.example.vuphu.newlaundry.Main.Fragment.NotificationFragment;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
-    private GraphqlClient graphqlClient;
     private SharedPreferences token;
     private SharedPreferences.Editor editor;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -105,11 +105,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        init();
-        graphqlClient = new GraphqlClient(token.getString("customer_token",""));
-
-        CurrentUserQuery.CurrentUser currentUser= graphqlClient.currentUser();
-
+        Log.i("PRE_TOKEN",PreferenceUtil.getAuthToken(getApplicationContext()));
+        final Services services = new Services(GraphqlClient.getApolloClient(PreferenceUtil.getAuthToken(getApplicationContext()).trim()));
+        CurrentUserQuery.CurrentUser currentUser= services.currentUser();
         if (currentUser!= null)
         Log.i("current_user", currentUser.toString());
 
@@ -121,8 +119,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init(){
-        token = getSharedPreferences("customer", MODE_PRIVATE);
-        editor = token.edit();
     }
 
     @Override
