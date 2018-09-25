@@ -106,10 +106,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Log.i("PRE_TOKEN",PreferenceUtil.getAuthToken(getApplicationContext()));
-        final Services services = new Services(GraphqlClient.getApolloClient(PreferenceUtil.getAuthToken(getApplicationContext()).trim()));
-        CurrentUserQuery.CurrentUser currentUser= services.currentUser();
-        if (currentUser!= null)
-        Log.i("current_user", currentUser.toString());
+
 
     }
 

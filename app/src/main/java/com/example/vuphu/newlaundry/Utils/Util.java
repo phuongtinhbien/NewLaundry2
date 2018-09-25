@@ -18,6 +18,7 @@ public class Util {
             public void onClick(View v) {
                     edt.setFocusable(true);
                     edt.setCursorVisible(true);
+                    edt.setError(null);
             }
         };
         edt.setOnClickListener(clickListener);

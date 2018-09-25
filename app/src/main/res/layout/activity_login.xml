@@ -43,10 +43,35 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/margin_item_horizontal"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:fontFamily="sans-serif-black"
+            android:textSize="@dimen/font_size_header"
+            android:layout_marginBottom="@dimen/margin_item_horizontal"
+            android:textColor="@color/black_de"
+            />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:boxBackgroundMode="outline"
+            app:boxPaddingLeft="@dimen/input_drawable_padding"
+            app:boxPaddingRight="@dimen/input_drawable_padding"
+            app:boxCornerRadiusTopLeft="20dp"
+            app:boxCornerRadiusBottomLeft="20dp"
+            app:boxCornerRadiusBottomRight="20dp"
+            app:errorEnabled="true"
+            app:boxCornerRadiusTopRight="20dp"
+            app:boxStrokeColor="@color/colorAccent"
+            app:boxStrokeWidth="2dp"
+            app:errorTextAppearance="@style/error"
+            android:id="@+id/login_email_layout"
+            app:boxBackgroundColor="@android:color/transparent">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_user"
             android:drawablePadding="@dimen/input_drawable_padding"
@@ -57,22 +82,39 @@
             android:textColor="@color/textColor"
             android:id="@+id/login_email"
             android:background="@drawable/bg_input"/>
+        </android.support.design.widget.TextInputLayout>
 
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:drawableLeft="@drawable/ic_password"
-            android:drawablePadding="@dimen/input_drawable_padding"
-            android:hint="@string/input_password"
-            android:inputType="textPassword"
-            android:textColorHint="@color/textColorHint"
-            android:textSize="@dimen/font_size_input"
-            android:textColor="@color/textColor"
-            android:id="@+id/login_password"
-            android:background="@drawable/bg_input"/>
+            app:boxBackgroundMode="outline"
+            app:boxPaddingLeft="@dimen/input_drawable_padding"
+            app:boxPaddingRight="@dimen/input_drawable_padding"
+            app:boxCornerRadiusTopLeft="20dp"
+            app:boxCornerRadiusBottomLeft="20dp"
+            app:boxCornerRadiusBottomRight="20dp"
+            app:errorEnabled="true"
+            app:boxCornerRadiusTopRight="20dp"
+            app:errorTextAppearance="@style/error"
+            app:boxStrokeColor="@color/colorAccent"
+            app:boxStrokeWidth="2dp"
+            android:id="@+id/login_password_layout"
+            app:boxBackgroundColor="@android:color/transparent">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_password"
+                android:drawablePadding="@dimen/input_drawable_padding"
+                android:hint="@string/input_password"
+                android:inputType="textPassword"
+                android:background="@color/bgInputBlue"
+                android:textColorHint="@color/textColorHint"
+                android:textSize="@dimen/font_size_input"
+                android:textColor="@color/textColor"
+                android:id="@+id/login_password" />
+        </android.support.design.widget.TextInputLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,6 +134,16 @@
             app:backgroundTint="@color/colorAccent"
             android:id="@+id/btn_login"
             android:textAllCaps="false"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/black_de"
+            android:text="@string/login_create"
+            android:padding="@dimen/margin_item"
+            android:layout_marginTop="@dimen/margin_item"
+            android:textSize="@dimen/font_size_text" />
     </android.support.v7.widget.LinearLayoutCompat>
     
     

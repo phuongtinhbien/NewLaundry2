@@ -97,8 +97,8 @@ public class GraphqlClient {
                 .build()).enqueue(new ApolloCall.Callback<AuthenticateMutation.Data>() {
             @Override
             public void onResponse(@NotNull Response<AuthenticateMutation.Data> response) {
-                Log.i("authentication_token", response.data().authenticate().jwt().toString());
-                token = response.data().authenticate().jwt().toString();
+                Log.i("authentication_token", response.data().authenticate().jwt());
+                token = response.data().authenticate().jwt();
             }
 
             @Override

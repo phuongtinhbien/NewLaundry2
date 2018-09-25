@@ -164,4 +164,6 @@
     <string name="welcome">Welcome</string>
     <string name="sign_in_for_continue">Sign in to continue</string>
     <string name="forgot_pass">Forgot Password?</string>
+    <string name="input_email_err">Please enter your email</string>
+    <string name="input_password_err">Please enter your password</string>
 </resources>

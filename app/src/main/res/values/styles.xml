@@ -62,5 +62,10 @@
 
     </style>
 
+    <style name="error" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/endGradientFail</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
 
 </resources>

@@ -35,11 +35,23 @@
             android:id="@+id/prepare_order_address_contact_phone"
             android:background="@drawable/bg_input"/>-->
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundMode="outline"
+        android:layout_marginHorizontal="20dp"
+        app:boxPaddingLeft="@dimen/input_drawable_padding"
+        app:boxPaddingRight="@dimen/input_drawable_padding"
+        app:boxCornerRadiusTopLeft="20dp"
+        app:boxCornerRadiusBottomLeft="20dp"
+        app:boxCornerRadiusBottomRight="20dp"
+        app:boxCornerRadiusTopRight="20dp"
+        app:boxStrokeColor="@color/colorAccent"
+        app:boxStrokeWidth="2dp"
+        app:boxBackgroundColor="@android:color/transparent">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_person_location"
             android:drawablePadding="@dimen/input_drawable_padding"
             android:hint="@string/input_location_pickup"
@@ -49,14 +61,27 @@
             android:textColor="@color/textColor"
             android:id="@+id/prepare_order_address_pick_up"
             android:background="@drawable/bg_input"/>
+    </android.support.design.widget.TextInputLayout>
 
-
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundMode="outline"
+        android:layout_marginHorizontal="20dp"
+        app:boxPaddingLeft="@dimen/input_drawable_padding"
+        app:boxPaddingRight="@dimen/input_drawable_padding"
+        app:boxCornerRadiusTopLeft="20dp"
+        app:boxCornerRadiusBottomLeft="20dp"
+        app:boxCornerRadiusBottomRight="20dp"
+        app:boxCornerRadiusTopRight="20dp"
+        app:boxStrokeColor="@color/colorAccent"
+        app:boxStrokeWidth="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:boxBackgroundColor="@android:color/transparent">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
             android:drawableLeft="@drawable/ic_location"
             android:drawablePadding="@dimen/input_drawable_padding"
             android:hint="@string/input_location_dropoff"
@@ -66,6 +91,7 @@
             android:textColor="@color/textColor"
             android:id="@+id/prepare_order_address_drop_off"
             android:background="@drawable/bg_input"/>
+    </android.support.design.widget.TextInputLayout>
 
 
 
