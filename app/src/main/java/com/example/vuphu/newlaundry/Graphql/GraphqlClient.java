@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 
 import okhttp3.Authenticator;
-import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -67,11 +66,10 @@ public class GraphqlClient {
                 @Override
                 public okhttp3.Response intercept(Chain chain) throws IOException {
                     Request request = chain.request();
-                    Headers.Builder header = new Headers.Builder();
-                    header.add("Authorization", "Bearer "+authToken.trim());
-                    Request.Builder requestBuilder = request.newBuilder();
-                    requestBuilder.headers(header.build());
-                    return chain.proceed(requestBuilder.build());
+                    Request.Builder builder = request.newBuilder();
+                    builder.addHeader("Authorization","BEARER " + token);
+                    builder.method(request.method(), request.body());
+                    return chain.proceed(builder.build());
                 }
             });
         }
