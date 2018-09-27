@@ -48,9 +48,12 @@
         <item name="android:windowMinWidthMinor">90%</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:layout_marginBottom">@dimen/margin_item_horizontal</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/black</item>
+
     </style>
 
 
@@ -65,6 +68,20 @@
     <style name="error" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/endGradientFail</item>
         <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="textInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlineBox">
+       <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="boxCornerRadiusBottomLeft">10dp</item>
+        <item name="boxCornerRadiusTopLeft">10dp</item>
+        <item name="boxCornerRadiusBottomRight">10dp</item>
+        <item name="boxCornerRadiusTopRight">10dp</item>
+        <item name="errorTextAppearance">@style/error</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxPaddingLeft">@dimen/input_drawable_padding</item>
+        <item name="boxPaddingRight">@dimen/input_drawable_padding</item>
+        <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="boxStrokeWidth">2dp</item>
     </style>
 
 

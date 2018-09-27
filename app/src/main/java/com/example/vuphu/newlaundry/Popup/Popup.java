@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -41,12 +42,14 @@ public class Popup {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.R.color.transparent));
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.setCanceledOnTouchOutside(CANCEL_OUTSIDE);
         dialog.setContentView(R.layout.popup);
         dialogButton = dialog.findViewById(R.id.btn_popup);
         text = dialog.findViewById(R.id.txt_popup_content);
         loading = dialog.findViewById(R.id.progress_popup);
         list = dialog.findViewById(R.id.list_popup);
+        list.setVisibility(View.GONE);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +63,7 @@ public class Popup {
     }
 
     public void createSuccessDialog(String content, String button){
+        dialogButton.setVisibility(View.VISIBLE);
         text.setText(content);
         dialogButton.setText(button);
         dialogButton.setBackground(this.context.getDrawable(R.drawable.btn_bg));
@@ -67,6 +71,7 @@ public class Popup {
     }
     public void createSuccessDialog(int content, int button){
 
+        dialogButton.setVisibility(View.VISIBLE);
         text.setText(content);
         dialogButton.setText(button);
         dialogButton.setBackground(this.context.getDrawable(R.drawable.btn_bg));
@@ -75,12 +80,15 @@ public class Popup {
 
     public void createFailDialog(String content, String button){
 
+        dialogButton.setVisibility(View.VISIBLE);
         text.setText(content);
         dialogButton.setText(button);
+        dialogButton.setBackground(this.context.getDrawable(R.drawable.btn_fail_bg));
         loading.setVisibility(View.GONE);
     }
     public void createFailDialog(int content, int button){
 
+        dialogButton.setVisibility(View.VISIBLE);
         text.setText(content);
         dialogButton.setText(button);
         dialogButton.setBackground(this.context.getDrawable(R.drawable.btn_fail_bg));
@@ -89,6 +97,7 @@ public class Popup {
 
 
     public void createLoadingDialog (){
+        loading.setVisibility(View.VISIBLE);
         text.setText(R.string.notify_loading);
         dialogButton.setVisibility(View.GONE);
     }

@@ -56,19 +56,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:boxBackgroundMode="outline"
-            app:boxPaddingLeft="@dimen/input_drawable_padding"
-            app:boxPaddingRight="@dimen/input_drawable_padding"
-            app:boxCornerRadiusTopLeft="20dp"
-            app:boxCornerRadiusBottomLeft="20dp"
-            app:boxCornerRadiusBottomRight="20dp"
+            style="@style/textInputLayout"
             app:errorEnabled="true"
-            app:boxCornerRadiusTopRight="20dp"
-            app:boxStrokeColor="@color/colorAccent"
-            app:boxStrokeWidth="2dp"
-            app:errorTextAppearance="@style/error"
             android:id="@+id/login_email_layout"
-            app:boxBackgroundColor="@android:color/transparent">
+           >
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,19 +79,9 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundMode="outline"
-            app:boxPaddingLeft="@dimen/input_drawable_padding"
-            app:boxPaddingRight="@dimen/input_drawable_padding"
-            app:boxCornerRadiusTopLeft="20dp"
-            app:boxCornerRadiusBottomLeft="20dp"
-            app:boxCornerRadiusBottomRight="20dp"
-            app:errorEnabled="true"
-            app:boxCornerRadiusTopRight="20dp"
-            app:errorTextAppearance="@style/error"
-            app:boxStrokeColor="@color/colorAccent"
-            app:boxStrokeWidth="2dp"
             android:id="@+id/login_password_layout"
-            app:boxBackgroundColor="@android:color/transparent">
+            app:errorEnabled="true"
+            style="@style/textInputLayout">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,6 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+
             android:fontFamily="sans-serif-black"
             android:text="@string/forgot_pass"
             android:textSize="@dimen/font_size_text" />
@@ -134,12 +116,15 @@
             app:backgroundTint="@color/colorAccent"
             android:id="@+id/btn_login"
             android:textAllCaps="false"/>
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:fontFamily="sans-serif"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:textColor="@color/black_de"
+            android:onClick="signUp"
+            android:textAllCaps="false"
             android:text="@string/login_create"
             android:padding="@dimen/margin_item"
             android:layout_marginTop="@dimen/margin_item"

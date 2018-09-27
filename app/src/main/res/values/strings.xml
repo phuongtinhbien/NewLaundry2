@@ -166,4 +166,13 @@
     <string name="forgot_pass">Forgot Password?</string>
     <string name="input_email_err">Please enter your email</string>
     <string name="input_password_err">Please enter your password</string>
+    <string name="sign_up_for_continue">Create your account</string>
+    <string name="input_first_name">First name</string>
+    <string name="input_last_name">Last name</string>
+    <string name="input_last_name_err">Please enter your last name</string>
+    <string name="input_first_name_err">Please enter your first name</string>
+    <string name="notify_successfully_create_account">Create successfully!</string>
+    <string name="notify_fail_email_exist">This email is existing!</string>
+    <string name="login_successfuly">Login successfully</string>
+    <string name="email_password_wrong">Your email/password typed wrong</string>
 </resources>

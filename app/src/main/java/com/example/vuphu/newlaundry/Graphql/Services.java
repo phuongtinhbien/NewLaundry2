@@ -18,7 +18,7 @@ public class Services {
     public static  final String USER_TYPE = "customer_type";
     private ApolloClient apolloClient;
     private static CurrentUserQuery.CurrentUser currentUser;
-    private static RegisterUserMutation.RegisterUser registerUser;
+
     public Services(ApolloClient apolloClient) {
         this.apolloClient = apolloClient;
     }
@@ -43,29 +43,7 @@ public class Services {
         return token[0];
     }
 
-    public RegisterUserMutation.RegisterUser registerUser (String email, String pass, String firstName, String lastName){
-        final RegisterUserInput input = RegisterUserInput.builder()
-                .email(email)
-                .firstName(firstName)
-                .lastName(lastName)
-                .password(pass)
-                .userType(USER_TYPE).build();
 
-        getApolloClient().mutate(RegisterUserMutation.builder().registerUserInput(input)
-                .build()).enqueue(new ApolloCall.Callback<RegisterUserMutation.Data>() {
-            @Override
-            public void onResponse(@NotNull Response<RegisterUserMutation.Data> response) {
-                Log.e("register_user", response.data().registerUser().toString());
-                registerUser = response.data().registerUser();
-            }
-
-            @Override
-            public void onFailure(@NotNull ApolloException e) {
-                Log.e("register_err", e.getCause() +" - "+e);
-            }
-        });
-        return registerUser;
-    }
 
     public CurrentUserQuery.CurrentUser currentUser(){
         getApolloClient().query(CurrentUserQuery.builder().build()).enqueue(new ApolloCall.Callback<CurrentUserQuery.Data>() {

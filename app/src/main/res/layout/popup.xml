@@ -6,6 +6,7 @@
     app:cardBackgroundColor="@color/bgWhite"
     app:cardMaxElevation="20dp"
     app:cardCornerRadius="20dp"
+    android:layout_gravity="bottom"
     android:forceHasOverlappingRendering="true"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -28,7 +29,6 @@
             android:layout_height="wrap_content"
             android:text="OK"
             android:layout_marginTop="@dimen/popup_margin"
-            android:layout_marginBottom="@dimen/popup_margin"
             android:layout_marginRight="@dimen/btn_margin_left_right"
             android:layout_marginLeft="@dimen/btn_margin_left_right"
             android:textColor="@color/textColorBtn"
@@ -38,7 +38,6 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/popup_margin"
             android:id="@+id/progress_popup"
             style="@style/Widget.AppCompat.ProgressBar"
             />

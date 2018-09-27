@@ -33,4 +33,12 @@ public class PreferenceUtil {
         editor.apply();
     }
 
+    public static void setPreferenceNull (@NonNull Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.apply();
+
+    }
+
 }

@@ -283,6 +283,7 @@
                         app:fabSize="normal"
                         android:layout_gravity="center"
                         android:padding="@dimen/margin_item"
+                        android:id="@+id/btn_logout"
                         app:rippleColor="@color/colorAccent" />
             </android.support.design.card.MaterialCardView>
         </LinearLayout>

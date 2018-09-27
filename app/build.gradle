@@ -20,8 +20,10 @@ android {
 
 apollo {
     customTypeMapping = [
-            "Jwt" : "java.lang.String",
-            "BigFloat": "java.lang.String"
+            "Jwt"     : "java.lang.String",
+            "BigFloat": "java.lang.String",
+            "Datetime": "java.lang.String",
+
     ]
     suppressRawTypesWarning = true
 }

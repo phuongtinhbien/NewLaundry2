@@ -4,9 +4,11 @@ import android.util.Log;
 
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
+import com.apollographql.apollo.ApolloMutationCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 import com.apollographql.apollo.internal.interceptor.ApolloCacheInterceptor;
+import com.apollographql.apollo.rx2.Rx2Apollo;
 import com.example.vuphu.newlaundry.AuthenticateMutation;
 
 import org.jetbrains.annotations.NotNull;
@@ -32,10 +34,10 @@ public class GraphqlClient {
     private static OkHttpClient okHttpClient;
     private static String token;
 
-    public static ApolloClient getApolloClient(String authToken) {
+    public static ApolloClient getApolloClient(String authToken, boolean noHeader) {
 
         if (okHttpClient == null) {
-            okHttpClient = getOkHttpClient(authToken, false);
+            okHttpClient = getOkHttpClient(authToken, noHeader);
         }
 
         return ApolloClient.builder()
@@ -67,7 +69,7 @@ public class GraphqlClient {
                 public okhttp3.Response intercept(Chain chain) throws IOException {
                     Request request = chain.request();
                     Request.Builder builder = request.newBuilder();
-                    builder.addHeader("Authorization","BEARER " + token);
+                    builder.addHeader("Authorization","BEARER " + authToken);
                     builder.method(request.method(), request.body());
                     return chain.proceed(builder.build());
                 }
@@ -84,46 +86,6 @@ public class GraphqlClient {
         builder.addInterceptor(loggingInterceptor);
     }
 
-    public static String authentication(String email, String pass) {
-        ApolloClient apollo = ApolloClient.builder()
-                .serverUrl(BASE_URL)
-                .okHttpClient(getOkHttpClient(null, true))
-                .build();
 
-        apollo.mutate(AuthenticateMutation.builder()
-                .email(email)
-                .password(pass)
-                .userType(Services.USER_TYPE)
-                .build()).enqueue(new ApolloCall.Callback<AuthenticateMutation.Data>() {
-            @Override
-            public void onResponse(@NotNull Response<AuthenticateMutation.Data> response) {
-                Log.i("authentication_token", response.data().authenticate().jwt());
-                token = response.data().authenticate().jwt();
-            }
-
-            @Override
-            public void onFailure(@NotNull ApolloException e) {
-                Log.e("authentication_err", e.getCause() + " - " + e);
-            }
-        });
-        return token;
-    }
-
-    private static class RequestInterceptor implements Interceptor {
-
-        private String authToken;
-
-        public RequestInterceptor(String authToken) {
-            this.authToken = authToken;
-        }
-
-        @Override
-        public okhttp3.Response intercept(Chain chain) throws IOException {
-            Request request = chain.request();
-            Request.Builder requestBuilder = request.newBuilder();
-            requestBuilder.addHeader("Authorization", ": Bearer "+authToken.trim());
-            return chain.proceed(requestBuilder.build());
-        }
-    }
 }
 
