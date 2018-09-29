@@ -32,14 +32,14 @@ public class GraphqlClient {
 
     private static final int TIME_OUT = 30000;
     private static OkHttpClient okHttpClient;
-    private static String token;
 
     public static ApolloClient getApolloClient(String authToken, boolean noHeader) {
 
-        if (okHttpClient == null) {
-            okHttpClient = getOkHttpClient(authToken, noHeader);
+        if (okHttpClient != null){
+            okHttpClient = null;
         }
 
+        okHttpClient = getOkHttpClient(authToken, noHeader);
         return ApolloClient.builder()
                 .serverUrl(BASE_URL)
                 .okHttpClient(okHttpClient)
@@ -53,14 +53,6 @@ public class GraphqlClient {
         builder.connectTimeout(TIME_OUT, TimeUnit.MILLISECONDS);
         builder.readTimeout(TIME_OUT, TimeUnit.MILLISECONDS);
         builder.writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS);
-
-        builder.authenticator(new Authenticator() {
-            @Nullable
-            @Override
-            public Request authenticate(Route route, okhttp3.Response response) throws IOException {
-                return null;
-            }
-        });
         builder.interceptors().clear();
         addLoggingInterceptor(builder);
         if (!noHeader) {

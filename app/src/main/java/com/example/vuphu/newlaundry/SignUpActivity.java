@@ -1,5 +1,6 @@
 package com.example.vuphu.newlaundry;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.button.MaterialButton;
@@ -17,6 +18,7 @@ import com.apollographql.apollo.exception.ApolloException;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Main.MainActivity;
 import com.example.vuphu.newlaundry.Popup.Popup;
+import com.example.vuphu.newlaundry.Utils.StringKey;
 import com.example.vuphu.newlaundry.type.RegisterUserInput;
 import com.google.android.gms.common.internal.SignInButtonImpl;
 
@@ -88,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
         return validate;
     }
 
-    public RegisterUserMutation.RegisterUser registerUser (String email, String pass, String firstName, String lastName){
+    public RegisterUserMutation.RegisterUser registerUser (final String email, final String pass, String firstName, String lastName){
         final RegisterUserInput input = RegisterUserInput.builder()
                 .email(email)
                 .firstName(firstName)
@@ -107,9 +109,22 @@ public class SignUpActivity extends AppCompatActivity {
                     public void run() {
                         if (registerUser.user != null){
                             popup.hide();
-                            popup.createSuccessDialog(R.string.notify_successfully_create_account,R.string.btn_ok);
+                            View.OnClickListener onClickListener = new View.OnClickListener() {
+                                @SuppressLint("RestrictedApi")
+                                @Override
+                                public void onClick(View view) {
+                                    Bundle account = new Bundle();
+                                    account.putString(StringKey.CUSTOMER_EMAIL,email);
+                                    account.putString(StringKey.CUSTOMER_PASSWORD, pass);
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    intent.putExtra(StringKey.CUSTOMER_ACCOUNT, account);
+                                    setResult(RESULT_OK, intent);
+                                    popup.hide();
+                                    finish();
+                                }
+                            };
+                            popup.createSuccessDialog(R.string.notify_successfully_create_account,R.string.btn_login,onClickListener);
                             popup.show();
-
                         }
                         else if (registerUser.user == null){
                             popup.hide();
@@ -123,8 +138,6 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
             }
             @Override
             public void onFailure(@NotNull ApolloException e) {
@@ -133,4 +146,6 @@ public class SignUpActivity extends AppCompatActivity {
         });
         return registerUser;
     }
+
+
 }

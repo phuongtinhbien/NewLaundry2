@@ -62,19 +62,25 @@ public class Popup {
         this.text.setText(text);
     }
 
-    public void createSuccessDialog(String content, String button){
+    public void createSuccessDialog(String content, String button,View.OnClickListener onClickListener){
         dialogButton.setVisibility(View.VISIBLE);
         text.setText(content);
         dialogButton.setText(button);
         dialogButton.setBackground(this.context.getDrawable(R.drawable.btn_bg));
+        if (onClickListener != null){
+            dialogButton.setOnClickListener(onClickListener);
+        }
         loading.setVisibility(View.GONE);
     }
-    public void createSuccessDialog(int content, int button){
+    public void createSuccessDialog(int content, int button, View.OnClickListener onClickListener){
 
         dialogButton.setVisibility(View.VISIBLE);
         text.setText(content);
         dialogButton.setText(button);
         dialogButton.setBackground(this.context.getDrawable(R.drawable.btn_bg));
+        if (onClickListener != null){
+            dialogButton.setOnClickListener(onClickListener);
+        }
         loading.setVisibility(View.GONE);
     }
 
@@ -84,6 +90,7 @@ public class Popup {
         text.setText(content);
         dialogButton.setText(button);
         dialogButton.setBackground(this.context.getDrawable(R.drawable.btn_fail_bg));
+
         loading.setVisibility(View.GONE);
     }
     public void createFailDialog(int content, int button){
