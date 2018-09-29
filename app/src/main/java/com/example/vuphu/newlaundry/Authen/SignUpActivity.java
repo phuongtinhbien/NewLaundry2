@@ -1,8 +1,7 @@
-package com.example.vuphu.newlaundry;
+package com.example.vuphu.newlaundry.Authen;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,17 +9,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
-import com.example.vuphu.newlaundry.Main.MainActivity;
 import com.example.vuphu.newlaundry.Popup.Popup;
+import com.example.vuphu.newlaundry.R;
+import com.example.vuphu.newlaundry.RegisterUserMutation;
 import com.example.vuphu.newlaundry.Utils.StringKey;
 import com.example.vuphu.newlaundry.type.RegisterUserInput;
-import com.google.android.gms.common.internal.SignInButtonImpl;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -107,7 +105,7 @@ public class SignUpActivity extends AppCompatActivity {
                 SignUpActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (registerUser.user != null){
+                        if (registerUser.user() != null){
                             popup.hide();
                             View.OnClickListener onClickListener = new View.OnClickListener() {
                                 @SuppressLint("RestrictedApi")
@@ -126,7 +124,7 @@ public class SignUpActivity extends AppCompatActivity {
                             popup.createSuccessDialog(R.string.notify_successfully_create_account,R.string.btn_login,onClickListener);
                             popup.show();
                         }
-                        else if (registerUser.user == null){
+                        else if (registerUser.user() == null){
                             popup.hide();
                             popup.createFailDialog(R.string.notify_fail_email_exist, R.string.btn_fail);
                             popup.show();

@@ -117,6 +117,7 @@ public class Popup {
     }
 
     public void createListPopup(final List<String> value , String content, final EditText editText){
+        list.setVisibility(View.VISIBLE);
         text.setText(content);
         dialogButton.setVisibility(View.GONE);
         loading.setVisibility(View.GONE);

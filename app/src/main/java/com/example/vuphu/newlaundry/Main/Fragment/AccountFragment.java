@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.vuphu.newlaundry.LoginActivity;
+import com.example.vuphu.newlaundry.Authen.LoginActivity;
 import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;

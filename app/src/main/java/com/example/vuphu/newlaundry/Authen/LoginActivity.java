@@ -1,6 +1,5 @@
-package com.example.vuphu.newlaundry;
+package com.example.vuphu.newlaundry.Authen;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
@@ -14,8 +13,11 @@ import android.widget.Toast;
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
+import com.example.vuphu.newlaundry.AuthenticateMutation;
+import com.example.vuphu.newlaundry.CurrentUserQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Popup.Popup;
+import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.example.vuphu.newlaundry.Graphql.Services;
 import com.example.vuphu.newlaundry.Main.MainActivity;
@@ -34,6 +36,7 @@ public class LoginActivity extends AppCompatActivity{
     private Popup popup;
     private static String token;
     private static CurrentUserQuery.CurrentUser currentUser;
+    private boolean newAccount;
 
     public static final int REQUEST_CODE=1123;
     @Override
@@ -49,6 +52,7 @@ public class LoginActivity extends AppCompatActivity{
         password = findViewById(R.id.login_password);
         btnLogin = findViewById(R.id.btn_login);
         popup = new Popup(this);
+        newAccount = PreferenceUtil.getSetUpInfo(getApplicationContext());
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,8 +137,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private void successLogin(){
-        if (token == null)
-            token = PreferenceUtil.getAuthToken(getApplicationContext());
+        token = PreferenceUtil.getAuthToken(getApplicationContext());
         if (!Util.isEmptyorNull(token)) {
             popup.createLoadingDialog();
             popup.show();
@@ -148,9 +151,18 @@ public class LoginActivity extends AppCompatActivity{
                             public void run() {
                                 if (currentUser!= null) {
                                     popup.hide();
-                                    Toast.makeText(LoginActivity.this, R.string.login_successfuly, Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                    finish();
+
+                                    if (!newAccount){
+                                        Toast.makeText(LoginActivity.this, R.string.welcome, Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getApplicationContext(), SetUpInfoActivity.class));
+                                        finish();
+                                    }
+                                    else {
+                                        Toast.makeText(LoginActivity.this, R.string.login_successfuly, Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                        finish();
+                                    }
+
                                 }
                                 else{
                                     popup.hide();
@@ -181,6 +193,8 @@ public class LoginActivity extends AppCompatActivity{
             Bundle bundle = data.getBundleExtra(StringKey.CUSTOMER_ACCOUNT);
             email.setText(bundle.getString(StringKey.CUSTOMER_EMAIL));
             password.setText(bundle.getString(StringKey.CUSTOMER_PASSWORD));
+            PreferenceUtil.setSetUpInfo(getApplicationContext(), false);
+            newAccount = false;
         }
     }
 }

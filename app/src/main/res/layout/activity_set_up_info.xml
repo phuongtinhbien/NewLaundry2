@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".Authen.SetUpInfoActivity">
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"></include>
+    <include layout="@layout/nav_header_main"></include>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/margin_item_horizontal"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_item_horizontal"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                style="@style/textInputLayout"
+                app:boxBackgroundMode="outline"
+                android:id="@+id/set_up_gender_layout">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/input_gender"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif"
+                android:textColorHint="@color/textColorHint"
+                android:textSize="@dimen/font_size_input"
+                android:textColor="@color/textColor"
+                android:id="@+id/set_up_gender"
+                android:background="@drawable/bg_input"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                style="@style/textInputLayout"
+                app:boxBackgroundMode="outline"
+                android:id="@+id/set_up_phone_layout">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/input_phone_number"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    android:fontFamily="sans-serif"
+                    android:textColorHint="@color/textColorHint"
+                    android:textSize="@dimen/font_size_input"
+                    android:textColor="@color/textColor"
+                    android:id="@+id/set_up_phone"
+                    android:background="@drawable/bg_input"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                style="@style/textInputLayout"
+                app:boxBackgroundMode="outline"
+                android:id="@+id/set_up_address_layout">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/input_address"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:fontFamily="sans-serif"
+                    android:textColorHint="@color/textColorHint"
+                    android:textSize="@dimen/font_size_input"
+                    android:textColor="@color/textColor"
+                    android:id="@+id/set_up_address"
+                    android:background="@drawable/bg_input"/>
+            </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.FloatingActionButton
+                    style="@style/Widget.MaterialComponents.FloatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/card_margin"
+                    android:src="@drawable/ic_done"
+                    android:tooltipText="@string/btn_finish"
+                    app:fabSize="normal"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/margin_item"
+                    android:id="@+id/set_up_btn_finish"
+                    app:rippleColor="@color/colorAccent" />
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

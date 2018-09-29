@@ -1,0 +1,9 @@
+mutation updateCustomer ($id: BigFloat!, $customerPath: CustomerPatch!){
+updateCustomerById(input: {id: $id, customerPatch:$customerPath}){
+customer {
+id
+gender
+address
+}
+}
+}
