@@ -60,7 +60,7 @@
             app:errorEnabled="true"
             android:id="@+id/login_email_layout"
            >
-        <EditText
+        <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -82,7 +82,7 @@
             android:id="@+id/login_password_layout"
             app:errorEnabled="true"
             style="@style/textInputLayout">
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_password"
@@ -93,6 +93,7 @@
                 android:textColorHint="@color/textColorHint"
                 android:textSize="@dimen/font_size_input"
                 android:textColor="@color/textColor"
+
                 android:id="@+id/login_password" />
         </android.support.design.widget.TextInputLayout>
 

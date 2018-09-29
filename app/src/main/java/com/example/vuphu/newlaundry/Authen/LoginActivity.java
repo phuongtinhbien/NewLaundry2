@@ -2,6 +2,7 @@ package com.example.vuphu.newlaundry.Authen;
 
 import android.content.Intent;
 import android.support.design.button.MaterialButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,8 +31,8 @@ import java.util.Calendar;
 
 public class LoginActivity extends AppCompatActivity{
 
-    private EditText email;
-    private EditText password;
+    private TextInputEditText email;
+    private TextInputEditText password;
     private MaterialButton btnLogin;
     private Popup popup;
     private static String token;

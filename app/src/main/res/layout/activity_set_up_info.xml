@@ -29,7 +29,7 @@
                 style="@style/textInputLayout"
                 app:boxBackgroundMode="outline"
                 android:id="@+id/set_up_gender_layout">
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -50,7 +50,7 @@
                 style="@style/textInputLayout"
                 app:boxBackgroundMode="outline"
                 android:id="@+id/set_up_phone_layout">
-                <EditText
+                <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

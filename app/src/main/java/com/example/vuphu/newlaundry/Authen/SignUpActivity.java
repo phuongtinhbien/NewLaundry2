@@ -3,6 +3,7 @@ package com.example.vuphu.newlaundry.Authen;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.design.button.MaterialButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import static com.example.vuphu.newlaundry.Graphql.Services.USER_TYPE;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText lastName, firstName, email, password;
+    private TextInputEditText lastName, firstName, email, password;
     private MaterialButton signUp;
     private static RegisterUserMutation.RegisterUser registerUser;
     private Popup popup;

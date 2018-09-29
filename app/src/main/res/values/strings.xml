@@ -175,4 +175,5 @@
     <string name="notify_fail_email_exist">This email is existing!</string>
     <string name="login_successfuly">Login successfully</string>
     <string name="email_password_wrong">Your email/password typed wrong</string>
+    <string name="use_now">Use now</string>
 </resources>

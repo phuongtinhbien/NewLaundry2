@@ -129,6 +129,7 @@ public class Popup {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 choosenValue = value.get(position);
                 editText.setText(choosenValue);
+                list.setVisibility(View.GONE);
                 hide();
             }
         });
