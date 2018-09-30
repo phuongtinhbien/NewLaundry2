@@ -23,6 +23,7 @@ apollo {
             "Jwt"     : "java.lang.String",
             "BigFloat": "java.lang.String",
             "Datetime": "java.lang.String",
+            "Upload": "java.lang.String"
 
     ]
     suppressRawTypesWarning = true
@@ -63,4 +64,5 @@ dependencies {
     implementation 'com.apollographql.apollo:apollo-http-cache:1.0.0-alpha2'
     implementation 'com.apollographql.apollo:apollo-android-support:1.0.0-alpha2'
     implementation 'com.apollographql.apollo:apollo-rx2-support:1.0.0-alpha2'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

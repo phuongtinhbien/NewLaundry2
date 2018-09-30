@@ -1,10 +1,11 @@
-query CustomerQuery ( $id: BigFloat!) {
-      customerEntries: customerById ( id:$id){
-            id
-            fullName
-            email
-            address
-            phone
-            gender
-      }
+query getCustomer ($id: BigFloat!){
+customerById(id:$id){
+id
+gender
+email
+username
+fullName
+phone
+address
+}
 }

@@ -1,48 +1,80 @@
 package com.example.vuphu.newlaundry.Authen;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 import com.example.vuphu.newlaundry.CurrentUserQuery;
+import com.example.vuphu.newlaundry.GetCustomerQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
-import com.example.vuphu.newlaundry.Graphql.Services;
-import com.example.vuphu.newlaundry.ItemListDialogFragment;
 import com.example.vuphu.newlaundry.Main.MainActivity;
 import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
+import com.example.vuphu.newlaundry.SaveImageMutation;
 import com.example.vuphu.newlaundry.UpdateCustomerMutation;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
+import com.example.vuphu.newlaundry.Utils.StringKey;
 import com.example.vuphu.newlaundry.Utils.Util;
 import com.example.vuphu.newlaundry.type.CustomerPatch;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
+import android.util.Base64;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.OkHttpClient;
+
 
 public class SetUpInfoActivity extends AppCompatActivity {
 
+    private final int REQUEST_CODE = 1234;
     private Toolbar toolbar;
     private List<String> genderList;
     private Popup popup;
     private TextInputEditText gender, phone, address;
     private FloatingActionButton setUp;
+    private CircleImageView avatar;
     private String token;
     private static CurrentUserQuery.CurrentUser currentUser;
     private static UpdateCustomerMutation.Customer customer;
+    private static SaveImageMutation.Post image;
+    private static final int REQUEST_WRITE_PERMISSION = 786;
+    private TextView name, email;
+    int REQUEST_CODE_GALLERY = 0;
+    Bitmap bitmap =  null;
+    File file = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +82,23 @@ public class SetUpInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_set_up_info);
         initToolbar();
         init();
+        requestPermission();
+        addEvents();
     }
-
     private void init() {
 
         popup = new Popup(this);
         token = PreferenceUtil.getAuthToken(getApplicationContext());
+        name = findViewById(R.id.nav_txt_name);
+        email = findViewById(R.id.nav_txt_email);
         setCurrentUser();
         genderList = Arrays.asList(getResources().getStringArray(R.array.arr_gender));
         gender = findViewById(R.id.set_up_gender);
         phone = findViewById(R.id.set_up_phone);
+        avatar = findViewById(R.id.nav_img_avatar);
         address = findViewById(R.id.set_up_address);
         setUp = findViewById(R.id.set_up_btn_finish);
+
         Util.showHideCursor(gender);
         gender.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,11 +114,10 @@ public class SetUpInfoActivity extends AppCompatActivity {
                 if (validate()){
                     popup.createLoadingDialog();
                     popup.show();
-                    setUpInfo();
+                    saveAvatar();
                 }
             }
         });
-
     }
 
     private void initToolbar() {
@@ -90,7 +126,6 @@ public class SetUpInfoActivity extends AppCompatActivity {
         setTitle("Set up information");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 
     public boolean validate(){
         boolean validate = true;
@@ -115,11 +150,14 @@ public class SetUpInfoActivity extends AppCompatActivity {
 
     private void setUpInfo (){
 
-
         CustomerPatch customerPatch = CustomerPatch.builder()
+                .fullName(name.getText().toString())
                 .address(address.getText().toString())
                 .gender( gender.getText().toString().equals("Female")?true:false)
+                .updateDate(Util.getDate().toString())
+                .customerAvatar(image.id())
                 .phone(phone.getText().toString()).build();
+
         GraphqlClient.getApolloClient(token, false)
                 .mutate(UpdateCustomerMutation.builder()
                         .id(String.valueOf(currentUser.id()))
@@ -136,6 +174,7 @@ public class SetUpInfoActivity extends AppCompatActivity {
                                     View.OnClickListener onClickListener = new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
+                                            popup.hide();
                                             startActivity(new Intent(SetUpInfoActivity.this, MainActivity.class));
                                             finish();
                                         }
@@ -167,6 +206,13 @@ public class SetUpInfoActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(@NotNull Response<CurrentUserQuery.Data> response) {
                         currentUser = response.data().currentUser();
+                        SetUpInfoActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                name.setText(currentUser.lastName()+ " " + currentUser.firstName());
+                                getCustomerInfo();
+                            }
+                        });
                     }
 
                     @Override
@@ -175,4 +221,107 @@ public class SetUpInfoActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    public void getCustomerInfo(){
+        GraphqlClient.getApolloClient(token, false)
+                .query(GetCustomerQuery.builder()
+                .id(String.valueOf(currentUser.id())).build())
+                .enqueue(new ApolloCall.Callback<GetCustomerQuery.Data>() {
+                    @Override
+                    public void onResponse(@NotNull Response<GetCustomerQuery.Data> response) {
+                        final String emailStr = response.data().customerById().email();
+                        if ( emailStr != null){
+                            SetUpInfoActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    email.setText(emailStr);
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull ApolloException e) {
+
+                    }
+                });
+    }
+
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
+        } else {
+            addEvents();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK) {
+            Uri image = data.getData();
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(image, projection, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(projection[0]);
+            String filePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            file = new File(filePath);
+            bitmap = BitmapFactory.decodeFile(filePath);
+            avatar.setImageBitmap(bitmap);
+        }
+
+    }
+
+    private void addEvents() {
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentGallery = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intentGallery, REQUEST_CODE_GALLERY);
+            }
+        });
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_WRITE_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            addEvents();
+        }
+    }
+
+    private void saveAvatar(){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ((BitmapDrawable)avatar.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG,100, baos);
+        String encodedBytes = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+            GraphqlClient.getApolloClient(token, false)
+                    .mutate(SaveImageMutation.builder()
+                            .headerImageFile(encodedBytes)
+                            .body("avatar")
+                            .headLine(email.getText().toString()).build())
+                    .enqueue(new ApolloCall.Callback<SaveImageMutation.Data>() {
+                        @Override
+                        public void onResponse(@NotNull Response<SaveImageMutation.Data> response) {
+                            image = response.data().createPost().post();
+                            SetUpInfoActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    setUpInfo();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull ApolloException e) {
+
+                        }
+                    });
+
+
+    }
+
 }

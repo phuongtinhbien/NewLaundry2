@@ -1,0 +1,16 @@
+mutation saveImage ($headLine: String!, $body: String!, $headerImageFile: Upload!){
+createPost (input:{
+post:{
+headline: $headLine,
+body: $body,
+headerImageFile: $headerImageFile
+}
+})
+{
+post{
+id
+body
+headline
+}
+}
+}
