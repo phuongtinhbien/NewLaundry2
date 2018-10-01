@@ -61,24 +61,27 @@
                         app:mcv_selectable="true"
                         android:layout_margin="@dimen/margin_item"
                         app:mcv_chipText="9:00 - 10:30"></com.robertlevonyan.views.chip.Chip>
+
                     <com.robertlevonyan.views.chip.Chip
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:mcv_backgroundColor="@color/cool_grey"
-                        app:mcv_selectedBackgroundColor="@color/colorAccent"
-                        app:mcv_textColor="@color/white"
-                        app:mcv_selectable="true"
                         android:layout_margin="@dimen/margin_item"
-                        app:mcv_chipText="11:00 - 12:30"></com.robertlevonyan.views.chip.Chip>
+                        app:mcv_backgroundColor="@color/cool_grey"
+                        app:mcv_chipText="11:00 - 12:30"
+                        app:mcv_selectable="true"
+                        app:mcv_selectedBackgroundColor="@color/colorAccent"
+                        app:mcv_textColor="@color/white"></com.robertlevonyan.views.chip.Chip>
+
                     <com.robertlevonyan.views.chip.Chip
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:mcv_backgroundColor="@color/cool_grey"
-                        app:mcv_selectedBackgroundColor="@color/colorAccent"
-                        app:mcv_textColor="@color/white"
-                        app:mcv_selectable="true"
                         android:layout_margin="@dimen/margin_item"
-                        app:mcv_chipText="11:00 - 12:30"></com.robertlevonyan.views.chip.Chip>
+                        app:mcv_backgroundColor="@color/cool_grey"
+                        app:mcv_chipText="11:00 - 12:30"
+                        app:mcv_selectable="true"
+                        app:mcv_selectedBackgroundColor="@color/colorAccent"
+                        app:mcv_textColor="@color/white"></com.robertlevonyan.views.chip.Chip>
+
                     <com.robertlevonyan.views.chip.Chip
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

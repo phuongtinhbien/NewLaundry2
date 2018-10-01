@@ -13,3 +13,4 @@ public class LocationUtils {
         return String.format("%.2f %S", distance[0] * 0.0006, "mi");
     }
 }
+

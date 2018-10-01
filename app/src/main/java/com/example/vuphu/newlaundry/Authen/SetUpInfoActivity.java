@@ -74,7 +74,7 @@ public class SetUpInfoActivity extends AppCompatActivity {
     private TextView name, email;
     int REQUEST_CODE_GALLERY = 0;
     Bitmap bitmap =  null;
-    File file = null;
+    private String urlAvatar = "default";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public class SetUpInfoActivity extends AppCompatActivity {
                 if (validate()){
                     popup.createLoadingDialog();
                     popup.show();
-                    saveAvatar();
+                    excecute();
                 }
             }
         });
@@ -267,8 +267,6 @@ public class SetUpInfoActivity extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(projection[0]);
             String filePath = cursor.getString(columnIndex);
             cursor.close();
-
-            file = new File(filePath);
             bitmap = BitmapFactory.decodeFile(filePath);
             avatar.setImageBitmap(bitmap);
         }
@@ -294,13 +292,12 @@ public class SetUpInfoActivity extends AppCompatActivity {
         }
     }
 
-    private void saveAvatar(){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ((BitmapDrawable)avatar.getDrawable()).getBitmap().compress(Bitmap.CompressFormat.JPEG,100, baos);
-        String encodedBytes = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+    private void excecute(){
+
+            saveAvatar();
             GraphqlClient.getApolloClient(token, false)
                     .mutate(SaveImageMutation.builder()
-                            .headerImageFile(encodedBytes)
+                            .headerImageFile(urlAvatar)
                             .body("avatar")
                             .headLine(email.getText().toString()).build())
                     .enqueue(new ApolloCall.Callback<SaveImageMutation.Data>() {
@@ -322,6 +319,11 @@ public class SetUpInfoActivity extends AppCompatActivity {
                     });
 
 
+    }
+
+    private void saveAvatar(){
+        //ông làm vô đây đi...
+        //rồi set url cho t
     }
 
 }
