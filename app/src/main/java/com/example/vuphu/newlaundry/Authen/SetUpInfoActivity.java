@@ -39,6 +39,11 @@ import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.example.vuphu.newlaundry.Utils.StringKey;
 import com.example.vuphu.newlaundry.Utils.Util;
 import com.example.vuphu.newlaundry.type.CustomerPatch;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -51,6 +56,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 import android.util.Base64;
+import android.widget.Toast;
+
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -74,7 +82,9 @@ public class SetUpInfoActivity extends AppCompatActivity {
     private TextView name, email;
     int REQUEST_CODE_GALLERY = 0;
     Bitmap bitmap =  null;
-    private String urlAvatar = "default";
+    private static String urlAvatar = "default";
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageReference = storage.getReferenceFromUrl("gs://luandry-2f439.appspot.com");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -292,9 +302,8 @@ public class SetUpInfoActivity extends AppCompatActivity {
         }
     }
 
-    private void excecute(){
+    private void saveAvatar(){
 
-            saveAvatar();
             GraphqlClient.getApolloClient(token, false)
                     .mutate(SaveImageMutation.builder()
                             .headerImageFile(urlAvatar)
@@ -321,9 +330,33 @@ public class SetUpInfoActivity extends AppCompatActivity {
 
     }
 
-    private void saveAvatar(){
-        //ông làm vô đây đi...
-        //rồi set url cho t
-    }
+    private void excecute(){
+        StorageReference storageR = storageReference.child("customer/" + email.getText().toString() + ".png");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] data = baos.toByteArray();
+        UploadTask uploadTask = storageR.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Toast.makeText(SetUpInfoActivity.this, "Tải hình thất bại", Toast.LENGTH_LONG).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getStorage().getDownloadUrl().getResult();
+                urlAvatar = downloadUrl.toString();
+                SetUpInfoActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveAvatar();
+                        Toast.makeText(SetUpInfoActivity.this, urlAvatar, Toast.LENGTH_LONG).show();
+                    }
+                });
 
+            }
+        });
+    }
 }
