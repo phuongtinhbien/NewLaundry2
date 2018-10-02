@@ -2,60 +2,77 @@
 <android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/card_margin"
+    android:layout_marginVertical="0.1dp"
+    android:clickable="true"
+    android:foreground="?selectableItemBackground"
+    app:cardCornerRadius="0dp"
     app:cardElevation="@dimen/card_elevation"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_margin="@dimen/card_margin"
-        android:orientation="vertical">
+        android:gravity="start"
+        android:layout_margin="16dp"
+        android:orientation="horizontal">
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_cloth"
             android:padding="@dimen/margin_item"
             />
-        <com.robertlevonyan.views.chip.Chip
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mcv_textColor="@color/white"
-            app:mcv_backgroundColor="@color/colorAccent"
-            android:layout_margin="@dimen/margin_item"
-            android:id="@+id/chip_pricing"
-            app:mcv_chipText="VND 20.000">
-        </com.robertlevonyan.views.chip.Chip>
+            android:gravity="left"
+            android:layout_weight="1.5"
+            android:layout_marginLeft="@dimen/margin_item"
+            android:layout_gravity="center_vertical|left"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/item_prepare_order_txt_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_item"
-            android:fontFamily="sans-serif-black"
-            android:text="@string/title_category"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/font_size_title_item" />
-        <TextView
-            android:id="@+id/item_prepare_order_txt_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_item"
-            android:fontFamily="sans-serif"
-            android:text="Short Description"
-            android:textColor="@color/charcoal_grey"
-            android:textSize="@dimen/font_size_sub_title" />
+            <TextView
+                android:id="@+id/item_prepare_order_txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_item"
+                android:fontFamily="sans-serif-black"
+                android:text="@string/title_category"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/font_size_title_item" />
+            <android.support.v7.widget.AppCompatSpinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"
+                android:entries="@array/arr_payment">
+            </android.support.v7.widget.AppCompatSpinner>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:layout_margin="@dimen/margin_item"
+                android:id="@+id/chip_pricing"
+                android:fontFamily="sans-serif"
+                android:text="VND 20.000">
+            </TextView>
+        </LinearLayout>
+
+
         <android.support.design.button.MaterialButton
-            android:layout_width="wrap_content"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/colorAccent"
             android:textAllCaps="false"
             android:elevation="0dp"
             android:translationZ="0dp"
+            app:strokeWidth="2dp"
+            android:layout_gravity="center_vertical|end"
+            app:strokeColor="@color/colorAccent"
+            android:text="+"
+            android:textSize="24dp"
+            android:fontFamily="sans-serif-light"
             app:rippleColor="@color/colorAccent"
-            app:cornerRadius="@dimen/card_radius"
-            android:text="@string/add_bag"/>
+            app:backgroundTint="@color/white"
+            app:cornerRadius="@dimen/card_radius" />
     </LinearLayout>
 
 

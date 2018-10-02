@@ -141,6 +141,9 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NotNull ApolloException e) {
                 Log.e("register_err", e.getCause() +" - "+e);
+                popup.hide();
+                popup.createFailDialog(e.getMessage(), "Fail");
+                popup.show();
             }
         });
         return registerUser;

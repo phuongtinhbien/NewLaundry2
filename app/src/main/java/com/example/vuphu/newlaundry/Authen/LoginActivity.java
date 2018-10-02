@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity{
 
     private void successLogin(){
         token = PreferenceUtil.getAuthToken(getApplicationContext());
-        if (!Util.isEmptyorNull(token)) {
+        if (token != null && token != "") {
             popup.createLoadingDialog();
             popup.show();
             GraphqlClient.getApolloClient(token, false).query(CurrentUserQuery.builder().build())
@@ -178,6 +178,15 @@ public class LoginActivity extends AppCompatActivity{
                 @Override
                 public void onFailure(@NotNull ApolloException e) {
                     Log.e("current_user_err", e.getCause() +" - "+e);
+                    final String er = e.getMessage();
+                    LoginActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            popup.hide();
+                            popup.createFailDialog(er, "Fail");
+                            popup.show();
+                        }
+                    });
 
                 }
             });

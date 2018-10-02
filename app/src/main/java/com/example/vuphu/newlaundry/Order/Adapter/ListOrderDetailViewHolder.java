@@ -17,7 +17,7 @@ public class ListOrderDetailViewHolder extends ViewHolder {
     View itemView;
     ImageView img;
     TextView title;
-    Chip price;
+    TextView price;
     public ListOrderDetailViewHolder(View itemView) {
         super(itemView);
         this.itemView = itemView;

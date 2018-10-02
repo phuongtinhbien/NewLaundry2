@@ -64,7 +64,7 @@ public class PrepareOrderActivity extends AppCompatActivity {
         listPrepareOrder.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listPrepareOrder.setLayoutManager(gridLayoutManager);
         orderDetailList = new ArrayList<>();

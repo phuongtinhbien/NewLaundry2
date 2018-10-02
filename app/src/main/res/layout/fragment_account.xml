@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".Main.Fragment.AccountFragment">
 
 
@@ -20,234 +21,87 @@
 
             <include layout="@layout/nav_header_main"></include>
 
-            <android.support.design.card.MaterialCardView
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_margin="@dimen/margin_item_horizontal"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:foreground="?selectableItemBackground">
-
-                <LinearLayout
+                android:orientation="vertical">
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/card_margin"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="18dp"
-                    android:paddingVertical="@dimen/padding_vertical"
-                    android:weightSum="3">
-
-                    <LinearLayout
+                    app:errorEnabled="true"
+                    style="@style/textInputLayout"
+                    app:boxBackgroundMode="outline"
+                    android:id="@+id/acc_gender_layout">
+                    <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_item"
-                            android:layout_weight="2"
-                            android:fontFamily="sans-serif-black"
-                            android:text="@string/input_your_name"
-                            android:textColor="@color/charcoal_grey"
-                            android:textSize="@dimen/font_size_title_item" />
-
-                        <EditText
-                            android:id="@+id/item_account_your_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_item"
-                            android:layout_weight="1.5"
-                            android:fontFamily="sans-serif"
-                            android:text="John Doe"
-                            android:textColor="@color/black_de"
-                            android:textSize="@dimen/font_size_text" />
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginLeft="16dp"
-                        android:layout_weight="1"
-                        android:tint="@color/charcoal_grey"
-                        app:srcCompat="@drawable/ic_expand" />
-                </LinearLayout>
-            </android.support.design.card.MaterialCardView>
-
-            <android.support.design.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:foreground="?selectableItemBackground">
-
-                <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/input_gender"
+                        android:inputType="textPersonName"
+                        android:textAlignment="center"
+                        android:enabled="false"
+                        android:fontFamily="sans-serif"
+                        android:textColorHint="@color/textColorHint"
+                        android:textSize="@dimen/font_size_input"
+                        android:textColor="@color/textColor"
+                        android:id="@+id/acc_gender"
+                        android:background="@drawable/bg_input"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/card_margin"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="18dp"
-                    android:paddingVertical="@dimen/padding_vertical"
-                    android:weightSum="3">
-
-                    <LinearLayout
+                    app:errorEnabled="true"
+                    style="@style/textInputLayout"
+                    app:boxBackgroundMode="outline"
+                    android:id="@+id/acc_phone_layout">
+                    <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_item"
-                            android:layout_weight="2"
-                            android:fontFamily="sans-serif-black"
-                            android:text="@string/input_email"
-                            android:textColor="@color/charcoal_grey"
-                            android:textSize="@dimen/font_size_title_item" />
-
-                        <EditText
-                            android:id="@+id/item_account_email"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_item"
-                            android:layout_weight="1.5"
-                            android:fontFamily="sans-serif"
-                            android:text="johndoe.c.@gmail.com"
-                            android:textColor="@color/black_de"
-                            android:textSize="@dimen/font_size_text" />
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginLeft="16dp"
-                        android:layout_weight="1"
-                        android:tint="@color/charcoal_grey"
-                        app:srcCompat="@drawable/ic_expand" />
-                </LinearLayout>
-            </android.support.design.card.MaterialCardView>
-
-            <android.support.design.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:foreground="?selectableItemBackground">
-
-                <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/input_phone_number"
+                        android:inputType="textPersonName"
+                        android:textAlignment="center"
+                        android:fontFamily="sans-serif"
+                        android:enabled="false"
+                        android:textColorHint="@color/textColorHint"
+                        android:textSize="@dimen/font_size_input"
+                        android:textColor="@color/textColor"
+                        android:id="@+id/acc_phone"
+                        android:background="@drawable/bg_input"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/card_margin"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="18dp"
-                    android:paddingVertical="@dimen/padding_vertical"
-                    android:weightSum="3">
-
-                    <LinearLayout
+                    app:errorEnabled="true"
+                    style="@style/textInputLayout"
+                    app:boxBackgroundMode="outline"
+                    android:id="@+id/acc_address_layout">
+                    <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/input_address"
+                        android:inputType="text"
+                        android:textAlignment="center"
+                        android:fontFamily="sans-serif"
+                        android:enabled="false"
+                        android:textColorHint="@color/textColorHint"
+                        android:textSize="@dimen/font_size_input"
+                        android:textColor="@color/textColor"
+                        android:id="@+id/acc_address"
+                        android:background="@drawable/bg_input"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_item"
-                            android:layout_weight="2"
-                            android:fontFamily="sans-serif-black"
-                            android:text="@string/input_phone_number"
-                            android:textColor="@color/charcoal_grey"
-                            android:textSize="@dimen/font_size_title_item" />
-
-                        <EditText
-                            android:id="@+id/item_account_phone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_item"
-                            android:layout_weight="1.5"
-                            android:fontFamily="sans-serif"
-                            android:text="0912 346 789"
-                            android:textColor="@color/black_de"
-                            android:textSize="@dimen/font_size_text" />
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginLeft="16dp"
-                        android:layout_weight="1"
-                        android:tint="@color/charcoal_grey"
-                        app:srcCompat="@drawable/ic_expand" />
-                </LinearLayout>
-            </android.support.design.card.MaterialCardView>
 
             <android.support.design.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:foreground="?selectableItemBackground">
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/card_margin"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="18dp"
-                    android:paddingVertical="@dimen/padding_vertical"
-                    android:weightSum="3">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_item"
-                            android:layout_weight="2"
-                            android:fontFamily="sans-serif-black"
-                            android:text="@string/input_address"
-                            android:textColor="@color/charcoal_grey"
-                            android:textSize="@dimen/font_size_title_item" />
-
-                        <EditText
-                            android:id="@+id/item_account_address"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_item"
-                            android:layout_weight="1.5"
-                            android:fontFamily="sans-serif"
-                            android:text="@string/your_address"
-                            android:textColor="@color/black_de"
-                            android:textSize="@dimen/font_size_text" />
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginLeft="16dp"
-                        android:layout_weight="1"
-                        android:tint="@color/charcoal_grey"
-                        app:srcCompat="@drawable/ic_expand" />
-                </LinearLayout>
-            </android.support.design.card.MaterialCardView>
-
-            <android.support.design.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
                 android:foreground="?selectableItemBackground">
 
                 <LinearLayout
@@ -264,28 +118,25 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="@string/about"
-                        android:textStyle="bold"
                         android:textColor="@color/charcoal_grey"
-                        android:textSize="@dimen/font_size_title_item" />
+                        android:textSize="@dimen/font_size_title_item"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </android.support.design.card.MaterialCardView>
 
-            <android.support.design.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                    <android.support.design.widget.FloatingActionButton
-                        style="@style/Widget.MaterialComponents.FloatingActionButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/card_margin"
-                        android:src="@drawable/ic_log_out"
-                        android:tooltipText="@string/log_out"
-                        app:fabSize="normal"
-                        android:layout_gravity="center"
-                        android:padding="@dimen/margin_item"
-                        android:id="@+id/btn_logout"
-                        app:rippleColor="@color/colorAccent" />
-            </android.support.design.card.MaterialCardView>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btn_logout"
+                style="@style/Widget.MaterialComponents.FloatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/card_margin"
+                android:padding="@dimen/margin_item"
+                android:src="@drawable/ic_log_out"
+                android:tooltipText="@string/log_out"
+                app:fabSize="normal"
+                app:rippleColor="@color/colorAccent" />
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

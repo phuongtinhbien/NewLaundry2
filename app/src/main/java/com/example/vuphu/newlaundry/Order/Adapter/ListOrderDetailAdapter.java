@@ -42,7 +42,7 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
     public void onBindViewHolder(@NonNull ListOrderDetailViewHolder holder, int position) {
 
         holder.title.setText(list.get(position).getTitle());
-        holder.price.setChipText(CURRENCY + " " + list.get(position).getPricing());
+        holder.price.setText(CURRENCY + " " + list.get(position).getPricing());
         Log.i("data", list.get(position).getCount()+"");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

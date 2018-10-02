@@ -51,7 +51,7 @@ public class PreferenceUtil {
     }
     public static boolean getSetUpInfo (@NonNull Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
-        return  sharedPref.getBoolean(SET_UP_INFO, false);
+        return  sharedPref.getBoolean(SET_UP_INFO, true);
     }
 
 }
