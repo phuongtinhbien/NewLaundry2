@@ -2,6 +2,7 @@ package com.example.vuphu.newlaundry.Main.Fragment;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,8 +26,11 @@ import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -37,6 +41,7 @@ public class AccountFragment extends Fragment {
     private FloatingActionButton logOut;
     private Popup popup;
     private TextView name, email;
+    private CircleImageView avatar;
     private static CurrentUserQuery.CurrentUser currentUser;
     private static GetCustomerQuery.CustomerById customer;
     private TextInputEditText gender, phone, address;
@@ -65,6 +70,7 @@ public class AccountFragment extends Fragment {
         gender = v.findViewById(R.id.acc_gender);
         phone = v.findViewById(R.id.acc_phone);
         address = v.findViewById(R.id.acc_address);
+        avatar = v.findViewById(R.id.nav_img_avatar);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,6 +82,40 @@ public class AccountFragment extends Fragment {
         token = PreferenceUtil.getAuthToken(getContext());
         setCurrentUser();
 
+    }
+
+    private void setCurrentUser() {
+        customer = PreferenceUtil.getCurrentUser(getContext());
+        if (customer!= null){
+            name.setText(customer.fullName());
+            email.setText(customer.email());
+            gender.setText(customer.gender()?"Female":"Male");
+            phone.setText(customer.phone());
+            address.setText(customer.address());
+            Picasso.get().load(Uri.parse(customer.postByCustomerAvatar().headerImageFile())).into(avatar);
+
+        }
+        else{
+            GraphqlClient.getApolloClient(token, false).query(CurrentUserQuery.builder().build())
+                    .enqueue(new ApolloCall.Callback<CurrentUserQuery.Data>() {
+                        @Override
+                        public void onResponse(@NotNull Response<CurrentUserQuery.Data> response) {
+                            currentUser = response.data().currentUser();
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    name.setText(currentUser.lastName()+ " " + currentUser.firstName());
+                                    getCustomerInfo();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull ApolloException e) {
+                            Log.e("current_user_err", e.getCause() +" - "+e);
+                        }
+                    });
+        }
     }
 
     private void logOut() {
@@ -95,28 +135,6 @@ public class AccountFragment extends Fragment {
         return fragment;
     }
 
-    public void setCurrentUser() {
-        GraphqlClient.getApolloClient(token, false).query(CurrentUserQuery.builder().build())
-                .enqueue(new ApolloCall.Callback<CurrentUserQuery.Data>() {
-                    @Override
-                    public void onResponse(@NotNull Response<CurrentUserQuery.Data> response) {
-                        currentUser = response.data().currentUser();
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                name.setText(currentUser.lastName()+ " " + currentUser.firstName());
-                                getCustomerInfo();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(@NotNull ApolloException e) {
-                        Log.e("current_user_err", e.getCause() +" - "+e);
-                    }
-                });
-    }
-
     public void getCustomerInfo(){
         GraphqlClient.getApolloClient(token, false)
                 .query(GetCustomerQuery.builder()
@@ -129,10 +147,12 @@ public class AccountFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    PreferenceUtil.setCurrentUser(getContext(), customer);
                                     email.setText(customer.email());
                                     gender.setText(customer.gender()?"Female":"Male");
                                     phone.setText(customer.phone());
                                     address.setText(customer.address());
+                                    Picasso.get().load(Uri.parse(customer.postByCustomerAvatar().headerImageFile())).into(avatar);
                                 }
                             });
                         }

@@ -233,7 +233,8 @@ public class SetUpInfoActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NotNull ApolloException e) {
                         Log.e("current_user_err", e.getCause() +" - "+e);
-                        
+
+
                     }
                 });
     }
@@ -354,7 +355,7 @@ public class SetUpInfoActivity extends AppCompatActivity {
     private void excecute(){
         final StorageReference storageR = storageReference.child("customer/" + email.getText().toString() + ".png");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 5, baos);
         byte[] data = baos.toByteArray();
         UploadTask uploadTask = storageR.putBytes(data);
         final Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -373,7 +374,9 @@ public class SetUpInfoActivity extends AppCompatActivity {
                     urlAvatar = downloadUri.toString();
                     saveAvatar(urlAvatar);
                 } else {
-                    // Handle fail
+                    popup.hide();
+                    popup.createFailDialog(R.string.notify_fail, R.string.btn_fail);
+                    popup.show();
                 }
             }
         });

@@ -32,7 +32,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class GraphqlClient {
 
-    private static final String BASE_URL = "http://192.168.1.13:5000/graphql";
+    private static final String BASE_URL = "http://192.168.16.130:5000/graphql";
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/jpg");
     private static final int TIME_OUT = 30000;
     private static OkHttpClient okHttpClient;

@@ -3,12 +3,24 @@ package com.example.vuphu.newlaundry.Utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.util.JsonReader;
+
+import com.apollographql.apollo.api.ResponseReader;
+import com.example.vuphu.newlaundry.GetCustomerQuery;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import java.io.StringReader;
+
+import static com.facebook.stetho.inspector.network.PrettyPrinterDisplayType.JSON;
 
 public class PreferenceUtil {
     public static final String PREFERENCE = "CUSTOMER";
     private static final String AUTH_TOKEN_TIME = "AUTH_TOKEN_TIME";
     private static final String AUTH_TOKEN = "AUTH_TOKEN";
     private static final String SET_UP_INFO = "SET_UP_INFO";
+    private static final String CURRENT_USER = "CURRENT_USER";
 
     public static Long getLastCheckedAuthTokenTime(@NonNull Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
@@ -52,6 +64,26 @@ public class PreferenceUtil {
     public static boolean getSetUpInfo (@NonNull Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         return  sharedPref.getBoolean(SET_UP_INFO, true);
+    }
+
+    public static void setCurrentUser(@NonNull Context context, GetCustomerQuery.CustomerById currentUser){
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(CURRENT_USER, gson.toJson(currentUser));
+        editor.apply();
+    }
+
+    public static GetCustomerQuery.CustomerById getCurrentUser (@NonNull Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        String currentUser = sharedPref.getString(CURRENT_USER, "");
+        if (currentUser == ""){
+            return null;
+        }
+        else {
+            Gson gson = new Gson();
+            return gson.fromJson(currentUser, GetCustomerQuery.CustomerById.class);
+        }
     }
 
 }
