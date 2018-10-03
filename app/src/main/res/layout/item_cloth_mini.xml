@@ -57,20 +57,21 @@
         </LinearLayout>
 
 
+        <!--set X thay doi color thành đỏ-->
         <android.support.design.button.MaterialButton
             android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/endGradientFail"
             android:textAllCaps="false"
             android:elevation="0dp"
             android:translationZ="0dp"
             app:strokeWidth="2dp"
             android:layout_gravity="center_vertical|end"
-            app:strokeColor="@color/colorAccent"
-            android:text="+"
+            app:strokeColor="@color/endGradientFail"
+            android:text="x"
             android:textSize="24dp"
             android:fontFamily="sans-serif-light"
-            app:rippleColor="@color/colorAccent"
+            app:rippleColor="@color/endGradientFail"
             app:backgroundTint="@color/white"
             app:cornerRadius="@dimen/card_radius" />
     </LinearLayout>

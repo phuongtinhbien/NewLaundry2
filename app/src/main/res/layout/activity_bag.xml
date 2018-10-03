@@ -15,13 +15,14 @@
         android:orientation="vertical">
         <include layout="@layout/toolbar">
     </include>
-        <include layout="@layout/item_cloth">
+        <!--set text button thanh "x"-->
+        <include layout="@layout/item_cloth_mini">
         </include>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/list_choose_cloth"
-            tools:listitem="@layout/item_cloth">
+            tools:listitem="@layout/item_cloth_mini">
 
         </android.support.v7.widget.RecyclerView>
 

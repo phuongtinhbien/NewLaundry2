@@ -8,6 +8,7 @@
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/card_radius">
 
+    <!--khuyến mãi-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_promotion"
         android:layout_width="match_parent"

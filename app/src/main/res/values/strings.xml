@@ -86,7 +86,7 @@
     <string name="title_category">Category 1</string>
     <string name="category_price">VND 10.000</string>
     <string name="input_material">Material</string>
-    <string name="input_production">Production</string>
+    <string name="input_production">Label</string>
     <string name="input_note">Note</string>
     <string name="input_color">Color</string>
     <string name="input_number">1</string>
