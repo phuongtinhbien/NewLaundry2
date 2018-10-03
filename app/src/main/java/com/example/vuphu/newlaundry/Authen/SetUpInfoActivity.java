@@ -31,6 +31,7 @@ import com.example.vuphu.newlaundry.CurrentUserQuery;
 import com.example.vuphu.newlaundry.GetCustomerQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Main.MainActivity;
+import com.example.vuphu.newlaundry.Order.Activity.InfoOrderActivity;
 import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.SaveImageMutation;
@@ -39,8 +40,11 @@ import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.example.vuphu.newlaundry.Utils.StringKey;
 import com.example.vuphu.newlaundry.Utils.Util;
 import com.example.vuphu.newlaundry.type.CustomerPatch;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -99,6 +103,7 @@ public class SetUpInfoActivity extends AppCompatActivity {
 
         popup = new Popup(this);
         token = PreferenceUtil.getAuthToken(getApplicationContext());
+        Log.i("token", token);
         name = findViewById(R.id.nav_txt_name);
         email = findViewById(R.id.nav_txt_email);
         setCurrentUser();
@@ -228,6 +233,7 @@ public class SetUpInfoActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NotNull ApolloException e) {
                         Log.e("current_user_err", e.getCause() +" - "+e);
+                        
                     }
                 });
     }
@@ -252,7 +258,15 @@ public class SetUpInfoActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NotNull ApolloException e) {
-
+                        final String er = e.getMessage();
+                        SetUpInfoActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                popup.hide();
+                                popup.createFailDialog(er, "Fail");
+                                popup.show();
+                            }
+                        });
                     }
                 });
     }
@@ -302,60 +316,65 @@ public class SetUpInfoActivity extends AppCompatActivity {
         }
     }
 
-    private void saveAvatar(){
-
-            GraphqlClient.getApolloClient(token, false)
-                    .mutate(SaveImageMutation.builder()
-                            .headerImageFile(urlAvatar)
-                            .body("avatar")
-                            .headLine(email.getText().toString()).build())
-                    .enqueue(new ApolloCall.Callback<SaveImageMutation.Data>() {
+    private void saveAvatar(String urlAvatar){
+        GraphqlClient.getApolloClient(token, false)
+            .mutate(SaveImageMutation.builder()
+                    .headerImageFile(urlAvatar)
+                    .body("avatar") 
+                    .headLine(email.getText().toString()).build())
+            .enqueue(new ApolloCall.Callback<SaveImageMutation.Data>() {
+                @Override
+                public void onResponse(@NotNull Response<SaveImageMutation.Data> response) {
+                    image = response.data().createPost().post();
+                    SetUpInfoActivity.this.runOnUiThread(new Runnable() {
                         @Override
-                        public void onResponse(@NotNull Response<SaveImageMutation.Data> response) {
-                            image = response.data().createPost().post();
-                            SetUpInfoActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    setUpInfo();
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onFailure(@NotNull ApolloException e) {
-
+                        public void run() {
+                            setUpInfo();
                         }
                     });
+                }
+
+                @Override
+                public void onFailure(@NotNull ApolloException e) {
+                    final String er = e.getMessage();
+                    SetUpInfoActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            popup.hide();
+                            popup.createFailDialog(er, "Fail");
+                            popup.show();
+                        }
+                    });
+                }
+            });
 
 
     }
 
     private void excecute(){
-        StorageReference storageR = storageReference.child("customer/" + email.getText().toString() + ".png");
+        final StorageReference storageR = storageReference.child("customer/" + email.getText().toString() + ".png");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] data = baos.toByteArray();
         UploadTask uploadTask = storageR.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
+        final Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-                Toast.makeText(SetUpInfoActivity.this, "Tải hình thất bại", Toast.LENGTH_LONG).show();
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return storageR.getDownloadUrl();
             }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                Uri downloadUrl = taskSnapshot.getStorage().getDownloadUrl().getResult();
-                urlAvatar = downloadUrl.toString();
-                SetUpInfoActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        saveAvatar();
-                        Toast.makeText(SetUpInfoActivity.this, urlAvatar, Toast.LENGTH_LONG).show();
-                    }
-                });
-
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    urlAvatar = downloadUri.toString();
+                    saveAvatar(urlAvatar);
+                } else {
+                    // Handle fail
+                }
             }
         });
     }
