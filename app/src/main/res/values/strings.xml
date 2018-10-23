@@ -178,4 +178,6 @@
     <string name="email_password_wrong">Your email/password typed wrong</string>
     <string name="use_now">Use now</string>
     <string name="serviceDetail">Detail</string>
+    <string name="choose_unit">Choose unit of clohtes</string>
+    <string name="choose_unit_desc">Two options for you, just choose one</string>
 </resources>
