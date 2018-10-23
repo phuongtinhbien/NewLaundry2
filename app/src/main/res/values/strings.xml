@@ -180,4 +180,6 @@
     <string name="serviceDetail">Detail</string>
     <string name="choose_unit">Choose unit of clohtes</string>
     <string name="choose_unit_desc">Two options for you, just choose one</string>
+    <string name="input_weight">Weight</string>
+    <string name="submit">Submit</string>
 </resources>
