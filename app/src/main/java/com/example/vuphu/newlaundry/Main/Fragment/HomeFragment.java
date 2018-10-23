@@ -114,6 +114,7 @@ public class HomeFragment extends Fragment implements iFService {
     public void itemClick(int pos) {
         Intent intent = new Intent(getActivity(), PrepareOrderActivity.class);
         intent.putExtra("idService", listService.get(pos).getId());
+        intent.putExtra("NameService", listService.get(pos).getName());
         startActivity(intent);
     }
 
