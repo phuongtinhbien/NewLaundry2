@@ -49,6 +49,7 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
         final OBOrderDetail obOrderDetail = list.get(position);
         Picasso.get().load(Uri.parse(obOrderDetail.getProduct().getAvatar())).into(holder.img);
         holder.title.setText(obOrderDetail.getProduct().getTitle());
+        holder.serviceName.setChipText(obOrderDetail.getServiceName());
         if(obOrderDetail.getCount() > 0) {
             holder.count.setVisibility(View.VISIBLE);
             holder.count.setText(obOrderDetail.getCount() + " item");

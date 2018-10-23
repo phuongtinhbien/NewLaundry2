@@ -187,7 +187,24 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                     count = (long) slidr.getCurrentValue();
                     obOrderDetail.setCount(count);
                     ArrayList<OBOrderDetail> list = PreferenceUtil.getListOrderDetail(DetailPrepareOrderClothesActivity.this);
-                    list.add(obOrderDetail);
+                    boolean flag = false;
+                    for (OBOrderDetail orderDetail: list){
+                        if(checkDuplicateClothes(orderDetail.getColorID(), obOrderDetail.getColorID())
+                                && checkDuplicateClothes(orderDetail.getLabelID(), obOrderDetail.getLabelID())
+                                && checkDuplicateClothes(orderDetail.getMaterialID(), obOrderDetail.getMaterialID())
+                                && checkDuplicateClothes(orderDetail.getProduct().getId(), obOrderDetail.getProduct().getId())
+                                && checkDuplicateClothes(orderDetail.getIdService(),obOrderDetail.getIdService())
+                                ){
+                            long count = orderDetail.getCount();
+                            orderDetail.setCount(count + obOrderDetail.getCount());
+                            list.set(list.indexOf(orderDetail), orderDetail);
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(flag == false) {
+                        list.add(obOrderDetail);
+                    }
                     PreferenceUtil.setListOrderDetail(list, DetailPrepareOrderClothesActivity.this);
                     Intent intent = new Intent(DetailPrepareOrderClothesActivity.this, BagActivity.class);
                     startActivity(intent);
@@ -195,6 +212,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                 }
             }
         });
+
 
         color = findViewById(R.id.item_prepare_order_color);
         color.setOnClickListener(new View.OnClickListener() {
@@ -217,6 +235,25 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
 
 
 
+    }
+
+    public boolean checkDuplicateClothes(String str1, String str2) {
+        if(str1 != null && str2 != null) {
+            if(str1.equals(str2)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            if(str1 == null && str2 == null) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
 
     private void initToolbar() {

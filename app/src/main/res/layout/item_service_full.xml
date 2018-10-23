@@ -15,7 +15,7 @@
         android:layout_height="200dp"
         android:src="@drawable/specific_clothes"
         android:id="@+id/item_service"
-        android:scaleType="centerInside"/>
+        android:scaleType="centerCrop"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

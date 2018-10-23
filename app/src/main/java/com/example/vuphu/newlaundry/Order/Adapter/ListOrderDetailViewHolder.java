@@ -16,6 +16,7 @@ public class ListOrderDetailViewHolder extends ViewHolder {
     ImageView img;
     TextView title, count;
     MaterialButton btnDel;
+    Chip serviceName;
 
     public ListOrderDetailViewHolder(View itemView) {
         super(itemView);
@@ -23,6 +24,7 @@ public class ListOrderDetailViewHolder extends ViewHolder {
         title = itemView.findViewById(R.id.item_prepare_order_txt_title);
         btnDel = itemView.findViewById(R.id.btnDel);
         count = itemView.findViewById(R.id.order_count);
+        serviceName = itemView.findViewById(R.id.chip_service_name);
     }
 
 
