@@ -43,7 +43,7 @@
                 android:textSize="@dimen/font_size_title_item" />
 
             <TextView
-                android:visibility="gone"
+                android:visibility="invisible"
                 android:id="@+id/order_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
         </com.robertlevonyan.views.chip.Chip>
         <!--set X thay doi color thành đỏ-->
         <android.support.design.button.MaterialButton
-            android:visibility="gone"
+            android:visibility="invisible"
             android:id="@+id/btnDel"
             android:layout_width="38dp"
             android:layout_height="wrap_content"
