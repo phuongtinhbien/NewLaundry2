@@ -62,6 +62,7 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
 
     private String token;
     private String idService;
+    private String serviceName;
     private String unit = "1";
     private int position;
     private LinearLayout linearLayout;
@@ -86,7 +87,8 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
         linearLayout.setVisibility(View.GONE);
 
         Intent intent = getIntent();
-//        idService = intent.getStringExtra("idService");
+        idService = intent.getStringExtra("idService");
+        serviceName = intent.getStringExtra("NameService");
         token = PreferenceUtil.getAuthToken(getApplicationContext());
         listPrepareOrder = findViewById(R.id.prepare_order_list_category);
 //        listPrepareOrder.setHasFixedSize(true);
@@ -177,6 +179,8 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
                             product.setCategory(node.producyTypeId());
                             product.setId(node.id());
                             obOrderDetail.setProduct(product);
+                            obOrderDetail.setIdService(idService);
+                            obOrderDetail.setServiceName(serviceName);
                             orderDetailList.add(obOrderDetail);
                         }
                         PrepareOrderActivity.this.runOnUiThread(new Runnable() {

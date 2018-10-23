@@ -50,6 +50,7 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
         Picasso.get().load(Uri.parse(obOrderDetail.getProduct().getAvatar())).into(holder.img);
         holder.title.setText(obOrderDetail.getProduct().getTitle());
         if(obOrderDetail.getCount() > 0) {
+            holder.count.setVisibility(View.VISIBLE);
             holder.count.setText(obOrderDetail.getCount() + " item");
             holder.btnDel.setVisibility(View.VISIBLE);
             holder.btnDel.setOnClickListener(new View.OnClickListener() {
@@ -76,5 +77,13 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
         this.list.clear();
         this.list.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public long sumCount() {
+        long count = 0;
+        for (OBOrderDetail obOrderDetail: list){
+            count += obOrderDetail.getCount();
+        }
+        return count;
     }
 }

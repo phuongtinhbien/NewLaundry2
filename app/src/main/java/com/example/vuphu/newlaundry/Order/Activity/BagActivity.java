@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.vuphu.newlaundry.Order.Adapter.ListOrderDetailAdapter;
 import com.example.vuphu.newlaundry.Order.IFOBPrepareOrder;
@@ -27,6 +28,7 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
     private RecyclerView listChooseClothes;
     private ListOrderDetailAdapter adapter;
     private ArrayList<OBOrderDetail> list;
+    private TextView countTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
     }
 
     private void init() {
+        countTotal = findViewById(R.id.item_prepare_order_total_items);
         listChooseClothes = findViewById(R.id.list_choose_cloth);
         list = PreferenceUtil.getListOrderDetail(BagActivity.this);
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
@@ -44,6 +47,7 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
         listChooseClothes.setLayoutManager(gridLayoutManager);
         adapter = new ListOrderDetailAdapter(list, BagActivity.this, this);
         listChooseClothes.setAdapter(adapter);
+        countTotal.setText(adapter.sumCount() + " item");
         checkOut = findViewById(R.id.see_your_bag);
         checkOut.setText("Check out");
         checkOut.setOnClickListener(new View.OnClickListener() {
@@ -84,5 +88,6 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
         list.remove(position);
         adapter.notifyDataSetChanged();
         PreferenceUtil.setListOrderDetail(list, BagActivity.this);
+        countTotal.setText(adapter.sumCount() + " item");
     }
 }

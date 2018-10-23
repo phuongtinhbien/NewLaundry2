@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/list_service"
+            android:nestedScrollingEnabled="false"
             tools:listitem="@layout/item_service_full">
         </android.support.v7.widget.RecyclerView>
     </android.support.v7.widget.LinearLayoutCompat>

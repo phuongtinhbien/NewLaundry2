@@ -20,12 +20,13 @@ public class OBOrderDetail implements Serializable {
     private String colorID;
     private long   count;
     private String idService;
-    private boolean   selectedIndx; //default -1...not selected
+    private String note;
+    private String serviceName;
 
     public OBOrderDetail() {
     }
 
-    public OBOrderDetail(OBProduct product, String label, String material, String unit, String labelID, String materialID, String unitID, String color, String colorID, long count, String idService, boolean selectedIndx) {
+    public OBOrderDetail(OBProduct product, String label, String material, String unit, String labelID, String materialID, String unitID, String color, String colorID, long count, String idService, String note, String serviceName) {
         this.product = product;
         this.label = label;
         this.material = material;
@@ -37,7 +38,24 @@ public class OBOrderDetail implements Serializable {
         this.colorID = colorID;
         this.count = count;
         this.idService = idService;
-        this.selectedIndx = selectedIndx;
+        this.note = note;
+        this.serviceName = serviceName;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getIdService() {
@@ -112,9 +130,6 @@ public class OBOrderDetail implements Serializable {
         return count;
     }
 
-    public boolean isSelectedIndx() {
-        return selectedIndx;
-    }
 
     public void setLabel(String label) {
         this.label = label;
@@ -132,7 +147,4 @@ public class OBOrderDetail implements Serializable {
         this.count = count;
     }
 
-    public void setSelectedIndx(boolean selectedIndx) {
-        this.selectedIndx = selectedIndx;
-    }
 }

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +57,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
     private LinearLayout totalPanel;
 
     private TextView productionValue, colorValue, materialValue, title;
-
+    private EditText note;
     MaterialCardView production,color, material;
 
     private String token;
@@ -166,6 +167,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
         title.setText(obOrderDetail.getProduct().getTitle());
         initList();
 
+        note = findViewById(R.id.item_prepare_order_txt_note);
         addToBag = findViewById(R.id.see_your_bag);
         addToBag.setText(R.string.add_to_your_bag);
         slidr = findViewById(R.id.item_prepare_order_seek_count);
@@ -179,6 +181,9 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
             @Override
             public void onClick(View view) {
                 if(validate()) {
+                    if(note.getText().toString() != null){
+                        obOrderDetail.setNote(note.getText().toString());
+                    }
                     count = (long) slidr.getCurrentValue();
                     obOrderDetail.setCount(count);
                     ArrayList<OBOrderDetail> list = PreferenceUtil.getListOrderDetail(DetailPrepareOrderClothesActivity.this);
@@ -231,13 +236,14 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
     }
 
     public Boolean validate() {
-        if( obOrderDetail.getColor() == null || obOrderDetail.getLabel() == null || obOrderDetail.getMaterial() == null) {
-            Toast.makeText(DetailPrepareOrderClothesActivity.this, "Vui lòng chọn đủ thông tin!", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        else {
-            return true;
-        }
+//        if( obOrderDetail.getColor() == null || obOrderDetail.getLabel() == null || obOrderDetail.getMaterial() == null) {
+//            Toast.makeText(DetailPrepareOrderClothesActivity.this, "Vui lòng chọn đủ thông tin!", Toast.LENGTH_LONG).show();
+//            return false;
+//        }
+//        else {
+//            return true;
+//        }
+        return true;
     }
 
     public void countValue(){
