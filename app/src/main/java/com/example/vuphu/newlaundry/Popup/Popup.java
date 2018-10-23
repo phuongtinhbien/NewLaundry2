@@ -138,4 +138,12 @@ public class Popup {
     public String getChoosenValue() {
         return choosenValue;
     }
+
+    public void createInfoPopup(String content) {
+        dialogButton.setVisibility(View.VISIBLE);
+        text.setText(content);
+        dialogButton.setText("OK");
+        dialogButton.setBackground(this.context.getDrawable(R.drawable.btn_bg));
+        loading.setVisibility(View.GONE);
+    }
 }

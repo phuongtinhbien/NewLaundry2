@@ -6,7 +6,14 @@ public class OBCategory implements Serializable{
 
     private String id;
     private String name;
-    private String code;
+
+    public OBCategory(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public OBCategory() {
+    }
 
     public String getId() {
         return id;
@@ -22,13 +29,5 @@ public class OBCategory implements Serializable{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 }

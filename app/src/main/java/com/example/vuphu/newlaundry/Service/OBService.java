@@ -7,14 +7,14 @@ import me.aflak.filter_annotation.Filterable;
 @Filterable
 public class OBService implements Serializable {
 
-    private long id;
+    private String id;
     private String name;
     private String desc;
     private String icon;
 
     private String selectedInd;
 
-    public OBService(long id, String name, String desc, String icon) {
+    public OBService(String id, String name, String desc, String icon) {
         this.id = id;
         this.name = name;
         this.desc = desc;
@@ -25,11 +25,11 @@ public class OBService implements Serializable {
 
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

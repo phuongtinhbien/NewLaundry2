@@ -36,8 +36,8 @@ public class ListClothesAdapter extends RecyclerView.Adapter<ListClothesViewHold
     @Override
     public void onBindViewHolder(@NonNull ListClothesViewHolder holder, int position) {
 
-        holder.title.setText(list.get(position).getTitle());
-        holder.price.setText(CURRENCY + " " + list.get(position).getPricing());
+        holder.title.setText(list.get(position).getProduct().getTitle());
+        holder.price.setText(CURRENCY + " " + list.get(position).getProduct().getPricing());
         Log.i("data", list.get(position).getCount()+"");
 
     }

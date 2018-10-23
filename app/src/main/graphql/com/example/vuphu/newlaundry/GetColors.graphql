@@ -1,0 +1,8 @@
+query getColors{
+  allColors(orderBy: COLOR_NAME_ASC, condition: {status: "ACTIVE"}){
+    nodes {
+      id
+      colorName
+    }
+  }
+}

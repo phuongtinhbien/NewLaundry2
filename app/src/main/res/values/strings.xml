@@ -10,6 +10,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+
     <string name="title">Name of agency</string>
     <string name="sub_title">497 Evergreen Rd.</string>
     <!--gender-->
@@ -176,4 +177,5 @@
     <string name="login_successfuly">Login successfully</string>
     <string name="email_password_wrong">Your email/password typed wrong</string>
     <string name="use_now">Use now</string>
+    <string name="serviceDetail">Detail</string>
 </resources>

@@ -16,6 +16,7 @@
         android:layout_margin="16dp"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/img_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_cloth"
@@ -40,17 +41,19 @@
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/font_size_title_item" />
             <android.support.v7.widget.AppCompatSpinner
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dialog"
                 android:entries="@array/arr_payment">
             </android.support.v7.widget.AppCompatSpinner>
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
                 android:layout_margin="@dimen/margin_item"
-                android:id="@+id/chip_pricing"
+                android:id="@+id/order_count"
                 android:fontFamily="sans-serif"
                 android:text="VND 20.000">
             </TextView>
@@ -59,7 +62,9 @@
 
         <!--set X thay doi color thành đỏ-->
         <android.support.design.button.MaterialButton
-            android:layout_width="45dp"
+            android:visibility="gone"
+            android:id="@+id/btnDel"
+            android:layout_width="38dp"
             android:layout_height="wrap_content"
             android:textColor="@color/endGradientFail"
             android:textAllCaps="false"
@@ -68,8 +73,9 @@
             app:strokeWidth="2dp"
             android:layout_gravity="center_vertical|end"
             app:strokeColor="@color/endGradientFail"
-            android:text="x"
-            android:textSize="24dp"
+            android:text="X"
+            android:textStyle="bold"
+            android:textSize="12sp"
             android:fontFamily="sans-serif-light"
             app:rippleColor="@color/endGradientFail"
             app:backgroundTint="@color/white"

@@ -1,4 +1,4 @@
-mutation saveImage ($headLine: String!, $body: String!, $headerImageFile: Upload!){
+mutation saveImage ($headLine: String!, $body: String!, $headerImageFile: String!){
 createPost (input:{
 post:{
 headline: $headLine,

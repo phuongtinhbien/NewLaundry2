@@ -1,0 +1,8 @@
+query getMaterials{
+   allMaterials(orderBy: , MATERIAL_NAME_ASC, condition: {status: "ACTIVE"}){
+     nodes{
+       id
+       materialName
+     }
+   }
+ }

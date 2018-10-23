@@ -1,0 +1,12 @@
+query getServiceTypes{
+    allServiceTypes(orderBy: SERVICE_TYPE_NAME_ASC, condition: {status: "ACTIVE"}) {
+        nodes{
+          id
+          serviceTypeName
+          serviceTypeDesc
+          postByServiceTypeAvatar {
+             headerImageFile
+          }
+        }
+    }
+}

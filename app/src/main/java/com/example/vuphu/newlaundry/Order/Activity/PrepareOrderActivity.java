@@ -1,52 +1,75 @@
 package com.example.vuphu.newlaundry.Order.Activity;
 
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
 import com.example.vuphu.newlaundry.Categories.OBCategory;
+import com.example.vuphu.newlaundry.Categories.iFCategory;
+import com.example.vuphu.newlaundry.GetProductQuery;
+import com.example.vuphu.newlaundry.GetProductTypeQuery;
+import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Order.Adapter.ListChipAdapter;
 import com.example.vuphu.newlaundry.Order.Adapter.ListOrderDetailAdapter;
+import com.example.vuphu.newlaundry.Order.IFOBPrepareOrder;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
+import com.example.vuphu.newlaundry.Popup.Popup;
+import com.example.vuphu.newlaundry.Product.OBProduct;
 import com.example.vuphu.newlaundry.R;
+import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrepareOrderActivity extends AppCompatActivity {
+import me.aflak.libraries.OBOrderDetailFilter;
+import me.aflak.libraries.OBProductFilter;
+import me.aflak.utils.Condition;
 
+public class PrepareOrderActivity extends AppCompatActivity implements iFCategory, IFOBPrepareOrder{
+
+    private static final int PREPARE_ORDER_REQUEST = 1;
     private RecyclerView listPrepareOrder;
     private ListOrderDetailAdapter adapter;
     private List<OBOrderDetail> orderDetailList = new ArrayList<>();
     private List<OBOrderDetail> orderDetailFilterList = new ArrayList<>();
     private List<OBOrderDetail> orderDetailSelectedList = new ArrayList<>();
     private List<OBCategory> categoryList = new ArrayList<>();
-    private List<String> tagList = new ArrayList<>();
     private RecyclerView listFilter;
     private ListChipAdapter listChipAdapter;
     private FloatingActionButton floatingActionButton;
+    private Popup popup;
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
     private Button seeYourBag;
 
+    private String token;
+    private String idService;
+    private String unit = "1";
+    private int position;
+    private LinearLayout linearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prepare_order);
-
         initToolbar();
         init();
     }
@@ -59,20 +82,21 @@ public class PrepareOrderActivity extends AppCompatActivity {
     }
 
     private void init() {
+        linearLayout = findViewById(R.id.total_panel_spml);
+        linearLayout.setVisibility(View.GONE);
 
+        Intent intent = getIntent();
+//        idService = intent.getStringExtra("idService");
+        token = PreferenceUtil.getAuthToken(getApplicationContext());
         listPrepareOrder = findViewById(R.id.prepare_order_list_category);
-        listPrepareOrder.setHasFixedSize(true);
+//        listPrepareOrder.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
-        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        listPrepareOrder.setLayoutManager(gridLayoutManager);
-        orderDetailList = new ArrayList<>();
+        popup = new Popup(this);
+
         prepareList();
-        orderDetailFilterList = orderDetailList;
-        adapter = new ListOrderDetailAdapter(this, orderDetailFilterList);
-        listPrepareOrder.setAdapter(adapter);
-        listPrepareOrder.invalidate();
+
+
 
         seeYourBag = findViewById(R.id.see_your_bag);
         seeYourBag.setOnClickListener(new View.OnClickListener() {
@@ -86,10 +110,7 @@ public class PrepareOrderActivity extends AppCompatActivity {
         //Tag Filter
         prepareCategory();
         listFilter = findViewById(R.id.list_chip);
-        StaggeredGridLayoutManager staggeredGridLayoutManager1 = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        listFilter.setLayoutManager(staggeredGridLayoutManager1);
-        listChipAdapter = new ListChipAdapter(tagList, getApplicationContext());
-        listFilter.setAdapter(listChipAdapter);
+
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -101,7 +122,7 @@ public class PrepareOrderActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //Do some magic
+                searchListProduct(newText);
                 return false;
             }
         });
@@ -118,33 +139,103 @@ public class PrepareOrderActivity extends AppCompatActivity {
         });
     }
 
-
-    private void prepareList() {
-
-        for (int i = 0; i < 10; i++) {
-            OBOrderDetail detail = new OBOrderDetail();
-            detail.setTitle("T-Shirt " + i);
-            detail.setPricing("200" + i);
-            if (i % 2 == 0)
-                detail.setCategory("Category Type 1");
-            else
-                detail.setCategory("Category Type 2");
-            orderDetailList.add(detail);
+    private void searchListProduct(final String newText) {
+        if(!newText.isEmpty()) {
+            List<OBOrderDetail> orderFilterList = OBOrderDetailFilter.builder()
+                    .product().matches(OBProductFilter.builder().extraCondition(new Condition<OBProduct>() {
+                        @Override
+                        public boolean verify(OBProduct ob) {
+                            if (ob.getTitle().toLowerCase().contains(newText.toLowerCase()))
+                                return true;
+                            return false;
+                        }
+                    })
+                            .build(), OBProductFilter.class)
+                    .on(orderDetailFilterList);
+            adapter.refreshAdapter(orderFilterList);
         }
+        else {
+            adapter.refreshAdapter(orderDetailFilterList);
+        }
+
     }
 
 
-    private void prepareCategory() {
-        tagList.add(0, "List All");
-        for (int i = 1; i <= 6; i++) {
-            OBCategory detail = new OBCategory();
-            detail.setName("Category Type " + (i));
-            detail.setCode("TYPE_" + (i));
-            detail.setId(i + "");
-            categoryList.add(detail);
-            tagList.add(detail.getName());
+    private void prepareList() {
+        popup.createLoadingDialog();
+        popup.show();
+        GraphqlClient.getApolloClient(token, false).query(GetProductQuery.builder().build()).
+                enqueue(new ApolloCall.Callback<GetProductQuery.Data>() {
+                    @Override
+                    public void onResponse(@NotNull Response<GetProductQuery.Data> response) {
+                        List<GetProductQuery.Node> list = response.data().allProducts().nodes();
+                        for(GetProductQuery.Node node: list) {
+                            OBOrderDetail obOrderDetail = new OBOrderDetail();
+                            OBProduct product = new OBProduct();
+                            product.setAvatar(node.postByProductAvatar().headerImageFile());
+                            product.setTitle(node.productName());
+                            product.setCategory(node.producyTypeId());
+                            product.setId(node.id());
+                            obOrderDetail.setProduct(product);
+                            orderDetailList.add(obOrderDetail);
+                        }
+                        PrepareOrderActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initListClothes();
+                            }
+                        });
+                    }
 
-        }
+                    @Override
+                    public void onFailure(@NotNull ApolloException e) {
+                        Log.e("getProduct", e.getCause() +" - "+e);
+                    }
+                });
+
+    }
+
+    private void initListClothes() {
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        listPrepareOrder.setLayoutManager(gridLayoutManager);
+        orderDetailFilterList = new ArrayList<>(orderDetailList);
+        adapter = new ListOrderDetailAdapter(orderDetailList, PrepareOrderActivity.this, this);
+        listPrepareOrder.setAdapter(adapter);
+        listPrepareOrder.invalidate();
+    }
+
+    private void prepareCategory() {
+        GraphqlClient.getApolloClient(token, false).query(GetProductTypeQuery.builder().build()).
+                enqueue(new ApolloCall.Callback<GetProductTypeQuery.Data>() {
+                    @Override
+                    public void onResponse(@NotNull Response<GetProductTypeQuery.Data> response) {
+                        List<GetProductTypeQuery.Node> list = response.data().allProductTypes().nodes();
+                        for (GetProductTypeQuery.Node node: list) {
+                            categoryList.add(new OBCategory(node.id(), node.productTypeName()));
+                        }
+                        PrepareOrderActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initListCategory();
+                                popup.hide();
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull ApolloException e) {
+                        Log.e("getProductType", e.getCause() +" - "+e);
+                    }
+                });
+    }
+
+    private void initListCategory() {
+        StaggeredGridLayoutManager staggeredGridLayoutManager1 = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        listFilter.setLayoutManager(staggeredGridLayoutManager1);
+        listChipAdapter = new ListChipAdapter(categoryList, getApplicationContext(), this);
+        listFilter.setAdapter(listChipAdapter);
     }
 
     public void checkOut(View view) {
@@ -163,4 +254,34 @@ public class PrepareOrderActivity extends AppCompatActivity {
 
         return true;
     }
+
+    @Override
+    public void categoryClick(String id) {
+        List<OBOrderDetail> orderFilterList = OBOrderDetailFilter.builder()
+                .product().matches(OBProductFilter.builder()
+                        .id().equalsTo(id)
+                        .build(), OBProductFilter.class)
+                .on(orderDetailFilterList);
+        adapter.refreshAdapter(orderFilterList);
+    }
+
+    @Override
+    public void categoryUnclick() {
+        adapter.refreshAdapter(orderDetailFilterList);
+    }
+
+    @Override
+    public void clickClothes(OBOrderDetail obOrderDetail) {
+        if(obOrderDetail != null) {
+            Intent intent = new Intent(PrepareOrderActivity.this, DetailPrepareOrderClothesActivity.class);
+            intent.putExtra("OBOrderDetail", obOrderDetail);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void clickDel(int position) {
+
+    }
+
 }

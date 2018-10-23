@@ -15,11 +15,11 @@
         android:layout_height="200dp"
         android:src="@drawable/specific_clothes"
         android:id="@+id/item_service"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerInside"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#30000000"></FrameLayout>
+        android:background="#4d646494"></FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="Wash &amp; Dry &amp; Iron"
+            android:text="NA"
             android:id="@+id/item_service_name"
             style="@style/textTopic"
             android:letterSpacing="0.3"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             app:mcv_backgroundColor="@color/colorAccent"
             app:mcv_strokeSize="2dp"
-            app:mcv_chipText="20 items for you"
+            app:mcv_chipText="@string/serviceDetail"
             app:mcv_textColor="@color/white"
             android:id="@+id/item_service_chip"></com.robertlevonyan.views.chip.Chip>
     </LinearLayout>

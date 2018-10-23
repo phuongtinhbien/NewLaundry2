@@ -5,68 +5,49 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.apollographql.apollo.ApolloCall;
-import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 import com.example.vuphu.newlaundry.CurrentUserQuery;
 import com.example.vuphu.newlaundry.GetCustomerQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Main.MainActivity;
-import com.example.vuphu.newlaundry.Order.Activity.InfoOrderActivity;
 import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.SaveImageMutation;
 import com.example.vuphu.newlaundry.UpdateCustomerMutation;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
-import com.example.vuphu.newlaundry.Utils.StringKey;
 import com.example.vuphu.newlaundry.Utils.Util;
 import com.example.vuphu.newlaundry.type.CustomerPatch;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Arrays;
-import android.util.Base64;
-import android.widget.Toast;
 
-import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.OkHttpClient;
 
 
 public class SetUpInfoActivity extends AppCompatActivity {
@@ -78,7 +59,7 @@ public class SetUpInfoActivity extends AppCompatActivity {
     private TextInputEditText gender, phone, address;
     private FloatingActionButton setUp;
     private CircleImageView avatar;
-    private String token;
+    private static String token;
     private static CurrentUserQuery.CurrentUser currentUser;
     private static UpdateCustomerMutation.Customer customer;
     private static SaveImageMutation.Post image;
@@ -86,7 +67,7 @@ public class SetUpInfoActivity extends AppCompatActivity {
     private TextView name, email;
     int REQUEST_CODE_GALLERY = 0;
     Bitmap bitmap =  null;
-    private static String urlAvatar = "default";
+    String urlAvatar = "default";
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageReference = storage.getReferenceFromUrl("gs://luandry-2f439.appspot.com");
 

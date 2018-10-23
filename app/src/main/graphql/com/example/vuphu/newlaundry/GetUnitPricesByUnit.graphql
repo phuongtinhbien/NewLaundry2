@@ -1,0 +1,12 @@
+query getUnitPricesByUnit($service: BigFloat!, $unit: BigFloat!, $product: BigFloat!){
+    allUnitPrices(condition: {
+      serviceTypeId: $service
+      unitId: $unit
+      productId: $product
+      status: "ACTIVE"
+    }){
+      nodes{
+        price
+      }
+    }
+}

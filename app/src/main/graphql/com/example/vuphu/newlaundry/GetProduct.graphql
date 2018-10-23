@@ -1,0 +1,12 @@
+query getProduct{
+    allProducts(orderBy: PRODUCT_NAME_ASC, condition: {status: "ACTIVE"}){
+          nodes {
+                id
+                productName
+                producyTypeId
+                postByProductAvatar{
+                    headerImageFile
+                }
+          }
+     }
+}

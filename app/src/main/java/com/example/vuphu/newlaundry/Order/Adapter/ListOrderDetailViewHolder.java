@@ -1,5 +1,6 @@
 package com.example.vuphu.newlaundry.Order.Adapter;
 
+import android.support.design.button.MaterialButton;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.EditText;
@@ -12,19 +13,16 @@ import com.github.florent37.androidslidr.Slidr;
 import com.robertlevonyan.views.chip.Chip;
 
 public class ListOrderDetailViewHolder extends ViewHolder {
-
-
-    View itemView;
     ImageView img;
-    TextView title;
-    TextView price;
+    TextView title, count;
+    MaterialButton btnDel;
+
     public ListOrderDetailViewHolder(View itemView) {
         super(itemView);
-        this.itemView = itemView;
-        img = itemView.findViewById(R.id.item_prepare_order_icon);
+        img = itemView.findViewById(R.id.img_product);
         title = itemView.findViewById(R.id.item_prepare_order_txt_title);
-        price = itemView.findViewById(R.id.chip_pricing);
-
+        btnDel = itemView.findViewById(R.id.btnDel);
+        count = itemView.findViewById(R.id.order_count);
     }
 
 

@@ -7,11 +7,16 @@ import android.util.JsonReader;
 
 import com.apollographql.apollo.api.ResponseReader;
 import com.example.vuphu.newlaundry.GetCustomerQuery;
+import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.StringReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.facebook.stetho.inspector.network.PrettyPrinterDisplayType.JSON;
 
@@ -21,6 +26,8 @@ public class PreferenceUtil {
     private static final String AUTH_TOKEN = "AUTH_TOKEN";
     private static final String SET_UP_INFO = "SET_UP_INFO";
     private static final String CURRENT_USER = "CURRENT_USER";
+    private static final String LIST_ORDER = "LIST_ORDER";
+
 
     public static Long getLastCheckedAuthTokenTime(@NonNull Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
@@ -84,6 +91,26 @@ public class PreferenceUtil {
             Gson gson = new Gson();
             return gson.fromJson(currentUser, GetCustomerQuery.CustomerById.class);
         }
+    }
+
+    public static ArrayList<OBOrderDetail> getListOrderDetail(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        ArrayList<OBOrderDetail> listOrder = new ArrayList<>();
+        String serializedObject = sharedPreferences.getString(LIST_ORDER, null);
+        if (serializedObject != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<OBOrderDetail>>(){}.getType();
+            listOrder = gson.fromJson(serializedObject, type);
+        }
+        return listOrder;
+    }
+
+    public static void setListOrderDetail(ArrayList<OBOrderDetail> list, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(LIST_ORDER, gson.toJson(list));
+        editor.apply();
     }
 
 }

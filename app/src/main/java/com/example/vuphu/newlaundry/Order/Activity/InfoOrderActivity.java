@@ -141,16 +141,16 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
 
     private void prepareList() {
 
-        for (int i = 0; i < 10; i++) {
-            OBOrderDetail detail = new OBOrderDetail();
-            detail.setTitle("Product " + i);
-            detail.setPricing("200" + i);
-            if (i % 2 == 0)
-                detail.setCategory("Category Type 1");
-            else
-                detail.setCategory("Category Type 2");
-            orderDetailList.add(detail);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            OBOrderDetail detail = new OBOrderDetail();
+//            detail.setTitle("Product " + i);
+//            detail.setPricing("200" + i);
+//            if (i % 2 == 0)
+//                detail.setCategory("Category Type 1");
+//            else
+//                detail.setCategory("Category Type 2");
+//            orderDetailList.add(detail);
+//        }
     }
 
     @Override

@@ -1,0 +1,8 @@
+query getProductType{
+      allProductTypes(orderBy: PRODUCT_TYPE_NAME_ASC, condition: {status: "ACTIVE"}){
+        nodes {
+          id
+          productTypeName
+        }
+      }
+   }

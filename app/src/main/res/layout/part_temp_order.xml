@@ -22,7 +22,7 @@
             android:layout_marginVertical="8dp"
             android:layout_marginHorizontal="@dimen/margin_item_horizontal"
             android:weightSum="2"
-            android:id="@+id/total_panel"
+            android:id="@+id/total_panel_spml"
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                     android:layout_marginLeft="@dimen/margin_item"
                     android:drawablePadding="@dimen/margin_item"
                     android:fontFamily="sans-serif-black"
-                    android:text="300.000 VND"
+                    android:text="_.000 VND"
                     android:textColor="@color/endGradientFail"
                     android:textSize="18dp" />
             </LinearLayout>

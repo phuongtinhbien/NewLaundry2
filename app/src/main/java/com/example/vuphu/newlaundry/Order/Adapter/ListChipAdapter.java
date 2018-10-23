@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.vuphu.newlaundry.Categories.OBCategory;
+import com.example.vuphu.newlaundry.Categories.iFCategory;
 import com.example.vuphu.newlaundry.ChipViewHolder.ChipViewHolder;
 import com.example.vuphu.newlaundry.R;
 import com.robertlevonyan.views.chip.OnSelectClickListener;
@@ -16,14 +18,17 @@ import java.util.List;
 
 public class ListChipAdapter extends RecyclerView.Adapter<ChipViewHolder> {
 
-    List<String> list;
+    List<OBCategory> list;
     Context context;
-    List<Long> itemId;
+    iFCategory iFCategory;
 
-    public ListChipAdapter(List<String> chip, Context context) {
-        this.list = chip;
+    public  ListChipAdapter(List<OBCategory> list, Context context, iFCategory iFCategory) {
+        this.list = list;
         this.context = context;
-        this.itemId = new ArrayList<>();
+        this.iFCategory = iFCategory;
+    }
+
+    public ListChipAdapter() {
     }
 
     @NonNull
@@ -35,12 +40,19 @@ public class ListChipAdapter extends RecyclerView.Adapter<ChipViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ChipViewHolder holder, int position) {
-
-        holder.chip.setChipText(list.get(position));
-        itemId.add(getItemId(position));
+        final OBCategory obCategory = list.get(position);
+        holder.chip.setChipText(obCategory.getName());
         holder.chip.setOnSelectClickListener(new OnSelectClickListener() {
             @Override
             public void onSelectClick(View v, boolean selected) {
+                if(selected == true) {
+                    iFCategory.categoryClick(obCategory.getId());
+                }
+                else {
+                    iFCategory.categoryUnclick();
+                }
+
+                // TODO: Xu li chon nhieu item ...
 
             }
         });

@@ -9,9 +9,6 @@ import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 import com.example.vuphu.newlaundry.R;
 
 public class ListClothesViewHolder extends ViewHolder {
-
-
-    View itemView;
     ImageView img;
     TextView title;
     TextView price;
@@ -24,7 +21,6 @@ public class ListClothesViewHolder extends ViewHolder {
     OBOrderDetail detail;
     public ListClothesViewHolder(View itemView) {
         super(itemView);
-        this.itemView = itemView;
         img = itemView.findViewById(R.id.item_prepare_order_icon);
         title = itemView.findViewById(R.id.item_prepare_order_txt_title);
         price = itemView.findViewById(R.id.item_prepare_order_txt_price);

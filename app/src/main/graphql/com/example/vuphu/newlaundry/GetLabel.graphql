@@ -1,0 +1,8 @@
+query getLabel{
+  allLabels(orderBy: LABEL_NAME_ASC, condition: {status: "ACTIVE"}){
+    nodes{
+      id
+      labelName
+    }
+  }
+}
