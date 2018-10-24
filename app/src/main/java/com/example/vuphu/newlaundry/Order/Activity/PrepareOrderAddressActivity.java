@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -22,7 +23,9 @@ import com.mapfit.android.OnMapReadyCallback;
 import com.mapfit.android.annotations.MapfitMarker;
 import com.mapfit.android.annotations.MarkerOptions;
 import com.mapfit.android.geometry.LatLng;
+import com.mapfit.android.location.LocationListener;
 import com.mapfit.android.location.LocationPriority;
+import com.mapfit.android.location.ProviderStatus;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +34,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity {
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 99;
     public static final String MAP_API_KEY = "591dccc4e499ca0001a4c6a468d0230a15d34cefbe1636563804093e";
     MapView mapView;
-    MapfitMap mapfitMap;
+    MapfitMap mapfitmap;
     private EditText pickUp,dropOff;
 
     private FloatingActionButton prepareNext;
@@ -43,19 +46,19 @@ public class PrepareOrderAddressActivity extends AppCompatActivity {
         Mapfit.getInstance(this, MAP_API_KEY);
         setContentView(R.layout.activity_prepare_order_address);
         mapView = findViewById(R.id.mapView);
-
         pickUp = findViewById(R.id.prepare_order_address_pick_up);
         dropOff = findViewById(R.id.prepare_order_address_drop_off);
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NotNull MapfitMap mapfitMap) {
-                LatLng position = new LatLng(40.729913, -74.000664);
-                mapfitMap.addMarker(new MarkerOptions()
-                        .position(position)
+                mapfitmap = mapfitMap;
+                LatLng latLng = new LatLng(15.6069896, 96.8611285);
+                mapfitmap.addMarker(new MarkerOptions()
+                        .position(latLng)
                         .icon(MapfitMarker.ARTS));
             }
         });
-
+        requestPermission();
         init();
         initToolbar();
 
@@ -73,6 +76,13 @@ public class PrepareOrderAddressActivity extends AppCompatActivity {
         });
     }
 
+    public void initMaker(LatLng latLng) {
+        mapfitmap.setCenter(latLng);
+        mapfitmap.addMarker(new MarkerOptions()
+                .position(latLng)
+                .icon(MapfitMarker.ARTS));
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -88,12 +98,32 @@ public class PrepareOrderAddressActivity extends AppCompatActivity {
     private void requestPermission(){
         if (ActivityCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            mapfitMap.getMapOptions().setUserLocationEnabled(true);
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
 
+            }
+            else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        LOCATION_PERMISSION_REQUEST_CODE);
+            }
         } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_PERMISSION_REQUEST_CODE);
+            mapfitmap.getMapOptions().setUserLocationEnabled(true, LocationPriority.HIGH_ACCURACY, new LocationListener() {
+                @Override
+                public void onLocation(final Location location) {
+                    mapView.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(MapfitMap mapfitMap) {
+                            LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
+                            initMaker(position);
+                        }
+                    });
+                }
+
+                @Override
+                public void onProviderStatus(ProviderStatus providerStatus) {
+
+                }
+            });
         }
     }
 
@@ -101,14 +131,26 @@ public class PrepareOrderAddressActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (permissions.length == 1 &&
-                    permissions[0] == Manifest.permission.ACCESS_FINE_LOCATION &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // permission is granted
-                mapfitMap.getMapOptions().setUserLocationEnabled(true, LocationPriority.HIGH_ACCURACY);
-
-
+//                mapfitmap.getMapOptions().setUserLocationEnabled(true, LocationPriority.HIGH_ACCURACY, new LocationListener() {
+//                    @Override
+//                    public void onLocation(final Location location) {
+//                        mapView.getMapAsync(new OnMapReadyCallback() {
+//                            @Override
+//                            public void onMapReady(MapfitMap mapfitMap) {
+//                                LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
+//                                initMaker(position);
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onProviderStatus(ProviderStatus providerStatus) {
+//
+//                    }
+//                });
             } else {
 
             }
