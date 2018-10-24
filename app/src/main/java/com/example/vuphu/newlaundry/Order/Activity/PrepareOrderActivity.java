@@ -44,16 +44,16 @@ import me.aflak.utils.Condition;
 
 public class PrepareOrderActivity extends AppCompatActivity implements iFCategory, IFOBPrepareOrder{
 
-    private static final int PREPARE_ORDER_REQUEST = 1;
+//    private static final int PREPARE_ORDER_REQUEST = 1;
     private RecyclerView listPrepareOrder;
     private ListOrderDetailAdapter adapter;
     private List<OBOrderDetail> orderDetailList = new ArrayList<>();
     private List<OBOrderDetail> orderDetailFilterList = new ArrayList<>();
-    private List<OBOrderDetail> orderDetailSelectedList = new ArrayList<>();
+//    private List<OBOrderDetail> orderDetailSelectedList = new ArrayList<>();
     private List<OBCategory> categoryList = new ArrayList<>();
     private RecyclerView listFilter;
     private ListChipAdapter listChipAdapter;
-    private FloatingActionButton floatingActionButton;
+//    private FloatingActionButton floatingActionButton;
     private Popup popup;
 
     private Toolbar toolbar;
@@ -63,7 +63,8 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
     private String token;
     private String idService;
     private String serviceName;
-    private String unit = "1";
+    private String unitID;
+    private String weight;
     private int position;
     private LinearLayout linearLayout;
 
@@ -85,10 +86,20 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
     private void init() {
         linearLayout = findViewById(R.id.total_panel_spml);
         linearLayout.setVisibility(View.GONE);
-
         Intent intent = getIntent();
-        idService = intent.getStringExtra("idService");
-        serviceName = intent.getStringExtra("NameService");
+        idService = intent.getStringExtra("idServiceChoose");
+        serviceName = intent.getStringExtra("nameServiceChoose");
+        unitID = intent.getStringExtra("unit");
+        if(intent.hasExtra("weight")){
+            weight = intent.getStringExtra("weight");
+            if(PreferenceUtil.checkKeyExist(this, idService)){
+                String weightOld = PreferenceUtil.getWeightService(this, idService);
+                float weightNew = Float.parseFloat(weight) + Float.parseFloat(weightOld);
+                weight = Float.toString(weightNew);
+            }
+            PreferenceUtil.setWeightService(idService, weight, this);
+        }
+        Log.i("weight",idService + "--" + PreferenceUtil.getWeightService(this, idService) );
         token = PreferenceUtil.getAuthToken(getApplicationContext());
         listPrepareOrder = findViewById(R.id.prepare_order_list_category);
 //        listPrepareOrder.setHasFixedSize(true);
@@ -118,7 +129,6 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Do some magic
                 return false;
             }
 
@@ -181,6 +191,7 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
                             obOrderDetail.setProduct(product);
                             obOrderDetail.setIdService(idService);
                             obOrderDetail.setServiceName(serviceName);
+                            obOrderDetail.setUnitID(unitID);
                             orderDetailList.add(obOrderDetail);
                         }
                         PrepareOrderActivity.this.runOnUiThread(new Runnable() {

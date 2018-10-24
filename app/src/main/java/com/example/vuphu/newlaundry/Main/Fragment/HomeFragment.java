@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
+import com.example.vuphu.newlaundry.ChooseUnitActivity;
 import com.example.vuphu.newlaundry.GetServiceTypesQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Order.Activity.PrepareOrderActivity;
@@ -112,7 +113,7 @@ public class HomeFragment extends Fragment implements iFService {
 
     @Override
     public void itemClick(int pos) {
-        Intent intent = new Intent(getActivity(), PrepareOrderActivity.class);
+        Intent intent = new Intent(getActivity(), ChooseUnitActivity.class);
         intent.putExtra("idService", listService.get(pos).getId());
         intent.putExtra("NameService", listService.get(pos).getName());
         startActivity(intent);

@@ -113,4 +113,28 @@ public class PreferenceUtil {
         editor.apply();
     }
 
+    public static void setWeightService(String serviceID, String weight, Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(serviceID, weight);
+        editor.apply();
+    }
+
+    public static String getWeightService(Context context, String serviceID) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(serviceID, "");
+    }
+
+    public static void removeKey(Context context, String key) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(key);
+        editor.apply();
+    }
+
+    public static boolean checkKeyExist(Context context, String key) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        return sharedPreferences.contains(key);
+    }
+
 }

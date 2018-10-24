@@ -55,6 +55,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
     private Slidr slidr;
     private long count = 1;
     private LinearLayout totalPanel;
+    private boolean edit = false;
 
     private TextView productionValue, colorValue, materialValue, title;
     private EditText note;
@@ -90,7 +91,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                             DetailPrepareOrderClothesActivity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    initLabel();
+                                    clickLabel();
                                 }
                             });
 
@@ -115,6 +116,12 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                                         colorList.add(node.colorName());
                                         colorIDList.add(node.id());
                                     }
+                                    DetailPrepareOrderClothesActivity.this.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            clickColor();
+                                        }
+                                    });
                                 }
                             }
                         });
@@ -137,6 +144,12 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                                 materialList.add(node.materialName());
                                 materialIDList.add(node.materialName());
                             }
+                            DetailPrepareOrderClothesActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    clickMaterial();
+                                }
+                            });
                         }
                     }
 
@@ -147,9 +160,28 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                 });
     }
 
-    private void initLabel() {
-        productionValue = findViewById(R.id.item_prepare_order_txt_production);
-        production = findViewById(R.id.item_prepare_order_production);
+    private void clickMaterial() {
+
+        material.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ItemListDialogFragment bottomSheetDialogFragment = ItemListDialogFragment.newInstance(TYPE_LIST_MATERIAL, materialList);
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+        });
+    }
+
+    private void clickColor() {
+        color.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ItemListDialogFragment bottomSheetDialogFragment = ItemListDialogFragment.newInstance(TYPE_LIST_COLOR, colorList);
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+        });
+    }
+
+    private void clickLabel() {
         production.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,81 +192,102 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
     }
 
     public void init(){
+        materialValue = findViewById(R.id.item_prepare_order_txt_material);
+        material = findViewById(R.id.item_prepare_order_material);
+        colorValue = findViewById(R.id.item_prepare_order_txt_color);
+        color = findViewById(R.id.item_prepare_order_color);
+        productionValue = findViewById(R.id.item_prepare_order_txt_production);
+        production = findViewById(R.id.item_prepare_order_production);
+        addToBag = findViewById(R.id.see_your_bag);
+        title = findViewById(R.id.item_prepare_order_txt_title);
+        note = findViewById(R.id.item_prepare_order_txt_note);
+        totalPanel = findViewById(R.id.total_panel_spml);
+        slidr = findViewById(R.id.item_prepare_order_seek_count);
+
         token = PreferenceUtil.getAuthToken(getApplicationContext());
         intent = getIntent();
         obOrderDetail = (OBOrderDetail) intent.getSerializableExtra("OBOrderDetail");
-        title = findViewById(R.id.item_prepare_order_txt_title);
+        if(intent.hasExtra("Edit")){
+            edit = intent.getBooleanExtra("Edit", true);
+            addToBag.setText("SAVE");
+            countValue((obOrderDetail.getCount()));
+            note.setText(obOrderDetail.getNote());
+            if(obOrderDetail.getLabel() != null) {
+                productionValue.setText(obOrderDetail.getLabel());
+            } else {
+                productionValue.setText("Undefine");
+            }
+            if(obOrderDetail.getLabel() != null) {
+                colorValue.setText(obOrderDetail.getColor());
+            } else {
+                colorValue.setText("Undefine");
+            }
+            if(obOrderDetail.getMaterial() != null) {
+                materialValue.setText(obOrderDetail.getMaterial());
+            } else {
+                materialValue.setText("Undefine");
+            }
+
+            production.setEnabled(false);
+            color.setEnabled(false);
+            material.setEnabled(false);
+
+        } else {
+            addToBag.setText(R.string.add_to_your_bag);
+            countValue(1);
+        }
+
         title.setText(obOrderDetail.getProduct().getTitle());
         initList();
 
-        note = findViewById(R.id.item_prepare_order_txt_note);
-        addToBag = findViewById(R.id.see_your_bag);
-        addToBag.setText(R.string.add_to_your_bag);
-        slidr = findViewById(R.id.item_prepare_order_seek_count);
-        countValue();
-        totalPanel = findViewById(R.id.total_panel_spml);
         totalPanel.setVisibility(View.GONE);
 
-        colorValue = findViewById(R.id.item_prepare_order_txt_color);
-        materialValue = findViewById(R.id.item_prepare_order_txt_material);
         addToBag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(validate()) {
-                    if(note.getText().toString() != null){
+                    if(edit){
                         obOrderDetail.setNote(note.getText().toString());
+                        count = (long) slidr.getCurrentValue();
+                        obOrderDetail.setCount(count);
+                        Intent intentResult = new Intent();
+                        intentResult.putExtra("OBOrderDetailResult", obOrderDetail);
+                        setResult(RESULT_OK, intentResult);
+                        finish();
                     }
-                    count = (long) slidr.getCurrentValue();
-                    obOrderDetail.setCount(count);
-                    ArrayList<OBOrderDetail> list = PreferenceUtil.getListOrderDetail(DetailPrepareOrderClothesActivity.this);
-                    boolean flag = false;
-                    for (OBOrderDetail orderDetail: list){
-                        if(checkDuplicateClothes(orderDetail.getColorID(), obOrderDetail.getColorID())
-                                && checkDuplicateClothes(orderDetail.getLabelID(), obOrderDetail.getLabelID())
-                                && checkDuplicateClothes(orderDetail.getMaterialID(), obOrderDetail.getMaterialID())
-                                && checkDuplicateClothes(orderDetail.getProduct().getId(), obOrderDetail.getProduct().getId())
-                                && checkDuplicateClothes(orderDetail.getIdService(),obOrderDetail.getIdService())
-                                ){
-                            long count = orderDetail.getCount();
-                            orderDetail.setCount(count + obOrderDetail.getCount());
-                            list.set(list.indexOf(orderDetail), orderDetail);
-                            flag = true;
-                            break;
+                    else {
+                        if(note.getText().toString() != null){
+                            obOrderDetail.setNote(note.getText().toString());
                         }
+                        count = (long) slidr.getCurrentValue();
+                        obOrderDetail.setCount(count);
+                        ArrayList<OBOrderDetail> list = PreferenceUtil.getListOrderDetail(DetailPrepareOrderClothesActivity.this);
+                        boolean flag = false;
+                        for (OBOrderDetail orderDetail: list){
+                            if(checkDuplicateClothes(orderDetail.getColorID(), obOrderDetail.getColorID())
+                                    && checkDuplicateClothes(orderDetail.getLabelID(), obOrderDetail.getLabelID())
+                                    && checkDuplicateClothes(orderDetail.getMaterialID(), obOrderDetail.getMaterialID())
+                                    && checkDuplicateClothes(orderDetail.getProduct().getId(), obOrderDetail.getProduct().getId())
+                                    && checkDuplicateClothes(orderDetail.getIdService(),obOrderDetail.getIdService())
+                                    ){
+                                long count = orderDetail.getCount();
+                                orderDetail.setCount(count + obOrderDetail.getCount());
+                                list.set(list.indexOf(orderDetail), orderDetail);
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if(flag == false) {
+                            list.add(obOrderDetail);
+                        }
+                        PreferenceUtil.setListOrderDetail(list, DetailPrepareOrderClothesActivity.this);
+                        Intent intent = new Intent(DetailPrepareOrderClothesActivity.this, BagActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
-                    if(flag == false) {
-                        list.add(obOrderDetail);
-                    }
-                    PreferenceUtil.setListOrderDetail(list, DetailPrepareOrderClothesActivity.this);
-                    Intent intent = new Intent(DetailPrepareOrderClothesActivity.this, BagActivity.class);
-                    startActivity(intent);
-                    finish();
                 }
             }
         });
-
-
-        color = findViewById(R.id.item_prepare_order_color);
-        color.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ItemListDialogFragment bottomSheetDialogFragment = ItemListDialogFragment.newInstance(TYPE_LIST_COLOR, colorList);
-                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
-            }
-        });
-
-        material = findViewById(R.id.item_prepare_order_material);
-        material.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ItemListDialogFragment bottomSheetDialogFragment = ItemListDialogFragment.newInstance(TYPE_LIST_MATERIAL, materialList);
-                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
-            }
-        });
-
-
-
-
     }
 
     public boolean checkDuplicateClothes(String str1, String str2) {
@@ -283,10 +336,15 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
         return true;
     }
 
-    public void countValue(){
-        slidr.setMax(60);
+    public void countValue(long currentValue){
+        if(currentValue > 60) {
+            slidr.setMax(currentValue);
+        }
+        else {
+            slidr.setMax(60);
+        }
         slidr.setMin(1);
-        slidr.setCurrentValue(1);
+        slidr.setCurrentValue(currentValue);
         slidr.setTextFormatter(new Slidr.TextFormatter() {
             @Override
             public String format(float value) {

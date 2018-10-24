@@ -102,6 +102,17 @@ public class Popup {
         loading.setVisibility(View.GONE);
     }
 
+    public void createFailDialog(String content, String button,View.OnClickListener onClickListener){
+        dialogButton.setVisibility(View.VISIBLE);
+        text.setText(content);
+        dialogButton.setText(button);
+        dialogButton.setBackground(this.context.getDrawable(R.drawable.btn_fail_bg));
+        if (onClickListener != null){
+            dialogButton.setOnClickListener(onClickListener);
+        }
+        loading.setVisibility(View.GONE);
+    }
+
 
     public void createLoadingDialog (){
         loading.setVisibility(View.VISIBLE);

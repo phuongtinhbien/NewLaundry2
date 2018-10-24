@@ -1,6 +1,7 @@
 package com.example.vuphu.newlaundry.Order.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,19 +17,21 @@ import com.example.vuphu.newlaundry.Order.Adapter.ListOrderDetailAdapter;
 import com.example.vuphu.newlaundry.Order.IFOBPrepareOrder;
 import com.example.vuphu.newlaundry.Order.OBOrder;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
+import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 
 import java.util.ArrayList;
 
 public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
-
+    private static final int REQUEST_CODE = 7;
     private Toolbar toolbar;
     private Button checkOut;
     private RecyclerView listChooseClothes;
     private ListOrderDetailAdapter adapter;
     private ArrayList<OBOrderDetail> list;
     private TextView countTotal;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,21 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
         checkOut.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                  startActivity(new Intent(getApplicationContext(), PrepareOrderAddressActivity.class));
+                  if(list.size() > 0){
+                      startActivity(new Intent(getApplicationContext(), PrepareOrderAddressActivity.class));
+                  }
+                  else {
+                      Popup popup = new Popup(BagActivity.this);
+                      popup.createFailDialog("Bag is empty", "ORDER", new View.OnClickListener() {
+                          @Override
+                          public void onClick(View view) {
+                              onBackPressed();
+                              finish();
+                          }
+                      });
+                      popup.show();
+                  }
+
               }
           }
 
@@ -80,7 +97,44 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
 
     @Override
     public void clickClothes(OBOrderDetail obOrderDetail) {
+        if(obOrderDetail != null){
+            position = list.indexOf(obOrderDetail);
+            Intent intent = new Intent(BagActivity.this, DetailPrepareOrderClothesActivity.class);
+            intent.putExtra("OBOrderDetail", obOrderDetail);
+            intent.putExtra("Edit", true);
+            startActivityForResult(intent, REQUEST_CODE);
+        }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            OBOrderDetail obOrderDetailResult = (OBOrderDetail) data.getSerializableExtra("OBOrderDetailResult");
+            Log.i("Bag", obOrderDetailResult.getCount() + "");
+            list.set(position, obOrderDetailResult);
+            PreferenceUtil.setListOrderDetail(list, this);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public boolean checkDuplicateClothes(String str1, String str2) {
+        if(str1 != null && str2 != null) {
+            if(str1.equals(str2)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            if(str1 == null && str2 == null) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
 
     @Override
