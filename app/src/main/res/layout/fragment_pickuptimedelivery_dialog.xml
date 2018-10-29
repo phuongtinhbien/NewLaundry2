@@ -43,56 +43,14 @@
                 android:text="Today, AUG 30"
                 android:textSize="@dimen/font_size_text_mini" />
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/margin_item"
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scrollbarSize="0.1dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <com.robertlevonyan.views.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:mcv_backgroundColor="@color/cool_grey"
-                        app:mcv_selectedBackgroundColor="@color/colorAccent"
-                        app:mcv_textColor="@color/white"
-                        app:mcv_selectable="true"
-                        android:layout_margin="@dimen/margin_item"
-                        app:mcv_chipText="9:00 - 10:30"></com.robertlevonyan.views.chip.Chip>
-
-                    <com.robertlevonyan.views.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_item"
-                        app:mcv_backgroundColor="@color/cool_grey"
-                        app:mcv_chipText="11:00 - 12:30"
-                        app:mcv_selectable="true"
-                        app:mcv_selectedBackgroundColor="@color/colorAccent"
-                        app:mcv_textColor="@color/white"></com.robertlevonyan.views.chip.Chip>
-
-                    <com.robertlevonyan.views.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_item"
-                        app:mcv_backgroundColor="@color/cool_grey"
-                        app:mcv_chipText="11:00 - 12:30"
-                        app:mcv_selectable="true"
-                        app:mcv_selectedBackgroundColor="@color/colorAccent"
-                        app:mcv_textColor="@color/white"></com.robertlevonyan.views.chip.Chip>
-
-                    <com.robertlevonyan.views.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:mcv_backgroundColor="@color/cool_grey"
-                        app:mcv_selectedBackgroundColor="@color/colorAccent"
-                        app:mcv_textColor="@color/white"
-                        app:mcv_selectable="true"
-                        android:layout_margin="@dimen/margin_item"
-                        app:mcv_chipText="11:00 - 12:30"></com.robertlevonyan.views.chip.Chip>
-                </LinearLayout>
-            </HorizontalScrollView>
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                android:id="@+id/list_pickupTime"
+                tools:listitem="@layout/item_pickup_delivery">
+            </android.support.v7.widget.RecyclerView>
             <DatePicker
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,54 +85,14 @@
                 android:fontFamily="sans-serif-black"
                 android:text="Today, AUG 30"
                 android:textSize="@dimen/font_size_text_mini" />
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/margin_item"
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scrollbarSize="0.1dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <com.robertlevonyan.views.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:mcv_backgroundColor="@color/cool_grey"
-                        app:mcv_selectedBackgroundColor="@color/colorAccent"
-                        app:mcv_textColor="@color/white"
-                        app:mcv_selectable="true"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                android:id="@+id/list_deliveryTime"
+                tools:listitem="@layout/item_pickup_delivery"/>
 
-                        android:layout_margin="@dimen/margin_item"
-                        app:mcv_chipText="9:00 - 10:30"></com.robertlevonyan.views.chip.Chip>
-                    <com.robertlevonyan.views.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:mcv_backgroundColor="@color/cool_grey"
-                        app:mcv_selectedBackgroundColor="@color/colorAccent"
-                        app:mcv_textColor="@color/white"
-                        app:mcv_selectable="true"
-                        android:layout_margin="@dimen/margin_item"
-                        app:mcv_chipText="11:00 - 12:30"></com.robertlevonyan.views.chip.Chip>
-                    <com.robertlevonyan.views.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:mcv_backgroundColor="@color/cool_grey"
-                        app:mcv_selectedBackgroundColor="@color/colorAccent"
-                        app:mcv_textColor="@color/white"
-                        app:mcv_selectable="true"
-                        android:layout_margin="@dimen/margin_item"
-                        app:mcv_chipText="11:00 - 12:30"></com.robertlevonyan.views.chip.Chip>
-                    <com.robertlevonyan.views.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:mcv_backgroundColor="@color/cool_grey"
-                        app:mcv_selectedBackgroundColor="@color/colorAccent"
-                        app:mcv_textColor="@color/white"
-                        app:mcv_selectable="true"
-                        android:layout_margin="@dimen/margin_item"
-                        app:mcv_chipText="11:00 - 12:30"></com.robertlevonyan.views.chip.Chip>
-                </LinearLayout>
-            </HorizontalScrollView>
 
             <DatePicker
                 android:layout_width="match_parent"

@@ -58,7 +58,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity {
                         .icon(MapfitMarker.ARTS));
             }
         });
-        requestPermission();
+//        requestPermission();
         init();
         initToolbar();
 

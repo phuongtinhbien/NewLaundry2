@@ -23,7 +23,7 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
     private static final String ARG_ITEM_TYPE= "itemType";
     private Listener mListener;
 
-    public static ItemListDialogFragment newInstance(String itemType,ArrayList<String> itemCount) {
+    public static ItemListDialogFragment newInstance(String itemType, ArrayList<String> itemCount) {
         final ItemListDialogFragment fragment = new ItemListDialogFragment();
         final Bundle args = new Bundle();
         args.putStringArrayList(ARG_ITEM, itemCount);

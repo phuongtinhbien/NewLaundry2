@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.robertlevonyan.views.chip.Chip android:id="@+id/time_pd"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:mcv_backgroundColor="@color/cool_grey"
+    app:mcv_selectedBackgroundColor="@color/colorAccent"
+    app:mcv_textColor="@color/white"
+    app:mcv_selectable="true"
+    app:mcv_chipText="9:00 - 10:30"
+    android:layout_margin="@dimen/margin_item"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+</com.robertlevonyan.views.chip.Chip>

@@ -22,7 +22,8 @@ apollo {
     customTypeMapping = [
             "Jwt"     : "java.lang.String",
             "BigFloat": "java.lang.String",
-            "Datetime": "java.lang.String"
+            "Datetime": "java.lang.String",
+            "Time" : "java.lang.String"
     ]
     suppressRawTypesWarning = true
 }

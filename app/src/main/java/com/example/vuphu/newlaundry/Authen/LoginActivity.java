@@ -152,7 +152,6 @@ public class LoginActivity extends AppCompatActivity{
                             public void run() {
                                 if (currentUser!= null) {
                                     popup.hide();
-
                                     if (!newAccount){
                                         Toast.makeText(LoginActivity.this, R.string.welcome, Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(getApplicationContext(), SetUpInfoActivity.class));

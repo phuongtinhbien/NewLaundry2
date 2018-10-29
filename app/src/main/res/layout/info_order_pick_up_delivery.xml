@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:fontFamily="sans-serif-black"
-            android:text="Today, AUG 30"
+            android:text="_"
             android:textSize="@dimen/font_size_text" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:text="9:30 AM"
+            android:text="_"
             android:textSize="@dimen/font_size_text" />
     </LinearLayout>
 
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:fontFamily="sans-serif-black"
-            android:text="Today, AUG 30"
+            android:text="_"
             android:textSize="@dimen/font_size_text" />
 
         <TextView
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:text="9:30 AM"
+            android:text="_"
             android:textSize="@dimen/font_size_text" />
 
 

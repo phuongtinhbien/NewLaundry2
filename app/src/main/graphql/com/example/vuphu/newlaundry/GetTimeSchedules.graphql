@@ -1,0 +1,9 @@
+query getTimeSchedules{
+  allTimeSchedules {
+    nodes {
+      id
+      timeStart
+      timeEnd
+    }
+  }
+}
