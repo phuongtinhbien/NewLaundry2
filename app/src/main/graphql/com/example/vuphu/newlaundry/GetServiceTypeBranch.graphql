@@ -1,0 +1,14 @@
+query getServiceBranch($list: [BigFloat!]){
+  allServiceTypeBranches(condition: {status: "ACTIVE"},filter: {serviceTypeId: {in: $list}}){
+    nodes{
+      serviceTypeId
+      branchByBranchId{
+        id
+        branchName
+        latidute
+        longtidute
+        address
+      }
+  	}
+  }
+}

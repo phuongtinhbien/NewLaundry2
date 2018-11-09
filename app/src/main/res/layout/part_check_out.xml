@@ -49,7 +49,7 @@
                     android:layout_marginLeft="@dimen/margin_item"
                     android:drawablePadding="@dimen/margin_item"
                     android:fontFamily="sans-serif-black"
-                    android:text="300.000 VND"
+                    android:text="_.000 VND"
                     android:textColor="@color/endGradientFail"
                     android:textSize="18dp" />
             </LinearLayout>
@@ -78,7 +78,7 @@
                     android:layout_marginLeft="@dimen/margin_item"
                     android:drawablePadding="@dimen/margin_item"
                     android:fontFamily="sans-serif-light"
-                    android:text="16 items"
+                    android:text="0 items"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/font_size_text" />
             </LinearLayout>
@@ -127,7 +127,7 @@
                         android:drawablePadding="@dimen/margin_item"
                         android:fontFamily="sans-serif-black"
                         android:textStyle="bold"
-                        android:text="post a note..."
+                        android:text=""
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/font_size_text" />
                 </LinearLayout>
@@ -162,7 +162,7 @@
                         android:layout_marginLeft="@dimen/margin_item"
                         android:drawablePadding="@dimen/margin_item"
                         android:fontFamily="sans-serif-black"
-                        android:text="PROACMN"
+                        android:text=""
                         android:textStyle="bold"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/font_size_text" />
@@ -213,7 +213,7 @@
             android:layout_height="wrap_content"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
             android:textColor="@color/white"
-            android:text="@string/place_a_order"
+            android:text="SUBMIT"
             android:textSize="@dimen/font_size_text"
             android:fontFamily="sans-serif"
             android:letterSpacing="0.3"

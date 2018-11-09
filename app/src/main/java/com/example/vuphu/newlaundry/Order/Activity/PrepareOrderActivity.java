@@ -186,7 +186,7 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
                             OBProduct product = new OBProduct();
                             product.setAvatar(node.postByProductAvatar().headerImageFile());
                             product.setTitle(node.productName());
-                            product.setCategory(node.producyTypeId());
+                            product.setCategory(node.productTypeId());
                             product.setId(node.id());
                             obOrderDetail.setProduct(product);
                             obOrderDetail.setIdService(idService);

@@ -7,11 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 import com.example.vuphu.newlaundry.R;
+import com.robertlevonyan.views.chip.Chip;
 
 public class ListClothesViewHolder extends ViewHolder {
-    ImageView img;
     TextView title;
     TextView price;
+    Chip serviceName;
     TextView count;
     //Number Picker
     FrameLayout badge;
@@ -21,11 +22,11 @@ public class ListClothesViewHolder extends ViewHolder {
     OBOrderDetail detail;
     public ListClothesViewHolder(View itemView) {
         super(itemView);
-        img = itemView.findViewById(R.id.item_prepare_order_icon);
         title = itemView.findViewById(R.id.item_prepare_order_txt_title);
         price = itemView.findViewById(R.id.item_prepare_order_txt_price);
         count = itemView.findViewById(R.id.item_prepare_order_count);
         badge = itemView.findViewById(R.id.badge);
+        serviceName = itemView.findViewById(R.id.chip_service_name_final);
     }
 
 }

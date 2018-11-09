@@ -22,7 +22,7 @@
         android:textSize="@dimen/font_size_text"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-
+        android:visibility="gone"
         android:id="@+id/place_an_order"
         android:fontFamily="sans-serif"
         android:letterSpacing="0.3"

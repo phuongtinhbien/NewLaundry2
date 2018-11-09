@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/info_window_nameBranch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CHI NHÁNH NINH KIỀU 2"
+        android:gravity="center_horizontal"
+        android:textColor="@color/bgBlue"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:id="@+id/info_window_addressBranch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="112 đường 3 tháng 2, phường Hưng Lợi, quận Ninh Kiều, TP Cần Thơ"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorChipText"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        />
+    <TextView
+        android:id="@+id/info_window_totalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_item"
+        android:drawablePadding="@dimen/margin_item"
+        android:fontFamily="sans-serif-black"
+        android:text="PRICE: _.000 VND"
+        android:textColor="@color/endGradientFail"
+        android:gravity="center_horizontal"
+        android:textSize="18dp" />
+
+</LinearLayout>

@@ -6,10 +6,12 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.vuphu.newlaundry.Order.Activity.PrepareOrderActivity;
 import com.uniquestudio.library.CircleCheckBox;
@@ -77,16 +79,24 @@ public class ChooseUnitActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(ChooseUnitActivity.this, PrepareOrderActivity.class);
-                if(weight.getText().toString().length() > 0 && kg.isChecked()) {
-                    weight_kg = weight.getText().toString();
-                    intent1.putExtra("weight", weight_kg);
+                if(kg.isChecked()) {
+                    if(!TextUtils.isEmpty(weight.getText().toString())){
+                        weight_kg = weight.getText().toString();
+                        intent1.putExtra("weight", weight_kg);
+                    }
+                    else {
+                        Toast.makeText(ChooseUnitActivity.this, "Weight must not null", Toast.LENGTH_LONG).show();
+                    }
                 }
-                if(kg.isChecked() || item.isChecked()) {
+                if((kg.isChecked() && !TextUtils.isEmpty(weight.getText().toString())) || item.isChecked()) {
                     intent1.putExtra("unit", unit);
                     intent1.putExtra("idServiceChoose", idService);
                     intent1.putExtra("nameServiceChoose", serviceName);
                     startActivity(intent1);
                     finish();
+                }
+                else {
+
                 }
             }
         });

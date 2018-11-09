@@ -48,6 +48,7 @@
                     android:textSize="@dimen/font_size_sub_title" />
             </LinearLayout>
             <com.robertlevonyan.views.chip.Chip
+                android:id="@+id/chip_service_name_final"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_item"
@@ -68,14 +69,14 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/headerIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|right"
-            android:layout_weight="1"
-            android:layout_marginLeft="16dp"
-            android:tint="@color/startGradientFail"
-            app:srcCompat="@drawable/ic_clear" />
+        <!--<ImageView-->
+            <!--android:id="@+id/headerIndicator"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical|right"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:tint="@color/startGradientFail"-->
+            <!--app:srcCompat="@drawable/ic_clear" />-->
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

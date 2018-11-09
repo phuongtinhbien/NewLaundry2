@@ -16,8 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin">
         <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:scaleType="centerInside"
 
             android:id="@+id/img_promotion"
@@ -43,6 +43,15 @@
                     android:layout_marginLeft="@dimen/margin_item"
                     android:id="@+id/item_promotion_title"
                     android:textColor="@color/textColor"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="@dimen/font_size_title_item"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Giảm giá 5%"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:id="@+id/item_promotion_saleoff"
+                    android:textColor="@color/startGradientFail"
                     android:fontFamily="sans-serif-black"
                     android:textSize="@dimen/font_size_title_item"/>
                 <TextView

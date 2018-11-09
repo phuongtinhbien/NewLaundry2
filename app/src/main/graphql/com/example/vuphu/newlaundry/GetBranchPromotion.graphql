@@ -1,0 +1,14 @@
+query getPromotionBranchs($branchID: BigFloat!){
+  allPromotionBranches(condition: {branchId: $branchID, status: "ACTIVE"}) {
+    nodes{
+      promotionByPromotionId {
+        id
+        promotionName
+        promotionCode
+        sale
+        dateStart
+        dateEnd
+      }
+    }
+  }
+}

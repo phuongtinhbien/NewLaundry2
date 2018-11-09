@@ -79,13 +79,16 @@ public class HomeFragment extends Fragment implements iFService {
                         for (GetServiceTypesQuery.Node node : list) {
                             listService.add(new OBService(node.id(), node.serviceTypeName(), node.serviceTypeDesc(), node.postByServiceTypeAvatar().headerImageFile()));
                         }
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                initRecycleView();
-                            }
-                        });
-
+                        if(getActivity()!= null){
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    initRecycleView();
+                                }
+                            });
+                        } else {
+                            initRecycleView();
+                        }
                     }
 
                     @Override

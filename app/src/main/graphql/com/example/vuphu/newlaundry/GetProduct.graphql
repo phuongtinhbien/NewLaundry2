@@ -3,7 +3,7 @@ query getProduct{
           nodes {
                 id
                 productName
-                producyTypeId
+                productTypeId
                 postByProductAvatar{
                     headerImageFile
                 }

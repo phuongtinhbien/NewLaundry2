@@ -151,6 +151,7 @@ public class LoginActivity extends AppCompatActivity{
                             @Override
                             public void run() {
                                 if (currentUser!= null) {
+                                    PreferenceUtil.setIdUser(LoginActivity.this, String.valueOf(currentUser.id()));
                                     popup.hide();
                                     if (!newAccount){
                                         Toast.makeText(LoginActivity.this, R.string.welcome, Toast.LENGTH_SHORT).show();

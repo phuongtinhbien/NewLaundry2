@@ -20,7 +20,10 @@ import com.robertlevonyan.views.chip.Chip;
 import org.w3c.dom.Text;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ItemPromotionListDialogFragment extends BottomSheetDialogFragment {
@@ -78,6 +81,7 @@ public class ItemPromotionListDialogFragment extends BottomSheetDialogFragment {
 
         final TextView title;
         final TextView time;
+        final TextView saleoff;
         final ImageView img;
         final Chip code;
 
@@ -88,22 +92,16 @@ public class ItemPromotionListDialogFragment extends BottomSheetDialogFragment {
             time =  itemView.findViewById(R.id.item_promotion_time);
             img = itemView.findViewById(R.id.img_promotion);
             code = itemView.findViewById(R.id.item_promotion_code);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        mListener.onItemPromotionClicked(getAdapterPosition());
-                        Toast.makeText(getContext(), "Promotion applied", Toast.LENGTH_SHORT).show();
-                        dismiss();
-                    }
-                }
-            });
+            saleoff = itemView.findViewById(R.id.item_promotion_saleoff);
         }
 
     }
 
     private class ItemPromotionAdapter extends RecyclerView.Adapter<ViewHolder> {
-
+        private String strDateFormat = "dd/MM/yyyy";
+        private String strDateFormatServer = "yyyy-MM-dd";
+        private SimpleDateFormat sfd = new SimpleDateFormat(strDateFormat);
+        private SimpleDateFormat sdfServer = new SimpleDateFormat(strDateFormatServer);
         private final List<OBPromotion> mItemCount;
 
         ItemPromotionAdapter(List<OBPromotion> mItemCount) {
@@ -117,9 +115,32 @@ public class ItemPromotionListDialogFragment extends BottomSheetDialogFragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.title.setText(mItemCount.get(position).getTitle());
-            holder.code.setChipText("PROMOTIONECONOMYS");
+            OBPromotion obPromotion = mItemCount.get(position);
+            holder.title.setText(obPromotion.getTitle());
+            holder.code.setChipText(obPromotion.getCode());
+            String strDateStart = "";
+            String strDateEnd = "";
 
+            try {
+                Date dateStart = sdfServer.parse(obPromotion.getTimeStart());
+                Date dateEnd = sdfServer.parse(obPromotion.getTimeEnd());
+                strDateStart = sfd.format(dateStart);
+                strDateEnd = sfd.format(dateEnd);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            holder.time.setText(strDateStart + " - " + strDateEnd);
+            holder.saleoff.setText("Giảm giá " + obPromotion.getSale() + "%");
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onItemPromotionClicked(position);
+                        Toast.makeText(getContext(), "Promotion applied", Toast.LENGTH_SHORT).show();
+                        dismiss();
+                    }
+                }
+            });
         }
 
         @Override

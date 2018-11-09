@@ -160,19 +160,6 @@
 
                 </android.support.design.card.MaterialCardView>
 
-               <!-- <android.support.design.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/card_margin"
-                    android:layout_marginVertical="@dimen/card_margin"
-                    app:cardCornerRadius="@dimen/card_radius"
-                    app:cardElevation="4dp"
-                    app:strokeColor="@color/bgBlue"
-                    app:strokeWidth="2dp">
-
-                    <include layout="@layout/part_item_service"></include>
-
-                </android.support.design.card.MaterialCardView>-->
                 <View
                     android:layout_width="match_parent"
                     android:background="@color/cool_grey"

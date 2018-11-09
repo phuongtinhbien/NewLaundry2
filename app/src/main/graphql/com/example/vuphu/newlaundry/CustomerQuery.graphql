@@ -1,14 +1,14 @@
 query getCustomer ($id: BigFloat!){
 customerById(id:$id){
-id
-gender
-email
-username
-fullName
-phone
-address
-postByCustomerAvatar{
-headerImageFile
-}
-}
-}
+ id
+ gender
+ email
+ username
+ fullName
+ phone
+ address
+ postByCustomerAvatar{
+ headerImageFile
+ }
+ }
+ }

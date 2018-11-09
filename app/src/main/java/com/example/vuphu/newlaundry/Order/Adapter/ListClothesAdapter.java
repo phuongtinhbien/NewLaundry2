@@ -35,15 +35,23 @@ public class ListClothesAdapter extends RecyclerView.Adapter<ListClothesViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ListClothesViewHolder holder, int position) {
-
-        holder.title.setText(list.get(position).getProduct().getTitle());
-        holder.price.setText(CURRENCY + " " + list.get(position).getProduct().getPricing());
-        Log.i("data", list.get(position).getCount()+"");
-
+        OBOrderDetail obOrderDetail = list.get(position);
+        holder.title.setText(obOrderDetail.getProduct().getTitle());
+        holder.price.setText(CURRENCY + " " + obOrderDetail.getProduct().getPricing());
+        holder.serviceName.setChipText(obOrderDetail.getServiceName());
+        holder.count.setText(Long.toString(obOrderDetail.getCount()));
     }
 
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public long sumCount() {
+        long count = 0;
+        for (OBOrderDetail obOrderDetail: list){
+            count += obOrderDetail.getCount();
+        }
+        return count;
     }
 }

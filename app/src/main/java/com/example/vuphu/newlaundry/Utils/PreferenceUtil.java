@@ -27,6 +27,7 @@ public class PreferenceUtil {
     private static final String SET_UP_INFO = "SET_UP_INFO";
     private static final String CURRENT_USER = "CURRENT_USER";
     private static final String LIST_ORDER = "LIST_ORDER";
+    private static final String ID_USER = "ID_USER";
 
 
     public static Long getLastCheckedAuthTokenTime(@NonNull Context context) {
@@ -135,6 +136,18 @@ public class PreferenceUtil {
     public static boolean checkKeyExist(Context context, String key) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         return sharedPreferences.contains(key);
+    }
+
+    public static void setIdUser(Context context, String id) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ID_USER, id);
+        editor.apply();
+    }
+
+    public static String getIdUser(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(ID_USER, "");
     }
 
 }

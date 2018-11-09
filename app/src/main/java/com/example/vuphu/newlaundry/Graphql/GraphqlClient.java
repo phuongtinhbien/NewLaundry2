@@ -26,13 +26,11 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Route;
-import okhttp3.internal.http2.Header;
-import okhttp3.logging.HttpLoggingInterceptor;
+
 
 public class GraphqlClient {
 
-    private static final String BASE_URL = "http://192.168.43.162:5000/graphql";
+    private static final String BASE_URL = "http://192.168.2.38:5000/graphql";
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/jpg");
     private static final int TIME_OUT = 30000;
     private static OkHttpClient okHttpClient;
@@ -58,7 +56,6 @@ public class GraphqlClient {
         builder.readTimeout(TIME_OUT, TimeUnit.MILLISECONDS);
         builder.writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS);
         builder.interceptors().clear();
-        addLoggingInterceptor(builder);
         if (!noHeader) {
             builder.addInterceptor(new Interceptor() {
                 @Override
@@ -76,11 +73,7 @@ public class GraphqlClient {
         return builder.build();
     }
 
-    private static void addLoggingInterceptor(OkHttpClient.Builder builder) {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        builder.addInterceptor(loggingInterceptor);
-    }
+
     public static ApolloClient uploadImage(final File image, final String imageName, final String authToken){
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -90,7 +83,6 @@ public class GraphqlClient {
         builder.readTimeout(TIME_OUT, TimeUnit.MILLISECONDS);
         builder.writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS);
         builder.interceptors().clear();
-        addLoggingInterceptor(builder);
         builder.addInterceptor(new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
