@@ -17,9 +17,11 @@ import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 import com.example.vuphu.newlaundry.ChooseUnitActivity;
+import com.example.vuphu.newlaundry.GetCustomerQuery;
 import com.example.vuphu.newlaundry.GetServiceTypesQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Order.Activity.PrepareOrderActivity;
+import com.example.vuphu.newlaundry.Order.Activity.PrepareOrderAddressActivity;
 import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Service.ListServiceAdapter;
@@ -44,6 +46,7 @@ public class HomeFragment extends Fragment implements iFService {
     private Button placeAnOrder;
     private Popup popup;
     private String token;
+    private static GetCustomerQuery.CustomerById customer;
     private GetServiceTypesQuery.AllServiceTypes allServiceTypes;
     public HomeFragment() {
         // Required empty public constructor
@@ -56,6 +59,7 @@ public class HomeFragment extends Fragment implements iFService {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_home, container, false);
         token = PreferenceUtil.getAuthToken(getActivity());
+        popup = new Popup(getActivity());
         fetchData();
         recyclerViewService = v.findViewById(R.id.list_service);
         listService = new ArrayList<>();
@@ -71,6 +75,8 @@ public class HomeFragment extends Fragment implements iFService {
     }
 
     private void fetchData() {
+        popup.createLoadingDialog();
+        popup.show();
         GraphqlClient.getApolloClient(token, false).query(GetServiceTypesQuery.builder().build())
                 .enqueue(new ApolloCall.Callback<GetServiceTypesQuery.Data>() {
                     @Override
@@ -96,6 +102,27 @@ public class HomeFragment extends Fragment implements iFService {
                         Log.e("getServiceType", e.getCause() +" - "+e);
                     }
                 });
+        customer = PreferenceUtil.getCurrentUser(getActivity());
+        if(customer == null) {
+            String idUser = PreferenceUtil.getIdUser(getActivity());
+            GraphqlClient.getApolloClient(token, false)
+                    .query(GetCustomerQuery.builder()
+                            .id(idUser).build())
+                    .enqueue(new ApolloCall.Callback<GetCustomerQuery.Data>() {
+                        @Override
+                        public void onResponse(@NotNull Response<GetCustomerQuery.Data> response) {
+                            customer = response.data().customerById();
+                            if ( customer != null){
+                                PreferenceUtil.setCurrentUser(getActivity(), customer);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull ApolloException e) {
+                            Log.e("customer_err", e.getCause() +" - "+e);
+                        }
+                    });
+        }
     }
 
     private void initRecycleView() {
@@ -103,6 +130,7 @@ public class HomeFragment extends Fragment implements iFService {
         recyclerViewService.setLayoutManager(gridLayoutManager);
         listServiceAdapter = new ListServiceAdapter(listService, getActivity(), this);
         recyclerViewService.setAdapter(listServiceAdapter);
+        popup.hide();
     }
 
     public static HomeFragment newInstance() {

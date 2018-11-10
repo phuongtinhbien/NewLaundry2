@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
@@ -22,6 +23,7 @@ import com.example.vuphu.newlaundry.Categories.OBCategory;
 import com.example.vuphu.newlaundry.Categories.iFCategory;
 import com.example.vuphu.newlaundry.GetProductQuery;
 import com.example.vuphu.newlaundry.GetProductTypeQuery;
+import com.example.vuphu.newlaundry.GetUnitPricesByUnitQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Order.Adapter.ListChipAdapter;
 import com.example.vuphu.newlaundry.Order.Adapter.ListOrderDetailAdapter;
@@ -41,6 +43,9 @@ import java.util.List;
 import me.aflak.libraries.OBOrderDetailFilter;
 import me.aflak.libraries.OBProductFilter;
 import me.aflak.utils.Condition;
+
+import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
+import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
 
 public class PrepareOrderActivity extends AppCompatActivity implements iFCategory, IFOBPrepareOrder{
 
@@ -287,10 +292,61 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
 
     @Override
     public void clickClothes(OBOrderDetail obOrderDetail) {
+        popup.createLoadingDialog();
+        popup.show();
         if(obOrderDetail != null) {
-            Intent intent = new Intent(PrepareOrderActivity.this, DetailPrepareOrderClothesActivity.class);
-            intent.putExtra("OBOrderDetail", obOrderDetail);
-            startActivity(intent);
+            if(obOrderDetail.getUnitID().equals(KG)){
+                GraphqlClient.getApolloClient(token, false).query(GetUnitPricesByUnitQuery.builder()
+                        .service(obOrderDetail.getIdService())
+                        .unit(KG)
+                        .product(null)
+                        .build()
+                ).enqueue(new ApolloCall.Callback<GetUnitPricesByUnitQuery.Data>() {
+                    @Override
+                    public void onResponse(@NotNull Response<GetUnitPricesByUnitQuery.Data> response) {
+                        GetUnitPricesByUnitQuery.Node node = response.data().allUnitPrices().nodes().get(0);
+                        Log.i("123456", node.price() + "");
+                        obOrderDetail.setPrice(node.price());
+                        obOrderDetail.setPriceID(node.id());
+                        Intent intent = new Intent(PrepareOrderActivity.this, DetailPrepareOrderClothesActivity.class);
+                        intent.putExtra("OBOrderDetail", obOrderDetail);
+                        startActivity(intent);
+                        popup.hide();
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull ApolloException e) {
+                        Log.e("getPrice", e.getCause() +" - "+e);
+                        Toast.makeText(PrepareOrderActivity.this, "can not get price. Please try again", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            else if(obOrderDetail.getUnitID().equals(ITEM)) {
+                GraphqlClient.getApolloClient(token, false).query(GetUnitPricesByUnitQuery.builder()
+                        .service(obOrderDetail.getIdService())
+                        .unit(ITEM)
+                        .product(obOrderDetail.getProduct().getId())
+                        .build()
+                ).enqueue(new ApolloCall.Callback<GetUnitPricesByUnitQuery.Data>() {
+                    @Override
+                    public void onResponse(@NotNull Response<GetUnitPricesByUnitQuery.Data> response) {
+                        GetUnitPricesByUnitQuery.Node node = response.data().allUnitPrices().nodes().get(0);
+                        Log.i("123456", node.price() + "");
+                        obOrderDetail.setPrice(node.price());
+                        obOrderDetail.setPriceID(node.id());
+                        Intent intent = new Intent(PrepareOrderActivity.this, DetailPrepareOrderClothesActivity.class);
+                        intent.putExtra("OBOrderDetail", obOrderDetail);
+                        startActivity(intent);
+                        popup.hide();
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull ApolloException e) {
+                        Log.e("getPrice", e.getCause() +" - "+e);
+                        Toast.makeText(PrepareOrderActivity.this, "can not get price. Please try again", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         }
     }
 

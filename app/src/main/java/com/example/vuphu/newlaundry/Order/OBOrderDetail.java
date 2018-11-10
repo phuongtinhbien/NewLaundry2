@@ -22,6 +22,8 @@ public class OBOrderDetail implements Serializable {
     private String idService;
     private String note;
     private String serviceName;
+    private double price = 0;
+    private String priceID;
 
     public OBOrderDetail() {
     }
@@ -40,6 +42,22 @@ public class OBOrderDetail implements Serializable {
         this.idService = idService;
         this.note = note;
         this.serviceName = serviceName;
+    }
+
+    public String getPriceID() {
+        return priceID;
+    }
+
+    public void setPriceID(String priceID) {
+        this.priceID = priceID;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public String getServiceName() {

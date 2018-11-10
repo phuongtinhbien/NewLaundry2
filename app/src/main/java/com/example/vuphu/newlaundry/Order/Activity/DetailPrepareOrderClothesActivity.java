@@ -21,6 +21,7 @@ import com.apollographql.apollo.exception.ApolloException;
 import com.example.vuphu.newlaundry.GetColorsQuery;
 import com.example.vuphu.newlaundry.GetLabelQuery;
 import com.example.vuphu.newlaundry.GetMaterialsQuery;
+import com.example.vuphu.newlaundry.GetUnitPricesByUnitQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.ItemListDialogFragment;
 import com.example.vuphu.newlaundry.Order.OBOrder;
@@ -29,12 +30,17 @@ import com.example.vuphu.newlaundry.Product.OBProduct;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.github.florent37.androidslidr.Slidr;
+import com.robertlevonyan.views.chip.Chip;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
+import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
 
 public class DetailPrepareOrderClothesActivity extends AppCompatActivity implements ItemListDialogFragment.Listener {
 
@@ -59,12 +65,13 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
 
     private TextView productionValue, colorValue, materialValue, title;
     private EditText note;
-    MaterialCardView production,color, material;
-
+    private MaterialCardView production,color, material;
+    private Chip price;
     private String token;
 
     private OBOrderDetail obOrderDetail = new OBOrderDetail();
     private Intent intent;
+    private DecimalFormat dec;
 
 
     @Override
@@ -192,6 +199,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
     }
 
     public void init(){
+        dec = new DecimalFormat("##,###,###,###");
         materialValue = findViewById(R.id.item_prepare_order_txt_material);
         material = findViewById(R.id.item_prepare_order_material);
         colorValue = findViewById(R.id.item_prepare_order_txt_color);
@@ -203,6 +211,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
         note = findViewById(R.id.item_prepare_order_txt_note);
         totalPanel = findViewById(R.id.total_panel_spml);
         slidr = findViewById(R.id.item_prepare_order_seek_count);
+        price = findViewById(R.id.chip_pricing);
 
         token = PreferenceUtil.getAuthToken(getApplicationContext());
         intent = getIntent();
@@ -227,7 +236,13 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
             } else {
                 materialValue.setText("Undefine");
             }
-
+            if(obOrderDetail.getPrice() > 0) {
+                if(obOrderDetail.getUnitID().equals(KG)) {
+                    price.setChipText(Double.toString(obOrderDetail.getPrice()).substring(0, Double.toString(obOrderDetail.getPrice()).length()-2) + " VND/KG");
+                } else if(obOrderDetail.getUnitID().equals(ITEM)) {
+                    price.setChipText(Double.toString(obOrderDetail.getPrice()).substring(0, Double.toString(obOrderDetail.getPrice()).length()-2) + " VND/ITEM");
+                }
+            }
             production.setEnabled(false);
             color.setEnabled(false);
             material.setEnabled(false);
@@ -236,7 +251,11 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
             addToBag.setText(R.string.add_to_your_bag);
             countValue(1);
         }
-
+        if(obOrderDetail.getUnitID().equals(KG)) {
+            price.setChipText(dec.format(obOrderDetail.getPrice()) + " VND/KG");
+        } else if(obOrderDetail.getUnitID().equals(ITEM)) {
+            price.setChipText(dec.format(obOrderDetail.getPrice()) + " VND/ITEM");
+        }
         title.setText(obOrderDetail.getProduct().getTitle());
         initList();
 

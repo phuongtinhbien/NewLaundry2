@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,11 @@ import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
+import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_PRICE;
 
 public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
     private static final int REQUEST_CODE = 7;
@@ -30,8 +35,9 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
     private RecyclerView listChooseClothes;
     private ListOrderDetailAdapter adapter;
     private ArrayList<OBOrderDetail> list;
-    private TextView countTotal;
+    private TextView countTotal, totalPrice, totalWeight;
     private int position;
+    private DecimalFormat dec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,10 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
     }
 
     private void init() {
+        dec = new DecimalFormat("##,###,###,###");
         countTotal = findViewById(R.id.item_prepare_order_total_items);
+        totalPrice = findViewById(R.id.item_prepare_order_total);
+        totalWeight = findViewById(R.id.item_prepare_order_total_weight);
         listChooseClothes = findViewById(R.id.list_choose_cloth);
         list = PreferenceUtil.getListOrderDetail(BagActivity.this);
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
@@ -50,14 +59,20 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
         listChooseClothes.setLayoutManager(gridLayoutManager);
         adapter = new ListOrderDetailAdapter(list, BagActivity.this, this);
         listChooseClothes.setAdapter(adapter);
+        totalWeight.setText(adapter.sumWeight() + " kg");
         countTotal.setText(adapter.sumCount() + " item");
+        totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
         checkOut = findViewById(R.id.see_your_bag);
         checkOut.setText("Check out");
         checkOut.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
+                  Intent intent = new Intent(getApplicationContext(), PrepareOrderAddressActivity.class);
                   if(list.size() > 0){
-                      startActivity(new Intent(getApplicationContext(), PrepareOrderAddressActivity.class));
+                      if(!TextUtils.isEmpty(totalPrice.getText().toString())){
+                          intent.putExtra(TOTAL_PRICE, totalPrice.getText().toString());
+                      }
+                      startActivity(intent);
                   }
                   else {
                       Popup popup = new Popup(BagActivity.this);
@@ -139,9 +154,25 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
 
     @Override
     public void clickDel(int position) {
+        if(list.get(position).equals(KG)) {
+            boolean isDeleteWeight = true;
+            for(int i=0; i<list.size(); i++) {
+                if(i != position) {
+                    if(list.get(i).getUnitID().equals(KG) && list.get(i).getIdService().equals(list.get(position).getIdService())) {
+                        isDeleteWeight = false;
+                        break;
+                    }
+                }
+            }
+            if(isDeleteWeight) {
+                PreferenceUtil.removeKey(BagActivity.this, list.get(position).getIdService());
+            }
+        }
         list.remove(position);
         adapter.notifyDataSetChanged();
         PreferenceUtil.setListOrderDetail(list, BagActivity.this);
         countTotal.setText(adapter.sumCount() + " item");
+        totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
+        totalWeight.setText(adapter.sumWeight() + " kg");
     }
 }

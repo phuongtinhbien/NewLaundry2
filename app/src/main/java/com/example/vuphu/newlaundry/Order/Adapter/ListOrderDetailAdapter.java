@@ -14,9 +14,13 @@ import com.example.vuphu.newlaundry.Order.Activity.DetailPrepareOrderClothesActi
 import com.example.vuphu.newlaundry.Order.IFOBPrepareOrder;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 import com.example.vuphu.newlaundry.R;
+import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
 
 public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetailViewHolder> {
 
@@ -86,5 +90,32 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
             count += obOrderDetail.getCount();
         }
         return count;
+    }
+
+    public double sumPrice() {
+        ArrayList<String> listService = new ArrayList<>();
+        double sum = 0;
+        for (OBOrderDetail obOrderDetail: list) {
+            if(obOrderDetail.getUnitID().equals(ITEM)){
+                sum += obOrderDetail.getPrice()*obOrderDetail.getCount();
+            } else if(!listService.contains(obOrderDetail.getIdService())){
+                listService.add(obOrderDetail.getIdService());
+                double weight = Double.parseDouble(PreferenceUtil.getWeightService(context, obOrderDetail.getIdService()));
+                sum += obOrderDetail.getPrice()*weight;
+            }
+        }
+        return sum;
+    }
+
+    public double sumWeight() {
+        ArrayList<String> listService = new ArrayList<>();
+        double sum = 0;
+        for (OBOrderDetail obOrderDetail : list) {
+            if(!listService.contains(obOrderDetail.getIdService())) {
+                listService.add(obOrderDetail.getIdService());
+                sum += Double.parseDouble(PreferenceUtil.getWeightService(context, obOrderDetail.getIdService()));
+            }
+        }
+        return sum;
     }
 }

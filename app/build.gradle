@@ -16,6 +16,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 apollo {
@@ -23,11 +28,11 @@ apollo {
             "Jwt"     : "java.lang.String",
             "BigFloat": "java.lang.String",
             "Datetime": "java.lang.String",
-            "Time" : "java.lang.String"
+            "Time" : "java.lang.String",
+            "Date" : "java.lang.String"
     ]
     suppressRawTypesWarning = true
 }
-
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -54,8 +59,7 @@ dependencies {
     implementation 'me.aflak.libraries:filter-annotation:1.2'
     annotationProcessor 'me.aflak.libraries:filter-processor:1.2'
     implementation 'com.robertlevonyan.view:MaterialChipView:1.2.4'
-    //Map
-    implementation 'com.mapfit:android-sdk:2.1.1'
+
     implementation 'com.github.florent37:android-slidr:1.0.3'
     implementation 'com.uniquestudio:checkbox:1.0.10'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
@@ -67,7 +71,6 @@ dependencies {
     implementation 'com.apollographql.apollo:apollo-android-support:1.0.0-alpha2'
     implementation 'com.apollographql.apollo:apollo-rx2-support:1.0.0-alpha2'
     implementation 'com.squareup.picasso:picasso:2.71828'
-
 }
 
 apply plugin: 'com.google.gms.google-services'

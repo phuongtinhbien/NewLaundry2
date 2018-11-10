@@ -118,6 +118,7 @@
     <string name="back_to_home">Back to home</string>
     <string name="checkout">Check out</string>
     <string name="total_items">Your Items </string>
+    <string name="total_weight"> Weight </string>
     <string name="add_more">Add more</string>
     <string name="title_activity_product">ProductActivity</string>
     <string name="title_person">Your account</string>

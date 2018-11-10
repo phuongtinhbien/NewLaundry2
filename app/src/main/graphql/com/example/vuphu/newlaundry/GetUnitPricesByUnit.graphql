@@ -1,4 +1,4 @@
-query getUnitPricesByUnit($service: BigFloat!, $unit: BigFloat!, $product: BigFloat!){
+query getUnitPricesByUnit($service: BigFloat!, $unit: BigFloat!, $product: BigFloat){
     allUnitPrices(condition: {
       serviceTypeId: $service
       unitId: $unit
@@ -7,6 +7,7 @@ query getUnitPricesByUnit($service: BigFloat!, $unit: BigFloat!, $product: BigFl
     }){
       nodes{
         price
+        id
       }
     }
 }

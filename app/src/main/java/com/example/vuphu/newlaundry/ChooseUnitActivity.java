@@ -16,10 +16,11 @@ import android.widget.Toast;
 import com.example.vuphu.newlaundry.Order.Activity.PrepareOrderActivity;
 import com.uniquestudio.library.CircleCheckBox;
 
+import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
+import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
+
 public class ChooseUnitActivity extends AppCompatActivity {
 
-    private static String KG = "4";
-    private static String ITEM = "1";
     private Toolbar toolbar;
     private String idService;
     private String serviceName;

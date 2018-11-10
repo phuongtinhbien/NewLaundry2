@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -48,6 +49,8 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -59,6 +62,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static com.example.vuphu.newlaundry.Utils.StringKey.SPECIAL_STRING;
+import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_PRICE;
 
 
 public class PrepareOrderAddressActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -73,12 +79,12 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
     private ArrayList<OBBranch> listBranch;
     private FloatingActionButton prepareNext;
     private Popup popup;
-    private static GetCustomerQuery.CustomerById customer;
-    private String idUser;
     private LatLng location;
     private static final String PICKUP_KEY = "PICKUP_KEY";
     private static final String DROPOFF_KEY = "DROPOFF_KEY";
     private Marker myMarker;
+    private String price;
+    private static GetCustomerQuery.CustomerById customer;
 
     private Toolbar toolbar;
     @Override
@@ -88,7 +94,10 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
         token = PreferenceUtil.getAuthToken(PrepareOrderAddressActivity.this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-
+        Intent intent = getIntent();
+        if(intent.hasExtra(TOTAL_PRICE)){
+            price = intent.getStringExtra(TOTAL_PRICE);
+        }
         pickUp = findViewById(R.id.prepare_order_address_pick_up);
         dropOff = findViewById(R.id.prepare_order_address_drop_off);
         customerName = findViewById(R.id.item_prepare_order_your_name);
@@ -127,9 +136,9 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
     }
 
     private void getCustomerInfo() {
-        idUser = PreferenceUtil.getIdUser(PrepareOrderAddressActivity.this);
-        customer = PreferenceUtil.getCurrentUser(PrepareOrderAddressActivity.this);
+        customer = PreferenceUtil.getCurrentUser(getApplicationContext());
         if(customer == null) {
+            String idUser = PreferenceUtil.getIdUser(PrepareOrderAddressActivity.this);
             GraphqlClient.getApolloClient(token, false)
                     .query(GetCustomerQuery.builder()
                             .id(idUser).build())
@@ -251,7 +260,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
         Marker marker = mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
                 .title(branchName)
-                .snippet(branchAddress)
+                .snippet(branchAddress + SPECIAL_STRING + price)
                 .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("ic_item_service",80,80)))
         );
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(getApplication()));
@@ -340,13 +349,18 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMinZoomPreference(10);
+//        mMap.setMinZoomPreference(12);
         if(location != null) {
             myMarker = mMap.addMarker(new MarkerOptions()
                     .position(location)
                     .title("My Address")
             );
             mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+            Circle circle = mMap.addCircle(new CircleOptions()
+                    .center(location)
+                    .radius(10000)
+                    .strokeColor(Color.RED)
+                    .fillColor(Color.BLUE));
         } else {
             Toast.makeText(PrepareOrderAddressActivity.this, "Adrress null", Toast.LENGTH_LONG).show();
         }

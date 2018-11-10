@@ -9,6 +9,8 @@ import com.example.vuphu.newlaundry.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
+import static com.example.vuphu.newlaundry.Utils.StringKey.SPECIAL_STRING;
+
 public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private final View mWindow;
     private Context mcontext;
@@ -28,9 +30,10 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         TextView branchName = mWindow.findViewById(R.id.info_window_nameBranch);
         branchName.setText(marker.getTitle());
         TextView branchAddress = mWindow.findViewById(R.id.info_window_addressBranch);
-        branchAddress.setText(marker.getSnippet());
-        TextView totalPrice = mWindow.findViewById(R.id.info_window_totalPrice);
-//        totalPrice.setText(marker.getTag().toString());
+        String[] str = marker.getSnippet().split(SPECIAL_STRING);
+        branchAddress.setText(str[0]);
+//        TextView totalPrice = mWindow.findViewById(R.id.info_window_totalPrice);
+//        totalPrice.setText(str[1]);
     }
 
     @Override
