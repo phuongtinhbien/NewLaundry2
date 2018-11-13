@@ -1,0 +1,18 @@
+query getOrderActive($id: BigFloat!){
+  allCustomerOrders(orderBy:CREATE_DATE_DESC, filter:{customerId:{equalTo: $id}, status:{notEqualTo:"FINISHED"}}) {
+    nodes {
+      status
+      branchByBranchId{
+        address
+      }
+      createDate
+      receiptsByOrderId{
+        nodes{
+          staffByStaffPickUp{
+            fullName
+          }
+        }
+      }
+    }
+  }
+}

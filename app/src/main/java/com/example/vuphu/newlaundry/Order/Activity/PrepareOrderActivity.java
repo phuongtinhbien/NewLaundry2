@@ -103,6 +103,7 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
                 weight = Float.toString(weightNew);
             }
             PreferenceUtil.setWeightService(idService, weight, this);
+            Log.i("TestWeight", weight);
         }
         Log.i("weight",idService + "--" + PreferenceUtil.getWeightService(this, idService) );
         token = PreferenceUtil.getAuthToken(getApplicationContext());

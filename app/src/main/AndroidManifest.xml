@@ -39,7 +39,7 @@
         <activity android:name=".Order.Activity.PrepareOrderPaymentActivity" />
         <activity
             android:name=".Order.Activity.FinalOrderActivity"
-            android:parentActivityName=".Order.Activity.InfoOrderActivity" />
+             />
         <activity android:name=".Order.Activity.BagActivity" />
         <activity android:name=".ServiceActivity" />
         <activity android:name=".Order.Activity.DetailPrepareOrderClothesActivity" />

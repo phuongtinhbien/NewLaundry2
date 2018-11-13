@@ -133,6 +133,8 @@ public class PreferenceUtil {
         editor.apply();
     }
 
+
+
     public static boolean checkKeyExist(Context context, String key) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         return sharedPreferences.contains(key);
@@ -148,6 +150,10 @@ public class PreferenceUtil {
     public static String getIdUser(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         return sharedPreferences.getString(ID_USER, "");
+    }
+
+    public static void removeOrderList(Context context) {
+        removeKey(context, LIST_ORDER);
     }
 
 }

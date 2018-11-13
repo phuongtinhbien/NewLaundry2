@@ -1,0 +1,7 @@
+mutation createOrderAndDetail($order: CustomerOrderInput, $detailOrder: [OrderDetailInput]) {
+  createOrderAndDetail(input: { o: $order, d: $detailOrder}) {
+    customerOrder {
+      id
+    }
+  }
+}

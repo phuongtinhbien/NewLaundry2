@@ -8,17 +8,27 @@ public class OBBranch implements Serializable {
     private String branchAddress;
     private String latitude;
     private String longitude;
+    private float distance;
 
     public OBBranch() {
 
     }
 
-    public OBBranch(String id, String branchName, String latitude, String longitude, String branchAddress) {
+    public OBBranch(String id, String branchName, String latitude, String longitude, String branchAddress, float distance) {
         this.id = id;
         this.branchName = branchName;
         this.latitude = latitude;
         this.longitude = longitude;
         this.branchAddress = branchAddress;
+        this.distance = distance;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
     public String getBranchAddress() {

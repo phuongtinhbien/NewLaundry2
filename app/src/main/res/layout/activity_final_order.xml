@@ -74,24 +74,25 @@
 
 
                     <android.support.design.button.MaterialButton
+                        android:id="@+id/btn_backtohome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/card_margin"
                         android:textAlignment="center"
                         android:textColor="@color/textColorBtn"
                         android:textSize="@dimen/font_size_btn"
-                        android:text="@string/confirm"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:layout_margin="@dimen/margin_item"
-                        android:text="@string/back_to_home"
-                        android:textColor="@color/textColorHeader"
-                        android:textSize="@dimen/font_size_text"
-                        android:textAllCaps="true"
-                        android:fontFamily="sans-serif-black"
-                        android:textStyle="bold" />
+                        android:text="BACK TO HOME"/>
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textAlignment="center"-->
+                        <!--android:layout_margin="@dimen/margin_item"-->
+                        <!--android:text="@string/back_to_home"-->
+                        <!--android:textColor="@color/textColorHeader"-->
+                        <!--android:textSize="@dimen/font_size_text"-->
+                        <!--android:textAllCaps="true"-->
+                        <!--android:fontFamily="sans-serif-black"-->
+                        <!--android:textStyle="bold" />-->
 
                 </LinearLayout>
 

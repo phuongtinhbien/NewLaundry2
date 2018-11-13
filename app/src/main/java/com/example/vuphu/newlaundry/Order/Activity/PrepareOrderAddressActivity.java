@@ -43,6 +43,7 @@ import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PermissionUtils;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -52,6 +53,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
@@ -60,9 +62,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.vuphu.newlaundry.Utils.LocationUtils.getDistanceFromLocation;
+import static com.example.vuphu.newlaundry.Utils.StringKey.DROPOFF_KEY;
+import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
+import static com.example.vuphu.newlaundry.Utils.StringKey.LIST_SERVICE;
+import static com.example.vuphu.newlaundry.Utils.StringKey.PICKUP_KEY;
 import static com.example.vuphu.newlaundry.Utils.StringKey.SPECIAL_STRING;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_PRICE;
 
@@ -80,11 +89,14 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
     private FloatingActionButton prepareNext;
     private Popup popup;
     private LatLng location;
-    private static final String PICKUP_KEY = "PICKUP_KEY";
-    private static final String DROPOFF_KEY = "DROPOFF_KEY";
     private Marker myMarker;
     private String price;
     private static GetCustomerQuery.CustomerById customer;
+    private float distanceCheckValue = 5000;
+    private LatLngBounds.Builder builder;
+    private int padding = 70;
+    private String branchNameChoose;
+    private String id;
 
     private Toolbar toolbar;
     @Override
@@ -92,6 +104,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prepare_order_address);
         token = PreferenceUtil.getAuthToken(PrepareOrderAddressActivity.this);
+        builder = new LatLngBounds.Builder();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         Intent intent = getIntent();
@@ -109,19 +122,21 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
         listBranchTemp = new ArrayList<OBBranch>();
         listBranch = new ArrayList<OBBranch>();
         popup = new Popup(this);
-
         initMap();
         prepareNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                handleIdBranch();
                 if(validate()){
                     Intent intent = new Intent(getApplicationContext(), InfoOrderActivity.class);
+                    intent.putExtra(ID_BRANCH, id);
                     intent.putExtra(PICKUP_KEY, pickUp.getText().toString());
                     intent.putExtra(DROPOFF_KEY, dropOff.getText().toString());
+                    intent.putStringArrayListExtra(LIST_SERVICE, listService);
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(getApplicationContext() ,"Address must not null", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext() ,"Please choose store in map!", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -131,8 +146,17 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
 
     }
 
+    private void handleIdBranch() {
+        for(OBBranch obBranch : listBranch) {
+            if(obBranch.getBranchName().equals(branchNameChoose)) {
+                id = obBranch.getId();
+                break;
+            }
+        }
+    }
+
     private boolean validate() {
-        return !TextUtils.isEmpty(dropOff.getText().toString()) && !TextUtils.isEmpty(pickUp.getText().toString());
+        return !TextUtils.isEmpty(dropOff.getText().toString()) && !TextUtils.isEmpty(pickUp.getText().toString()) && !TextUtils.isEmpty(id);
     }
 
     private void getCustomerInfo() {
@@ -234,7 +258,8 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
     private void handleList(List<GetServiceBranchQuery.Node> nodes) {
         for(GetServiceBranchQuery.Node node: nodes) {
             if(checkBranch(node, nodes)){
-                listBranchTemp.add(new OBBranch(node.branchByBranchId().id(), node.branchByBranchId().branchName(), node.branchByBranchId().latidute(), node.branchByBranchId().longtidute(), node.branchByBranchId().address()));
+                float distance =  getDistanceFromLocation(location.latitude, location.longitude, Float.parseFloat(node.branchByBranchId().latidute()), Float.parseFloat(node.branchByBranchId().longtidute()));
+                listBranchTemp.add(new OBBranch(node.branchByBranchId().id(), node.branchByBranchId().branchName(), node.branchByBranchId().latidute(), node.branchByBranchId().longtidute(), node.branchByBranchId().address(), distance));
             }
         }
 
@@ -246,13 +271,44 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
                 listBranch.add(obBranch);
             }
         }
+        sortListBanch();
         initMarkerBranch();
+    }
+
+    private void sortListBanch() {
+        Collections.sort(listBranch, new Comparator<OBBranch>() {
+            @Override
+            public int compare(OBBranch obBranch, OBBranch t1) {
+                return Float.compare(obBranch.getDistance(), t1.getDistance());
+            }
+        });
+    }
+
+    private boolean isDistanceCondition(float distance, int i) {
+        if(distanceCheckValue > 10000) {
+            return false;
+        }
+        else if(distance > distanceCheckValue) {
+            distanceCheckValue += 1000;
+            if(i == 1){
+                isDistanceCondition(distance, i);
+            }
+        }
+        else {
+            return true;
+        }
+        return false;
     }
 
     private void initMarkerBranch() {
         for(int i=0; i<listBranch.size(); i++) {
-            createMarker(listBranch.get(i).getBranchName(), Double.parseDouble(listBranch.get(i).getLatitude()), Double.parseDouble(listBranch.get(i).getLongitude()), listBranch.get(i).getBranchAddress());
+            if(isDistanceCondition(listBranch.get(i).getDistance(), i)){
+                createMarker(listBranch.get(i).getBranchName(), Double.parseDouble(listBranch.get(i).getLatitude()), Double.parseDouble(listBranch.get(i).getLongitude()), listBranch.get(i).getBranchAddress());
+            }
         }
+        LatLngBounds bounds = builder.build();
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        mMap.moveCamera(cu);
         popup.hide();
     }
 
@@ -263,14 +319,17 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
                 .snippet(branchAddress + SPECIAL_STRING + price)
                 .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("ic_item_service",80,80)))
         );
+        builder.include(new LatLng(latitude, longitude));
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(getApplication()));
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+                branchNameChoose = marker.getTitle();
+                Toast.makeText(getApplicationContext(), "You choose " + marker.getTitle(), Toast.LENGTH_LONG).show();
                 marker.hideInfoWindow();
             }
         });
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+
 
     }
 
@@ -349,18 +408,18 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-//        mMap.setMinZoomPreference(12);
+        mMap.setMinZoomPreference(10);
         if(location != null) {
             myMarker = mMap.addMarker(new MarkerOptions()
                     .position(location)
                     .title("My Address")
             );
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-            Circle circle = mMap.addCircle(new CircleOptions()
-                    .center(location)
-                    .radius(10000)
-                    .strokeColor(Color.RED)
-                    .fillColor(Color.BLUE));
+            builder.include(location);
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+//            Circle circle = mMap.addCircle(new CircleOptions()
+//                    .center(location)
+//                    .radius(5000)
+//                    .strokeColor(Color.RED));
         } else {
             Toast.makeText(PrepareOrderAddressActivity.this, "Adrress null", Toast.LENGTH_LONG).show();
         }

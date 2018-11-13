@@ -26,6 +26,19 @@ public class OBOrderDetail implements Serializable {
     private String priceID;
 
     public OBOrderDetail() {
+        this.product = null;
+        this.label = null;
+        this.material = null;
+        this.unit = null;
+        this.labelID = null;
+        this.materialID = null;
+        this.unitID = null;
+        this.color = null;
+        this.colorID = null;
+        this.count = 0;
+        this.idService = null;
+        this.note = null;
+        this.serviceName = null;
     }
 
     public OBOrderDetail(OBProduct product, String label, String material, String unit, String labelID, String materialID, String unitID, String color, String colorID, long count, String idService, String note, String serviceName) {

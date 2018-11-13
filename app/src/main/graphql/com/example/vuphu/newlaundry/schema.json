@@ -14109,6 +14109,18 @@
             "deprecationReason": null
           },
           {
+            "name": "SN_ASC",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SN_DESC",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "PRIMARY_KEY_ASC",
             "description": null,
             "isDeprecated": false,
@@ -14208,6 +14220,16 @@
               "ofType": null
             },
             "defaultValue": null
+          },
+          {
+            "name": "sn",
+            "description": "Checks for equality with the object’s `sn` field.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null
           }
         ],
         "interfaces": null,
@@ -14296,6 +14318,16 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "StringFilter",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "sn",
+            "description": "Filter by the object’s `sn` field.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "IntFilter",
               "ofType": null
             },
             "defaultValue": null
@@ -14550,6 +14582,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sn",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
               "ofType": null
             },
             "isDeprecated": false,
@@ -39741,6 +39785,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "sn",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -44211,6 +44267,33 @@
             "type": {
               "kind": "OBJECT",
               "name": "AssignToWashPayload",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "assignTypeOneToWash",
+            "description": null,
+            "args": [
+              {
+                "name": "input",
+                "description": "The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "AssignTypeOneToWashInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AssignTypeOneToWashPayload",
               "ofType": null
             },
             "isDeprecated": false,
@@ -52064,6 +52147,16 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "sn",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
               "ofType": null
             },
             "defaultValue": null
@@ -61808,6 +61901,16 @@
               "ofType": null
             },
             "defaultValue": null
+          },
+          {
+            "name": "sn",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null
           }
         ],
         "interfaces": null,
@@ -69285,6 +69388,139 @@
             "type": {
               "kind": "OBJECT",
               "name": "ReceiptsEdge",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "AssignTypeOneToWashInput",
+        "description": "All input for the `assignTypeOneToWash` mutation.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "clientMutationId",
+            "description": "An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "list",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "AssignWorkInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "AssignWorkInput",
+        "description": "An input for mutations affecting `AssignWork`",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "reId",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigFloat",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "currUser",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigFloat",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "washerId",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigFloat",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "sn",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AssignTypeOneToWashPayload",
+        "description": "The output of our `assignTypeOneToWash` mutation.",
+        "fields": [
+          {
+            "name": "clientMutationId",
+            "description": "The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "boolean",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "query",
+            "description": "Our root query field type. Allows us to run any query from our mutation payload.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Query",
               "ofType": null
             },
             "isDeprecated": false,

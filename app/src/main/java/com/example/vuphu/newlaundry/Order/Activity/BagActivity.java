@@ -154,7 +154,7 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
 
     @Override
     public void clickDel(int position) {
-        if(list.get(position).equals(KG)) {
+        if(list.get(position).getUnitID().equals(KG)) {
             boolean isDeleteWeight = true;
             for(int i=0; i<list.size(); i++) {
                 if(i != position) {

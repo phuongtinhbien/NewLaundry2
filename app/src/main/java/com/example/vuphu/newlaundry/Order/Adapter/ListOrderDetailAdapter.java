@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
+import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
 
 public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetailViewHolder> {
 
@@ -53,7 +54,12 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
         final OBOrderDetail obOrderDetail = list.get(position);
         Picasso.get().load(Uri.parse(obOrderDetail.getProduct().getAvatar())).into(holder.img);
         holder.title.setText(obOrderDetail.getProduct().getTitle());
-        holder.serviceName.setChipText(obOrderDetail.getServiceName());
+        if(obOrderDetail.getUnitID().equals(KG)){
+            holder.serviceName.setChipText(obOrderDetail.getServiceName() + " - " + obOrderDetail.getUnit());
+        } else {
+            holder.serviceName.setChipText(obOrderDetail.getServiceName());
+        }
+
         if(obOrderDetail.getCount() > 0) {
             holder.count.setVisibility(View.VISIBLE);
             holder.count.setText(obOrderDetail.getCount() + " item");
@@ -112,8 +118,10 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
         double sum = 0;
         for (OBOrderDetail obOrderDetail : list) {
             if(!listService.contains(obOrderDetail.getIdService())) {
-                listService.add(obOrderDetail.getIdService());
-                sum += Double.parseDouble(PreferenceUtil.getWeightService(context, obOrderDetail.getIdService()));
+                if(PreferenceUtil.checkKeyExist(context, obOrderDetail.getIdService())){
+                    listService.add(obOrderDetail.getIdService());
+                    sum += Double.parseDouble(PreferenceUtil.getWeightService(context, obOrderDetail.getIdService()));
+                }
             }
         }
         return sum;

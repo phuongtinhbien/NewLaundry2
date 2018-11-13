@@ -32,8 +32,8 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         TextView branchAddress = mWindow.findViewById(R.id.info_window_addressBranch);
         String[] str = marker.getSnippet().split(SPECIAL_STRING);
         branchAddress.setText(str[0]);
-//        TextView totalPrice = mWindow.findViewById(R.id.info_window_totalPrice);
-//        totalPrice.setText(str[1]);
+        TextView totalPrice = mWindow.findViewById(R.id.info_window_totalPrice);
+        totalPrice.setText(str[1]);
     }
 
     @Override

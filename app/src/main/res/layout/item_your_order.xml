@@ -19,6 +19,7 @@
             android:layout_height="wrap_content">
             <TableRow>
                 <com.robertlevonyan.views.chip.Chip
+                    android:id="@+id/status_order"
                     android:textColor="@color/white"
                     app:mcv_chipText="@string/stt_on_going"
                     app:mcv_textColor="@color/white"
@@ -56,7 +57,7 @@
 
                     android:textSize="@dimen/font_size_title_item" />
                 <TextView
-                    android:id="@+id/item_order_branch"
+                    android:id="@+id/item_order_branch_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_item"

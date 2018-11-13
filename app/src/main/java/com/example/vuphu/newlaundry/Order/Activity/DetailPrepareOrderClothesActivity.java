@@ -6,6 +6,7 @@ import android.support.design.card.MaterialCardView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -275,7 +276,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                         finish();
                     }
                     else {
-                        if(note.getText().toString() != null){
+                        if(!TextUtils.isEmpty(note.getText().toString())){
                             obOrderDetail.setNote(note.getText().toString());
                         }
                         count = (long) slidr.getCurrentValue();

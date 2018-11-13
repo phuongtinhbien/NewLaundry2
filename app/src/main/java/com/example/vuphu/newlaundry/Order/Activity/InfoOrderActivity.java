@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
+import com.example.vuphu.newlaundry.CreateOrderAndDetailMutation;
 import com.example.vuphu.newlaundry.CurrentUserQuery;
 import com.example.vuphu.newlaundry.GetCustomerQuery;
 import com.example.vuphu.newlaundry.GetPromotionBranchsQuery;
@@ -33,6 +35,7 @@ import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 import com.example.vuphu.newlaundry.Order.OBTimeSchedule;
 import com.example.vuphu.newlaundry.Payment.OBPayment;
 import com.example.vuphu.newlaundry.PickupTimeDeliveryDialogFragment;
+import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.Promotion.ItemPromotionListDialogFragment;
 import com.example.vuphu.newlaundry.Promotion.OBPromotion;
 import com.example.vuphu.newlaundry.R;
@@ -40,16 +43,24 @@ import com.example.vuphu.newlaundry.Service.ListServiceChooseAdapter;
 import com.example.vuphu.newlaundry.Service.OBService;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.example.vuphu.newlaundry.Utils.Util;
+import com.example.vuphu.newlaundry.type.CustomerOrderInput;
+import com.example.vuphu.newlaundry.type.OrderDetailInput;
 import com.github.florent37.androidslidr.Slidr;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.example.vuphu.newlaundry.Utils.PreferenceUtil.removeOrderList;
+import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
+import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
+import static com.example.vuphu.newlaundry.Utils.StringKey.LIST_SERVICE;
 
 public class InfoOrderActivity extends AppCompatActivity implements ItemListDialogFragment.Listener,
         ItemPromotionListDialogFragment.Listener,
@@ -62,8 +73,6 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
     ArrayList<String> paymentList = new ArrayList<>();
     private Toolbar toolbar;
     private RecyclerView listClothes;
-//    private Slidr deliveryDate;
-//    private TextView deliveryYourChoice;
     private CircleImageView avatar;
     private Button checkOut;
     private ArrayList<OBTimeSchedule> listTime;
@@ -75,7 +84,11 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
     private TextView paymentValue, promotionValue, noteValue, name, email, phone, pickupPlace, deliveryPlace, pickUpdate, deliveryDate, pickupTime, deliveryTime, totalItem;
     private LinearLayout payment, promotion, note;
     private MaterialButton chooseSchedule;
-    protected OBBranch obBranch;
+    private String idBranch;
+    private Popup popup;
+    private ArrayList<String> listService;
+    private String idOder;
+    private String idPromotion = null;
 
     private static final String PICKUP_KEY = "PICKUP_KEY";
     private static final String DROPOFF_KEY = "DROPOFF_KEY";
@@ -102,6 +115,8 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
         pickupTime = findViewById(R.id.prepare_order_time_pick_up);
         deliveryTime = findViewById(R.id.prepare_order_time_delivery);
         totalItem = findViewById(R.id.item_prepare_order_total_items);
+        popup = new Popup(InfoOrderActivity.this);
+
         Intent intent = getIntent();
         if(intent.hasExtra(PICKUP_KEY)){
             pickupPlace.setText(intent.getStringExtra(PICKUP_KEY));
@@ -109,6 +124,9 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
         if(intent.hasExtra(DROPOFF_KEY)){
             deliveryPlace.setText(intent.getStringExtra(DROPOFF_KEY));
         }
+        idBranch = intent.getStringExtra(ID_BRANCH);
+        listService = intent.getStringArrayListExtra(LIST_SERVICE);
+
         token = PreferenceUtil.getAuthToken(InfoOrderActivity.this);
         customer = PreferenceUtil.getCurrentUser(InfoOrderActivity.this);
         if(customer != null) {
@@ -172,28 +190,77 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
         checkOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), FinalOrderActivity.class));
+                if(validate()){
+                    popup.createLoadingDialog();
+                    popup.show();
+                    CustomerOrderInput customerOrderInput = CustomerOrderInput.builder()
+                            .branchId(idBranch)
+                            .customerId(customer.id())
+                            .deliveryDate(dateDeliveryValue)
+                            .pickUpDate(datePickupValue)
+                            .pickUpTimeId(TimePickupOB.getId())
+                            .deliveryTimeId(TimeDeliveryOB.getId())
+                            .deliveryPlace(deliveryPlace.getText().toString())
+                            .pickUpPlace(pickupPlace.getText().toString())
+                            .promotionId(idPromotion)
+                            .status("PENDING")
+                            .build();
+
+
+                    List<OrderDetailInput> list = new ArrayList<>();
+                    for(OBOrderDetail obOrderDetail : orderDetailList){
+                        OrderDetailInput orderDetailInput = OrderDetailInput.builder()
+                                .amount((int) obOrderDetail.getCount())
+                                .colorId(obOrderDetail.getColorID())
+                                .materialId(obOrderDetail.getMaterialID())
+                                .labelId(obOrderDetail.getLabelID())
+                                .productId(obOrderDetail.getProduct().getId())
+                                .unitPrice(obOrderDetail.getPriceID())
+                                .unitId(obOrderDetail.getUnitID())
+                                .serviceTypeId(obOrderDetail.getIdService())
+                                .note(obOrderDetail.getNote())
+                                .build();
+                        list.add(orderDetailInput);
+                    }
+
+
+                    GraphqlClient.getApolloClient(token, false).mutate(CreateOrderAndDetailMutation.builder()
+                            .order(customerOrderInput)
+                            .detailOrder(list)
+                            .build()
+                    ).enqueue(new ApolloCall.Callback<CreateOrderAndDetailMutation.Data>() {
+                        @Override
+                        public void onResponse(@NotNull Response<CreateOrderAndDetailMutation.Data> response) {
+                            idOder = response.data().createOrderAndDetail().customerOrder().id();
+                            Log.i("customer_order", idOder);
+                            clearPreference();
+                            popup.hide();
+                            startActivity(new Intent(getApplicationContext(), FinalOrderActivity.class).putExtra(ID_ORDER, idOder));
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull ApolloException e) {
+                            Log.e("createOrderDetail_err", e.getCause() +" - "+e);
+                            popup.createFailDialog("Create Order fail!", "OK");
+
+                        }
+                    });
+
+
+
+                }
             }
         });
-        obBranch = new OBBranch("1", "CHI NHÁNH BÌNH THỦY 1", "10.0531254", "105.741299", "");
 
-//        paymentValue = findViewById(R.id.item_prepare_order_payment);
         promotionValue = findViewById(R.id.item_prepare_order_promotion);
         noteValue = findViewById(R.id.item_prepare_order_note);
 
-//        payment = findViewById(R.id.check_out_payment);
+
         promotion = findViewById(R.id.check_out_promotion);
         note = findViewById(R.id.check_out_note);
 
         initializePromotion();
-//        paymentList.addAll(Arrays.asList(getResources().getStringArray(R.array.arr_payment)));
-//        payment.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ItemListDialogFragment bottomSheetDialogFragment = ItemListDialogFragment.newInstance(TYPE_LIST_PAYMENT,paymentList);
-//                bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
-//            }
-//        });
 
 
         note.setOnClickListener(new View.OnClickListener() {
@@ -215,8 +282,39 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
 
     }
 
+    private void clearPreference() {
+        removeOrderList(InfoOrderActivity.this);
+        if(listService.size() > 0) {
+            for (String service : listService) {
+                if(PreferenceUtil.checkKeyExist( InfoOrderActivity.this, service)) {
+                    PreferenceUtil.removeKey(InfoOrderActivity.this, service);
+                }
+            }
+        }
+    }
+
+    private boolean validate() {
+        if(TimeDeliveryOB == null) {
+            Toast.makeText(InfoOrderActivity.this, "Please choose TimeDelivery", Toast.LENGTH_LONG).show();
+            return false;
+        } else if(TimePickupOB == null) {
+            Toast.makeText(InfoOrderActivity.this, "Please choose TimePickup", Toast.LENGTH_LONG).show();
+            return false;
+        } else if(TextUtils.isEmpty(datePickupValue)) {
+            Toast.makeText(InfoOrderActivity.this, "Please choose DatePickup", Toast.LENGTH_LONG).show();
+            return false;
+        } else if(TextUtils.isEmpty(datePickupValue)) {
+            Toast.makeText(InfoOrderActivity.this, "Please choose DateDelivery", Toast.LENGTH_LONG).show();
+            return false;
+        } else if(TextUtils.isEmpty(promotionValue.getText().toString())) {
+            Toast.makeText(InfoOrderActivity.this, "Please choose Promotion", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
     private void initializePromotion() {
-        GraphqlClient.getApolloClient(token, false).query(GetPromotionBranchsQuery.builder().branchID(obBranch.getId()).build())
+        GraphqlClient.getApolloClient(token, false).query(GetPromotionBranchsQuery.builder().branchID(idBranch).build())
                 .enqueue(new ApolloCall.Callback<GetPromotionBranchsQuery.Data>() {
                     @Override
                     public void onResponse(@NotNull Response<GetPromotionBranchsQuery.Data> response) {
@@ -299,6 +397,7 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
     @Override
     public void onItemPromotionClicked(int position) {
         promotionValue.setText(promotionList.get(position).getCode());
+        idPromotion = promotionList.get(position).getId();
     }
 
     @Override
