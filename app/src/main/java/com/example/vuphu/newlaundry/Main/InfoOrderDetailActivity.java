@@ -163,7 +163,9 @@ public class InfoOrderDetailActivity extends AppCompatActivity {
                     pickupPlaceValue = response.data().customerOrderById().pickUpPlace();
                     pickupTimeValue = response.data().customerOrderById().timeScheduleByPickUpTimeId().timeStart() + "-" + response.data().customerOrderById().timeScheduleByPickUpTimeId().timeEnd();
                     deliveryTimeValue = response.data().customerOrderById().timeScheduleByDeliveryTimeId().timeStart() + "-" + response.data().customerOrderById().timeScheduleByDeliveryTimeId().timeEnd();
-                    promotionValue = response.data().customerOrderById().promotionByPromotionId().promotionCode();
+                    if(response.data().customerOrderById().promotionByPromotionId() != null){
+                        promotionValue = response.data().customerOrderById().promotionByPromotionId().promotionCode();
+                    }
                     List<GetOrdetailByOrderidQuery.Node> nodes = response.data().customerOrderById().orderDetailsByOrderId().nodes();
                     if(nodes.size() > 0) {
                         for(GetOrdetailByOrderidQuery.Node node : nodes) {

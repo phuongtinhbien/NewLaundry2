@@ -202,7 +202,6 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
                             obOrderDetail.setUnitID(unitID);
                             if(unitID.equals(KG)){
                                 obOrderDetail.setUnit(UNIT_NAME_KG);
-                                obOrderDetail.setCount(Long.parseLong(weight));
                             } else {
                                 obOrderDetail.setUnit(UNIT_NAME_ITEM);
                             }
