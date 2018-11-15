@@ -19213,12 +19213,36 @@
             "deprecationReason": null
           },
           {
+            "name": "colorByColorId",
+            "description": "Reads a single `Color` that is related to this `OrderDetail`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Color",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "productByProductId",
             "description": "Reads a single `Product` that is related to this `OrderDetail`.",
             "args": [],
             "type": {
               "kind": "OBJECT",
               "name": "Product",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "materialByMaterialId",
+            "description": "Reads a single `Material` that is related to this `OrderDetail`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Material",
               "ofType": null
             },
             "isDeprecated": false,
@@ -21038,6 +21062,111 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "BillDetailsConnection",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orderDetailsByColorId",
+            "description": "Reads and enables pagination through a set of `OrderDetail`.",
+            "args": [
+              {
+                "name": "first",
+                "description": "Only read the first `n` values of the set.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "last",
+                "description": "Only read the last `n` values of the set.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "offset",
+                "description": "Skip the first `n` values from our `after` cursor, an alternative to cursor based pagination. May not be used with `last`.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "before",
+                "description": "Read all values in the set before (above) this cursor.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Cursor",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "after",
+                "description": "Read all values in the set after (below) this cursor.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Cursor",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "orderBy",
+                "description": "The method to use when ordering `OrderDetail`.",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "OrderDetailsOrderBy",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": "[PRIMARY_KEY_ASC]"
+              },
+              {
+                "name": "condition",
+                "description": "A condition to be used in determining which values should be returned by the collection.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "OrderDetailCondition",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "filter",
+                "description": "A filter to be used in determining which values should be returned by the collection.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "OrderDetailFilter",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "OrderDetailsConnection",
                 "ofType": null
               }
             },
@@ -24855,6 +24984,111 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "BillDetailsConnection",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orderDetailsByMaterialId",
+            "description": "Reads and enables pagination through a set of `OrderDetail`.",
+            "args": [
+              {
+                "name": "first",
+                "description": "Only read the first `n` values of the set.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "last",
+                "description": "Only read the last `n` values of the set.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "offset",
+                "description": "Skip the first `n` values from our `after` cursor, an alternative to cursor based pagination. May not be used with `last`.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "before",
+                "description": "Read all values in the set before (above) this cursor.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Cursor",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "after",
+                "description": "Read all values in the set after (below) this cursor.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Cursor",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "orderBy",
+                "description": "The method to use when ordering `OrderDetail`.",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "OrderDetailsOrderBy",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": "[PRIMARY_KEY_ASC]"
+              },
+              {
+                "name": "condition",
+                "description": "A condition to be used in determining which values should be returned by the collection.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "OrderDetailCondition",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "filter",
+                "description": "A filter to be used in determining which values should be returned by the collection.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "OrderDetailFilter",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "OrderDetailsConnection",
                 "ofType": null
               }
             },
@@ -39787,6 +40021,18 @@
             "deprecationReason": null
           },
           {
+            "name": "customerName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "sn",
             "description": null,
             "args": [],
@@ -44435,6 +44681,33 @@
             "deprecationReason": null
           },
           {
+            "name": "searchcustomerorders",
+            "description": "Reads and enables pagination through a set of `CustomerOrder`.",
+            "args": [
+              {
+                "name": "input",
+                "description": "The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "SearchcustomerordersInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "SearchcustomerordersPayload",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "updatereceiptanddetail",
             "description": null,
             "args": [
@@ -47720,12 +47993,36 @@
             "deprecationReason": null
           },
           {
+            "name": "colorByColorId",
+            "description": "Reads a single `Color` that is related to this `OrderDetail`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Color",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "productByProductId",
             "description": "Reads a single `Product` that is related to this `OrderDetail`.",
             "args": [],
             "type": {
               "kind": "OBJECT",
               "name": "Product",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "materialByMaterialId",
+            "description": "Reads a single `Material` that is related to this `OrderDetail`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Material",
               "ofType": null
             },
             "isDeprecated": false,
@@ -57047,12 +57344,36 @@
             "deprecationReason": null
           },
           {
+            "name": "colorByColorId",
+            "description": "Reads a single `Color` that is related to this `OrderDetail`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Color",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "productByProductId",
             "description": "Reads a single `Product` that is related to this `OrderDetail`.",
             "args": [],
             "type": {
               "kind": "OBJECT",
               "name": "Product",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "materialByMaterialId",
+            "description": "Reads a single `Material` that is related to this `OrderDetail`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Material",
               "ofType": null
             },
             "isDeprecated": false,
@@ -65455,12 +65776,36 @@
             "deprecationReason": null
           },
           {
+            "name": "colorByColorId",
+            "description": "Reads a single `Color` that is related to this `OrderDetail`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Color",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "productByProductId",
             "description": "Reads a single `Product` that is related to this `OrderDetail`.",
             "args": [],
             "type": {
               "kind": "OBJECT",
               "name": "Product",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "materialByMaterialId",
+            "description": "Reads a single `Material` that is related to this `OrderDetail`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Material",
               "ofType": null
             },
             "isDeprecated": false,
@@ -70321,6 +70666,199 @@
             "type": {
               "kind": "OBJECT",
               "name": "UnitPricesEdge",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "SearchcustomerordersInput",
+        "description": "All input for the `searchcustomerorders` mutation.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "clientMutationId",
+            "description": "An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "customerName",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "customerOrder",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigFloat",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "branch",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "BigFloat",
+              "ofType": null
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SearchcustomerordersPayload",
+        "description": "The output of our `searchcustomerorders` mutation.",
+        "fields": [
+          {
+            "name": "clientMutationId",
+            "description": "The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "customerOrders",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CustomerOrder",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "query",
+            "description": "Our root query field type. Allows us to run any query from our mutation payload.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Query",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "customerByCustomerId",
+            "description": "Reads a single `Customer` that is related to this `CustomerOrder`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Customer",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "branchByBranchId",
+            "description": "Reads a single `Branch` that is related to this `CustomerOrder`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Branch",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "timeScheduleByPickUpTimeId",
+            "description": "Reads a single `TimeSchedule` that is related to this `CustomerOrder`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TimeSchedule",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "timeScheduleByDeliveryTimeId",
+            "description": "Reads a single `TimeSchedule` that is related to this `CustomerOrder`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TimeSchedule",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "promotionByPromotionId",
+            "description": "Reads a single `Promotion` that is related to this `CustomerOrder`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Promotion",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "customerOrderEdge",
+            "description": "An edge for our `CustomerOrder`. May be used by Relay 1.",
+            "args": [
+              {
+                "name": "orderBy",
+                "description": "The method to use when ordering `CustomerOrder`.",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "CustomerOrdersOrderBy",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": "[PRIMARY_KEY_ASC]"
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CustomerOrdersEdge",
               "ofType": null
             },
             "isDeprecated": false,

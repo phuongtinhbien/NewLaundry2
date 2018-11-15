@@ -50,6 +50,7 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,17 +61,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.example.vuphu.newlaundry.Utils.PreferenceUtil.removeOrderList;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
+import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
 import static com.example.vuphu.newlaundry.Utils.StringKey.LIST_SERVICE;
+import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_PRICE;
+import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_WEIGHT;
 
-public class InfoOrderActivity extends AppCompatActivity implements ItemListDialogFragment.Listener,
+public class InfoOrderActivity extends AppCompatActivity implements
         ItemPromotionListDialogFragment.Listener,
-        InputDialogFragment.InputListener,
         PickupTimeDeliveryDialogFragment.GetPickupTimeDelivery {
-    private static final String TYPE_LIST_PAYMENT = "PM";
     private String token;
     private static CurrentUserQuery.CurrentUser currentUser;
     private static GetCustomerQuery.CustomerById customer;
-    ArrayList<String> paymentList = new ArrayList<>();
     private Toolbar toolbar;
     private RecyclerView listClothes;
     private CircleImageView avatar;
@@ -81,14 +82,15 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
     private List<OBOrderDetail> orderDetailList = new ArrayList<>();
     private String datePickupValue, dateDeliveryValue;
     private OBTimeSchedule TimePickupOB, TimeDeliveryOB;
-    private TextView paymentValue, promotionValue, noteValue, name, email, phone, pickupPlace, deliveryPlace, pickUpdate, deliveryDate, pickupTime, deliveryTime, totalItem;
-    private LinearLayout payment, promotion, note;
+    private TextView promotionValue, name, email, phone, pickupPlace, deliveryPlace, pickUpdate, deliveryDate, pickupTime, deliveryTime, totalItem, weightTotal, priceTotal;
+    private LinearLayout promotion;
     private MaterialButton chooseSchedule;
     private String idBranch;
     private Popup popup;
     private ArrayList<String> listService;
     private String idOder;
     private String idPromotion = null;
+    private DecimalFormat dec;
 
     private static final String PICKUP_KEY = "PICKUP_KEY";
     private static final String DROPOFF_KEY = "DROPOFF_KEY";
@@ -115,7 +117,10 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
         pickupTime = findViewById(R.id.prepare_order_time_pick_up);
         deliveryTime = findViewById(R.id.prepare_order_time_delivery);
         totalItem = findViewById(R.id.item_prepare_order_total_items);
+        weightTotal = findViewById(R.id.item_info_order_total_weight);
+        priceTotal = findViewById(R.id.item_prepare_order_total);
         popup = new Popup(InfoOrderActivity.this);
+        dec = new DecimalFormat("##,###,###,###");
 
         Intent intent = getIntent();
         if(intent.hasExtra(PICKUP_KEY)){
@@ -124,6 +129,7 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
         if(intent.hasExtra(DROPOFF_KEY)){
             deliveryPlace.setText(intent.getStringExtra(DROPOFF_KEY));
         }
+
         idBranch = intent.getStringExtra(ID_BRANCH);
         listService = intent.getStringArrayListExtra(LIST_SERVICE);
 
@@ -181,11 +187,12 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
 
         orderDetailList = new ArrayList<>();
         orderDetailList = PreferenceUtil.getListOrderDetail(InfoOrderActivity.this);
-        prepareList();
         adapter = new ListClothesAdapter(this, orderDetailList);
 
         listClothes.setAdapter(adapter);
-        totalItem.setText(adapter.sumCount() + " item");
+        totalItem.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
+        weightTotal.setText(adapter.sumWeight() + " " + getResources().getString(R.string.kg));
+        priceTotal.setText(dec.format(adapter.sumPrice()) + " VND");
 
         checkOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,22 +261,11 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
         });
 
         promotionValue = findViewById(R.id.item_prepare_order_promotion);
-        noteValue = findViewById(R.id.item_prepare_order_note);
 
 
         promotion = findViewById(R.id.check_out_promotion);
-        note = findViewById(R.id.check_out_note);
 
         initializePromotion();
-
-
-        note.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InputDialogFragment inputDialogFragment = InputDialogFragment.newInstance();
-                inputDialogFragment.show(getSupportFragmentManager(), inputDialogFragment.getTag());
-            }
-        });
 
         chooseSchedule = findViewById(R.id.item_prepare_order_btn_schedule);
         chooseSchedule.setOnClickListener(new View.OnClickListener() {
@@ -295,19 +291,19 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
 
     private boolean validate() {
         if(TimeDeliveryOB == null) {
-            Toast.makeText(InfoOrderActivity.this, "Please choose TimeDelivery", Toast.LENGTH_LONG).show();
+            Toast.makeText(InfoOrderActivity.this, getResources().getString(R.string.please_choose_time_delivery), Toast.LENGTH_LONG).show();
             return false;
         } else if(TimePickupOB == null) {
-            Toast.makeText(InfoOrderActivity.this, "Please choose TimePickup", Toast.LENGTH_LONG).show();
+            Toast.makeText(InfoOrderActivity.this, getResources().getString(R.string.please_choose_time_pickup), Toast.LENGTH_LONG).show();
             return false;
         } else if(TextUtils.isEmpty(datePickupValue)) {
-            Toast.makeText(InfoOrderActivity.this, "Please choose DatePickup", Toast.LENGTH_LONG).show();
+            Toast.makeText(InfoOrderActivity.this, getResources().getString(R.string.please_choose_date_pickup), Toast.LENGTH_LONG).show();
             return false;
         } else if(TextUtils.isEmpty(datePickupValue)) {
-            Toast.makeText(InfoOrderActivity.this, "Please choose DateDelivery", Toast.LENGTH_LONG).show();
+            Toast.makeText(InfoOrderActivity.this, getResources().getString(R.string.please_choose_date_delivery), Toast.LENGTH_LONG).show();
             return false;
         } else if(TextUtils.isEmpty(promotionValue.getText().toString())) {
-            Toast.makeText(InfoOrderActivity.this, "Please choose Promotion", Toast.LENGTH_LONG).show();
+            Toast.makeText(InfoOrderActivity.this, getResources().getString(R.string.please_choose_promotion), Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -378,31 +374,14 @@ public class InfoOrderActivity extends AppCompatActivity implements ItemListDial
     private void initToolbar() {
         toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Information Order");
+        setTitle(R.string.info_order);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    private void prepareList() {
-        for(OBOrderDetail obOrderDetail : orderDetailList) {
-
-        }
-    }
-
-    @Override
-    public void onItemClicked(String type, int position) {
-        paymentValue.setText(paymentList.get(position));
-
     }
 
     @Override
     public void onItemPromotionClicked(int position) {
         promotionValue.setText(promotionList.get(position).getCode());
         idPromotion = promotionList.get(position).getId();
-    }
-
-    @Override
-    public void onInputClicked(String value) {
-        noteValue.setText(value);
     }
 
     @Override

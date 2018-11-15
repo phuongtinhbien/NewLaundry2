@@ -36,6 +36,7 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/Img_qrCode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="centerInside"

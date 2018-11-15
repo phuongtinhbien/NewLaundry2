@@ -86,7 +86,7 @@ public class ChooseUnitActivity extends AppCompatActivity {
                         intent1.putExtra("weight", weight_kg);
                     }
                     else {
-                        Toast.makeText(ChooseUnitActivity.this, "Weight must not null", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ChooseUnitActivity.this, R.string.weight_null, Toast.LENGTH_LONG).show();
                     }
                 }
                 if((kg.isChecked() && !TextUtils.isEmpty(weight.getText().toString())) || item.isChecked()) {
@@ -106,7 +106,7 @@ public class ChooseUnitActivity extends AppCompatActivity {
     private void initToolbar() {
         toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Choose unit of clothes");
+        setTitle(R.string.choose_unit_of_clothes);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

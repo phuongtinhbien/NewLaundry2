@@ -44,23 +44,23 @@ public class MainActivity extends AppCompatActivity {
             toolbar.getMenu().findItem(R.id.menu_bag_action).setVisible(true);
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    setTitle("Home");
+                    setTitle(R.string.title_home);
                     toolbar.getMenu().findItem(R.id.menu_read_action).setVisible(false);
                    fragment = HomeFragment.newInstance();
                    break;
                 case R.id.navigation_dashboard:
-                    setTitle("Your Order");
+                    setTitle(R.string.yout_order);
                     toolbar.getMenu().findItem(R.id.menu_read_action).setVisible(false);
                     fragment = OrderFragment.newInstance();
                     break;
                 case R.id.navigation_notifications:
-                    setTitle("Notification");
+                    setTitle(R.string.notification);
                     toolbar.getMenu().findItem(R.id.menu_search_action).setVisible(false);
                     toolbar.getMenu().findItem(R.id.menu_bag_action).setVisible(false);
                     fragment = NotificationFragment.newInstance();
                     break;
                 case R.id.navigation_person:
-                    setTitle("Your acount");
+                    setTitle(R.string.title_person);
                     fragment = AccountFragment.newInstance();
                     toolbar.getMenu().findItem(R.id.menu_read_action).setVisible(false);
                     toolbar.getMenu().findItem(R.id.menu_search_action).setVisible(false);
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.message,HomeFragment.newInstance()).commit();
-        setTitle("Home");
+        setTitle(R.string.title_home);
         initToolbar();
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {

@@ -1,6 +1,7 @@
 query getOrderFinish($id: BigFloat!){
   allCustomerOrders(orderBy:CREATE_DATE_DESC, filter:{customerId:{equalTo: $id}, status:{equalTo:"FINISHED"}}) {
     nodes {
+      id
       status
       branchByBranchId{
         address

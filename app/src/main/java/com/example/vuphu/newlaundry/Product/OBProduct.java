@@ -10,14 +10,12 @@ public class OBProduct implements Serializable {
     private String id;
     private String avatar;
     private String title;
-    private String pricing;
     private String category;
 
-    public OBProduct(String id ,String avatar, String title, String pricing, String category) {
+    public OBProduct(String id ,String avatar, String title, String category) {
         this.id = id;
         this.avatar = avatar;
         this.title = title;
-        this.pricing = pricing;
         this.category = category;
     }
 
@@ -46,14 +44,6 @@ public class OBProduct implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getPricing() {
-        return pricing;
-    }
-
-    public void setPricing(String pricing) {
-        this.pricing = pricing;
     }
 
     public String getCategory() {

@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">NewLaundry</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -18,31 +17,7 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
-    <string-array name="arr_production">
-        <item>REN</item>
-        <item>NOSBYN</item>
-        <item>THE BLUE T-SHIRT</item>
-        <item>COCOSIN</item>
-        <item>WEPHOBIA</item>
-        <item>MAGONN</item>
-    </string-array>
-    <string-array name="arr_color">
-        <item>Light Blue</item>
-        <item>Light Red</item>
-        <item>Green</item>
-        <item>Brown</item>
-    </string-array>
-    <string-array name="arr_material">
-        <item>Cotton</item>
-        <item>Kaki</item>
-        <item>Kate</item>
-        <item>Jean</item>
-        <item>Denim</item>
-    </string-array>
-    <string-array name="arr_payment">
-        <item>Cash</item>
-        <item>VISA</item>
-    </string-array>
+
     <!--notify-->
     <string name="notify_successfully_saved">Your information has been saved</string>
     <string name="notify_fail">Something went wrong\nPlease check!</string>
@@ -188,6 +163,29 @@
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
     <string name="location_permission_denied">Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'NewLaundry\'.</string>
     <string name="permission_required_toast">Location permission is required for NewLuandry.</string>
+    <string name="app_name">NewLuandry</string>
+    <string name="name_item">Item</string>
+    <string name="please_select">Please select</string>
+    <string name="Undefine">Undefine</string>
+    <string name="choose_unit_of_clothes">Choose unit of clothes</string>
+    <string name="kg">Kg</string>
+    <string name="weight_null">Weight must not null</string>
+    <string name="choose_clothes">Choose clothes</string>
+    <string name="detail_clothes">Detail clothes</string>
+    <string name="save">SAVE</string>
+    <string name="your_bag">Your bag</string>
+    <string name="info_order">Information Order</string>
+    <string name="please_choose_time_delivery">Please choose TimeDelivery</string>
+    <string name="please_choose_time_pickup">Please choose TimePickup</string>
+    <string name="please_choose_date_pickup">Please choose DatePickup</string>
+    <string name="please_choose_date_delivery">Please choose DateDelivery</string>
+    <string name="please_choose_promotion">Please choose Promotion</string>
+    <string name="choose_map">Please choose store in map!</string>
+    <string name="you_choose">You choose</string>
+    <string name="time_pickup_null">Time Pickup have to not null!</string>
+    <string name="time_delivery_null">Time Delivery have to not null!</string>
+    <string name="time_pickup_2h">Time Pickup before Time Pickup 2 hour</string>
+    <string name="date_delivery_pickup">Date Pickup must before Date Delivery</string>
 
 </resources>
 

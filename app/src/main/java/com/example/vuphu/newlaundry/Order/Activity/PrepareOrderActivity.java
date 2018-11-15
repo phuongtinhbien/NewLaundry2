@@ -46,6 +46,8 @@ import me.aflak.utils.Condition;
 
 import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
 import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
+import static com.example.vuphu.newlaundry.Utils.StringKey.UNIT_NAME_ITEM;
+import static com.example.vuphu.newlaundry.Utils.StringKey.UNIT_NAME_KG;
 
 public class PrepareOrderActivity extends AppCompatActivity implements iFCategory, IFOBPrepareOrder{
 
@@ -84,7 +86,7 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
     private void initToolbar() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Choose clothes");
+        setTitle(R.string.choose_clothes);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -97,15 +99,15 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
         unitID = intent.getStringExtra("unit");
         if(intent.hasExtra("weight")){
             weight = intent.getStringExtra("weight");
-            if(PreferenceUtil.checkKeyExist(this, idService)){
-                String weightOld = PreferenceUtil.getWeightService(this, idService);
-                float weightNew = Float.parseFloat(weight) + Float.parseFloat(weightOld);
-                weight = Float.toString(weightNew);
-            }
-            PreferenceUtil.setWeightService(idService, weight, this);
-            Log.i("TestWeight", weight);
+//            if(PreferenceUtil.checkKeyExist(this, idService)){
+//                String weightOld = PreferenceUtil.getWeightService(this, idService);
+//                float weightNew = Float.parseFloat(weight) + Float.parseFloat(weightOld);
+//                weight = Float.toString(weightNew);
+//            }
+//            PreferenceUtil.setWeightService(idService, weight, this);
+//            Log.i("TestWeight", weight);
         }
-        Log.i("weight",idService + "--" + PreferenceUtil.getWeightService(this, idService) );
+//        Log.i("weight",idService + "--" + PreferenceUtil.getWeightService(this, idService) );
         token = PreferenceUtil.getAuthToken(getApplicationContext());
         listPrepareOrder = findViewById(R.id.prepare_order_list_category);
 //        listPrepareOrder.setHasFixedSize(true);
@@ -198,6 +200,12 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
                             obOrderDetail.setIdService(idService);
                             obOrderDetail.setServiceName(serviceName);
                             obOrderDetail.setUnitID(unitID);
+                            if(unitID.equals(KG)){
+                                obOrderDetail.setUnit(UNIT_NAME_KG);
+                                obOrderDetail.setCount(Long.parseLong(weight));
+                            } else {
+                                obOrderDetail.setUnit(UNIT_NAME_ITEM);
+                            }
                             orderDetailList.add(obOrderDetail);
                         }
                         PrepareOrderActivity.this.runOnUiThread(new Runnable() {

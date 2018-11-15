@@ -82,7 +82,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_item"
                             android:fontFamily="sans-serif"
-                            android:text="Items"
+                            android:text="@string/item"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1.5"
                             android:textColor="@color/black_de"
@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_item"
                         android:fontFamily="sans-serif"
-                        android:text="Kilogams"
+                        android:text="@string/kg"
                         android:layout_weight="1.5"
                         android:textColor="@color/black_de"
                         android:textSize="@dimen/font_size_text" />
@@ -183,9 +183,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/choose_unit_kg"
-                    android:hint="@string/input_weight"
+                    android:hint="@string/total_weight"
                     android:textSize="@dimen/font_size_text"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:textColor="@color/black_de"/>
             </android.support.design.widget.TextInputLayout>
 

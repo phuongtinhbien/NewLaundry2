@@ -1,0 +1,34 @@
+query getOrdetailByOrderid($idOrder: BigFloat!) {
+  customerOrderById(id: $idOrder) {
+    pickUpDate
+    pickUpPlace
+    deliveryDate
+    deliveryPlace
+    timeScheduleByPickUpTimeId {
+      timeStart
+      timeEnd
+    }
+    timeScheduleByDeliveryTimeId {
+      timeEnd
+      timeStart
+    }
+    promotionByPromotionId {
+      promotionCode
+    }
+    orderDetailsByOrderId {
+      nodes {
+        productByProductId {
+          productName
+        }
+        amount
+        unitId
+        unitPriceByUnitPrice {
+          price
+        }
+        serviceTypeByServiceTypeId {
+          serviceTypeName
+        }
+      }
+    }
+  }
+}

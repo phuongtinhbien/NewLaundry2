@@ -219,43 +219,47 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
         obOrderDetail = (OBOrderDetail) intent.getSerializableExtra("OBOrderDetail");
         if(intent.hasExtra("Edit")){
             edit = intent.getBooleanExtra("Edit", true);
-            addToBag.setText("SAVE");
+            addToBag.setText(R.string.save);
             countValue((obOrderDetail.getCount()));
             note.setText(obOrderDetail.getNote());
             if(obOrderDetail.getLabel() != null) {
                 productionValue.setText(obOrderDetail.getLabel());
             } else {
-                productionValue.setText("Undefine");
+                productionValue.setText(R.string.Undefine);
             }
             if(obOrderDetail.getLabel() != null) {
                 colorValue.setText(obOrderDetail.getColor());
             } else {
-                colorValue.setText("Undefine");
+                colorValue.setText(R.string.Undefine);
             }
             if(obOrderDetail.getMaterial() != null) {
                 materialValue.setText(obOrderDetail.getMaterial());
             } else {
-                materialValue.setText("Undefine");
+                materialValue.setText(R.string.Undefine);
             }
-            if(obOrderDetail.getPrice() > 0) {
-                if(obOrderDetail.getUnitID().equals(KG)) {
-                    price.setChipText(Double.toString(obOrderDetail.getPrice()).substring(0, Double.toString(obOrderDetail.getPrice()).length()-2) + " VND/KG");
-                } else if(obOrderDetail.getUnitID().equals(ITEM)) {
-                    price.setChipText(Double.toString(obOrderDetail.getPrice()).substring(0, Double.toString(obOrderDetail.getPrice()).length()-2) + " VND/ITEM");
-                }
-            }
+//            if(obOrderDetail.getPrice() > 0) {
+//                if(obOrderDetail.getUnitID().equals(KG)) {
+//                    price.setChipText(Double.toString(obOrderDetail.getPrice()).substring(0, Double.toString(obOrderDetail.getPrice()).length()-2) + " VND/KG");
+//                } else if(obOrderDetail.getUnitID().equals(ITEM)) {
+//                    price.setChipText(Double.toString(obOrderDetail.getPrice()).substring(0, Double.toString(obOrderDetail.getPrice()).length()-2) + " VND/ITEM");
+//                }
+//            }
             production.setEnabled(false);
             color.setEnabled(false);
             material.setEnabled(false);
 
         } else {
             addToBag.setText(R.string.add_to_your_bag);
-            countValue(1);
+            if(obOrderDetail.getUnitID().equals(ITEM)){
+                countValue(1);
+            } else {
+                slidr.setVisibility(View.GONE);
+            }
         }
         if(obOrderDetail.getUnitID().equals(KG)) {
-            price.setChipText(dec.format(obOrderDetail.getPrice()) + " VND/KG");
+            price.setChipText(dec.format(obOrderDetail.getPrice()) + " VND/" + getResources().getString(R.string.kg));
         } else if(obOrderDetail.getUnitID().equals(ITEM)) {
-            price.setChipText(dec.format(obOrderDetail.getPrice()) + " VND/ITEM");
+            price.setChipText(dec.format(obOrderDetail.getPrice()) + " VND/" + getResources().getString(R.string.item));
         }
         title.setText(obOrderDetail.getProduct().getTitle());
         initList();
@@ -284,12 +288,17 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                         ArrayList<OBOrderDetail> list = PreferenceUtil.getListOrderDetail(DetailPrepareOrderClothesActivity.this);
                         boolean flag = false;
                         for (OBOrderDetail orderDetail: list){
+                            if(obOrderDetail.getUnitID().equals(KG) && checkDuplicateClothes(orderDetail.getUnitID(), obOrderDetail.getUnitID())) {
+                                long weight = obOrderDetail.getCount() + orderDetail.getCount();
+                                orderDetail.setCount(weight);
+                            }
                             if(checkDuplicateClothes(orderDetail.getColorID(), obOrderDetail.getColorID())
                                     && checkDuplicateClothes(orderDetail.getLabelID(), obOrderDetail.getLabelID())
                                     && checkDuplicateClothes(orderDetail.getMaterialID(), obOrderDetail.getMaterialID())
                                     && checkDuplicateClothes(orderDetail.getProduct().getId(), obOrderDetail.getProduct().getId())
                                     && checkDuplicateClothes(orderDetail.getIdService(),obOrderDetail.getIdService())
-                                    ){
+                                    && checkDuplicateClothes(orderDetail.getUnitID(), obOrderDetail.getUnitID()))
+                                    {
                                 long count = orderDetail.getCount();
                                 orderDetail.setCount(count + obOrderDetail.getCount());
                                 list.set(list.indexOf(orderDetail), orderDetail);
@@ -332,7 +341,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
     private void initToolbar() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Detail clothes");
+        setTitle(R.string.detail_clothes);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -369,7 +378,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
             @Override
             public String format(float value) {
 
-                return value>0?String.valueOf((int)value) + " items":String.valueOf((int)value) + " item";
+                return value>0? String.valueOf((int)value) + " " + getResources().getString(R.string.item) : String.valueOf((int)value) + " " + getResources().getString(R.string.item);
             }
         });
         slidr.setListener(new Slidr.Listener() {

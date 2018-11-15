@@ -31,8 +31,8 @@ public class OrderFragment extends Fragment {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_order, container, false);
         tabLayout = v.findViewById(R.id.tab_order);
-        tabLayout.addTab(tabLayout.newTab().setText("ACTIVE"));
-        tabLayout.addTab(tabLayout.newTab().setText("HISTORY"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_order_active));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_order_history));
         viewPager = v.findViewById(R.id.viewpager);
         viewPager.setAdapter(new PagerAdapter(getFragmentManager(), tabLayout.getTabCount()));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

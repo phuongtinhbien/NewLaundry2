@@ -40,7 +40,7 @@
                         android:layout_marginVertical="36dp"
                         android:id="@+id/chip_pricing"
                         android:layout_gravity="center_vertical|end"
-                        app:mcv_chipText="Undefine">
+                        app:mcv_chipText="@string/Undefine">
                     </com.robertlevonyan.views.chip.Chip>
 
                     <LinearLayout
@@ -133,7 +133,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/margin_item"
                                     android:fontFamily="sans-serif"
-                                    android:text="Please select"
+                                    android:text="@string/please_select"
                                     android:layout_weight="1.5"
                                     android:textColor="@color/black_de"
                                     android:textSize="@dimen/font_size_text" />
@@ -186,7 +186,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/margin_item"
                                 android:fontFamily="sans-serif"
-                                android:text="Please select"
+                                android:text="@string/please_select"
                                 android:layout_weight="1.5"
                                 android:textColor="@color/black_de"
                                 android:textSize="@dimen/font_size_text" />
@@ -239,7 +239,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/margin_item"
                                 android:fontFamily="sans-serif"
-                                android:text="Please select"
+                                android:text="@string/please_select"
                                 android:layout_weight="1.5"
                                 android:textColor="@color/black_de"
                                 android:textSize="@dimen/font_size_text" />

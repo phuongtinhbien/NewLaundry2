@@ -105,14 +105,14 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
             @Override
             public void onClick(View view) {
                 if(ObPickup == null) {
-                    Toast.makeText(getContext(), "Time Pickup have to not null!", Toast.LENGTH_LONG).show();
-                }
+                    Toast.makeText(getContext(),getResources().getString(R.string.time_pickup_null) , Toast.LENGTH_LONG).show();
+            }
                 else if(ObDelivery == null) {
-                        Toast.makeText(getContext(), "Time Delivery have to not null!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getResources().getString(R.string.time_delivery_null), Toast.LENGTH_LONG).show();
                     }
                     else if(mDatePickup.equals(mDateDelivery)) {
                         if(!checkTime(ObPickup.getTimeStart(), ObDelivery.getTimeStart())){
-                            Toast.makeText(getContext(), "Time Pickup before Time Delivery 2 hour", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), getResources().getString(R.string.time_pickup_2h), Toast.LENGTH_LONG).show();
                         }
                         else {
                             mListener.GetTime(ObPickup, ObDelivery, mDatePickup, mDateDelivery);
@@ -120,7 +120,7 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
                         }
                     }
                         else if(!checkDate(mDatePickup, mDateDelivery)) {
-                            Toast.makeText(getContext(), "Date Pickup must before Date Delivery", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), getResources().getString(R.string.date_delivery_pickup), Toast.LENGTH_LONG).show();
                         }
                             else {
                                 mListener.GetTime(ObPickup, ObDelivery, mDatePickup, mDateDelivery);

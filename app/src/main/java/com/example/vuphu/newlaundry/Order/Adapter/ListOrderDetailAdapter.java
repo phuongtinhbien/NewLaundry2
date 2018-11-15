@@ -54,15 +54,17 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
         final OBOrderDetail obOrderDetail = list.get(position);
         Picasso.get().load(Uri.parse(obOrderDetail.getProduct().getAvatar())).into(holder.img);
         holder.title.setText(obOrderDetail.getProduct().getTitle());
-        if(obOrderDetail.getUnitID().equals(KG)){
-            holder.serviceName.setChipText(obOrderDetail.getServiceName() + " - " + obOrderDetail.getUnit());
+        String unit_name = "";
+        if(obOrderDetail.getUnitID().equals(KG)) {
+            unit_name = context.getResources().getString(R.string.kg);
         } else {
-            holder.serviceName.setChipText(obOrderDetail.getServiceName());
+            unit_name = context.getResources().getString(R.string.item);
         }
+        holder.serviceName.setChipText(obOrderDetail.getServiceName() + " - " + unit_name);
 
         if(obOrderDetail.getCount() > 0) {
             holder.count.setVisibility(View.VISIBLE);
-            holder.count.setText(obOrderDetail.getCount() + " item");
+            holder.count.setText(obOrderDetail.getCount() + " " + context.getResources().getString(R.string.item));
             holder.btnDel.setVisibility(View.VISIBLE);
             holder.btnDel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -93,34 +95,36 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
     public long sumCount() {
         long count = 0;
         for (OBOrderDetail obOrderDetail: list){
-            count += obOrderDetail.getCount();
+            if(obOrderDetail.getUnitID().equals(ITEM)) {
+                count += obOrderDetail.getCount();
+            }
         }
         return count;
     }
 
-    public double sumPrice() {
+    public long sumPrice() {
         ArrayList<String> listService = new ArrayList<>();
-        double sum = 0;
+        long sum = 0;
         for (OBOrderDetail obOrderDetail: list) {
             if(obOrderDetail.getUnitID().equals(ITEM)){
                 sum += obOrderDetail.getPrice()*obOrderDetail.getCount();
             } else if(!listService.contains(obOrderDetail.getIdService())){
                 listService.add(obOrderDetail.getIdService());
-                double weight = Double.parseDouble(PreferenceUtil.getWeightService(context, obOrderDetail.getIdService()));
+                long weight = obOrderDetail.getCount();
                 sum += obOrderDetail.getPrice()*weight;
             }
         }
         return sum;
     }
 
-    public double sumWeight() {
+    public long sumWeight() {
         ArrayList<String> listService = new ArrayList<>();
-        double sum = 0;
+        long sum = 0;
         for (OBOrderDetail obOrderDetail : list) {
-            if(!listService.contains(obOrderDetail.getIdService())) {
-                if(PreferenceUtil.checkKeyExist(context, obOrderDetail.getIdService())){
+            if(obOrderDetail.getUnitID().equals(KG)) {
+                if(!listService.contains(obOrderDetail.getIdService())) {
                     listService.add(obOrderDetail.getIdService());
-                    sum += Double.parseDouble(PreferenceUtil.getWeightService(context, obOrderDetail.getIdService()));
+                    sum += obOrderDetail.getCount();
                 }
             }
         }

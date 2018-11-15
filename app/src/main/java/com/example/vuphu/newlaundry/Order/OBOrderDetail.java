@@ -57,6 +57,7 @@ public class OBOrderDetail implements Serializable {
         this.serviceName = serviceName;
     }
 
+
     public String getPriceID() {
         return priceID;
     }

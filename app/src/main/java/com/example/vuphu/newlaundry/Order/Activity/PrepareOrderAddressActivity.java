@@ -70,10 +70,13 @@ import java.util.Locale;
 import static com.example.vuphu.newlaundry.Utils.LocationUtils.getDistanceFromLocation;
 import static com.example.vuphu.newlaundry.Utils.StringKey.DROPOFF_KEY;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
+import static com.example.vuphu.newlaundry.Utils.StringKey.LATITUDE;
 import static com.example.vuphu.newlaundry.Utils.StringKey.LIST_SERVICE;
+import static com.example.vuphu.newlaundry.Utils.StringKey.LONGITUDE;
 import static com.example.vuphu.newlaundry.Utils.StringKey.PICKUP_KEY;
 import static com.example.vuphu.newlaundry.Utils.StringKey.SPECIAL_STRING;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_PRICE;
+import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_WEIGHT;
 
 
 public class PrepareOrderAddressActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -89,6 +92,8 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
     private FloatingActionButton prepareNext;
     private Popup popup;
     private LatLng location;
+    private double latitude;
+    private double longitude;
     private Marker myMarker;
     private String price;
     private static GetCustomerQuery.CustomerById customer;
@@ -105,24 +110,29 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
         setContentView(R.layout.activity_prepare_order_address);
         token = PreferenceUtil.getAuthToken(PrepareOrderAddressActivity.this);
         builder = new LatLngBounds.Builder();
+        popup = new Popup(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         Intent intent = getIntent();
         if(intent.hasExtra(TOTAL_PRICE)){
             price = intent.getStringExtra(TOTAL_PRICE);
         }
+        if(intent.hasExtra(LATITUDE)){
+            latitude = intent.getDoubleExtra(LATITUDE, 0);
+        }
+        if(intent.hasExtra(LONGITUDE)) {
+            longitude = intent.getDoubleExtra(LONGITUDE, 0);
+        }
+        location = new LatLng(latitude, longitude);
         pickUp = findViewById(R.id.prepare_order_address_pick_up);
         dropOff = findViewById(R.id.prepare_order_address_drop_off);
         customerName = findViewById(R.id.item_prepare_order_your_name);
         customerAddress = findViewById(R.id.item_prepare_order_your_address);
-        getCustomerInfo();
         prepareNext = findViewById(R.id.prepare_order_next);
         mapFragment.getMapAsync(this);
         listService = new ArrayList<>();
         listBranchTemp = new ArrayList<OBBranch>();
         listBranch = new ArrayList<OBBranch>();
-        popup = new Popup(this);
-        initMap();
         prepareNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,14 +143,17 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
                     intent.putExtra(PICKUP_KEY, pickUp.getText().toString());
                     intent.putExtra(DROPOFF_KEY, dropOff.getText().toString());
                     intent.putStringArrayListExtra(LIST_SERVICE, listService);
+
+                    intent.putExtra(TOTAL_PRICE, price);
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(getApplicationContext() ,"Please choose store in map!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext() ,getResources().getString(R.string.choose_map), Toast.LENGTH_LONG).show();
                 }
 
             }
         });
+        getCustomerInfo();
         initToolbar();
 
 
@@ -161,71 +174,15 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
 
     private void getCustomerInfo() {
         customer = PreferenceUtil.getCurrentUser(getApplicationContext());
-        if(customer == null) {
-            String idUser = PreferenceUtil.getIdUser(PrepareOrderAddressActivity.this);
-            GraphqlClient.getApolloClient(token, false)
-                    .query(GetCustomerQuery.builder()
-                            .id(idUser).build())
-                    .enqueue(new ApolloCall.Callback<GetCustomerQuery.Data>() {
-                        @Override
-                        public void onResponse(@NotNull Response<GetCustomerQuery.Data> response) {
-                            customer = response.data().customerById();
-                            if ( customer != null){
-                                PreferenceUtil.setCurrentUser(PrepareOrderAddressActivity.this, customer);
-                            }
-                            PrepareOrderAddressActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    customerName.setText(customer.fullName());
-                                    customerAddress.setText(customer.address());
-                                    pickUp.setText(customer.address());
-                                    dropOff.setText(customer.address());
-                                    location = getLocationFromAddress(customer.address());
-                                }
-                            });
-
-                            location = getLocationFromAddress(customer.address());
-
-                        }
-
-                        @Override
-                        public void onFailure(@NotNull ApolloException e) {
-                            Log.e("customer_err", e.getCause() +" - "+e);
-                        }
-                    });
-        }
-        else {
             customerName.setText(customer.fullName());
             customerAddress.setText(customer.address());
             pickUp.setText(customer.address());
             dropOff.setText(customer.address());
-            location = getLocationFromAddress(customer.address());
-        }
-    }
-
-    public LatLng getLocationFromAddress(String strAddress) {
-
-        Geocoder coder = new Geocoder(PrepareOrderAddressActivity.this, Locale.getDefault());
-        List<Address> address;
-        LatLng p1 = null;
-
-        try {
-            // May throw an IOException
-            address = coder.getFromLocationName(strAddress, 5);
-            if (address == null) {
-                return null;
+            if(location != null) {
+                initMap();
             }
-            Address location = address.get(0);
-
-            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
-
-        } catch (IOException ex) {
-
-            ex.printStackTrace();
-        }
-
-        return p1;
     }
+
 
     private void initMap() {
         popup.createLoadingDialog();
@@ -259,7 +216,9 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
         for(GetServiceBranchQuery.Node node: nodes) {
             if(checkBranch(node, nodes)){
                 float distance =  getDistanceFromLocation(location.latitude, location.longitude, Float.parseFloat(node.branchByBranchId().latidute()), Float.parseFloat(node.branchByBranchId().longtidute()));
-                listBranchTemp.add(new OBBranch(node.branchByBranchId().id(), node.branchByBranchId().branchName(), node.branchByBranchId().latidute(), node.branchByBranchId().longtidute(), node.branchByBranchId().address(), distance));
+                if(distance > 0){
+                    listBranchTemp.add(new OBBranch(node.branchByBranchId().id(), node.branchByBranchId().branchName(), node.branchByBranchId().latidute(), node.branchByBranchId().longtidute(), node.branchByBranchId().address(), distance));
+                }
             }
         }
 
@@ -325,7 +284,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
             @Override
             public void onInfoWindowClick(Marker marker) {
                 branchNameChoose = marker.getTitle();
-                Toast.makeText(getApplicationContext(), "You choose " + marker.getTitle(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),  getResources().getString(R.string.you_choose) +" " + marker.getTitle(), Toast.LENGTH_LONG).show();
                 marker.hideInfoWindow();
             }
         });

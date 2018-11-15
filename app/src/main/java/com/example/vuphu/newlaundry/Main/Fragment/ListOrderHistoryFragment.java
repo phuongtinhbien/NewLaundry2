@@ -54,6 +54,7 @@ public class ListOrderHistoryFragment extends Fragment{
                 if(nodes != null){
                     for(GetOrderFinishQuery.Node node : nodes) {
                         OBOrderFragment obOrderFragment = new OBOrderFragment();
+                        obOrderFragment.setId(node.id());
                         obOrderFragment.setDate(node.createDate());
                         obOrderFragment.setBranchAddress(node.branchByBranchId().address());
                         if(node.receiptsByOrderId().nodes().size() > 0) {
