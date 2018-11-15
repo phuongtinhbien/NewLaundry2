@@ -288,10 +288,6 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                         ArrayList<OBOrderDetail> list = PreferenceUtil.getListOrderDetail(DetailPrepareOrderClothesActivity.this);
                         boolean flag = false;
                         for (OBOrderDetail orderDetail: list){
-                            if(obOrderDetail.getUnitID().equals(KG) && checkDuplicateClothes(orderDetail.getUnitID(), obOrderDetail.getUnitID())) {
-                                long weight = obOrderDetail.getCount() + orderDetail.getCount();
-                                orderDetail.setCount(weight);
-                            }
                             if(checkDuplicateClothes(orderDetail.getColorID(), obOrderDetail.getColorID())
                                     && checkDuplicateClothes(orderDetail.getLabelID(), obOrderDetail.getLabelID())
                                     && checkDuplicateClothes(orderDetail.getMaterialID(), obOrderDetail.getMaterialID())

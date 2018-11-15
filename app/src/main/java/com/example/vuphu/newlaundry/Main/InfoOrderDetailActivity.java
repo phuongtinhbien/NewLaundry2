@@ -76,7 +76,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info_order_detail);
+        setContentView( R.layout.activity_info_order_detail);
         initToolbar();
         init();
     }
@@ -248,7 +248,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity {
     private void initToolbar() {
         toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Information Order");
+        setTitle(R.string.info_order);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
