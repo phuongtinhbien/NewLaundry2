@@ -249,7 +249,7 @@ public class InfoOrderActivity extends AppCompatActivity implements
                         @Override
                         public void onFailure(@NotNull ApolloException e) {
                             Log.e("createOrderDetail_err", e.getCause() +" - "+e);
-                            popup.createFailDialog("Create Order fail!", "OK");
+                            popup.createFailDialog(getResources().getString(R.string.order_fail), "OK");
 
                         }
                     });
@@ -301,9 +301,6 @@ public class InfoOrderActivity extends AppCompatActivity implements
             return false;
         } else if(TextUtils.isEmpty(datePickupValue)) {
             Toast.makeText(InfoOrderActivity.this, getResources().getString(R.string.please_choose_date_delivery), Toast.LENGTH_LONG).show();
-            return false;
-        } else if(TextUtils.isEmpty(promotionValue.getText().toString())) {
-            Toast.makeText(InfoOrderActivity.this, getResources().getString(R.string.please_choose_promotion), Toast.LENGTH_LONG).show();
             return false;
         }
         return true;

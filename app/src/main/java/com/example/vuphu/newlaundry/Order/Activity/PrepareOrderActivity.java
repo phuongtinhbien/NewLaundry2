@@ -266,9 +266,6 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
         listFilter.setAdapter(listChipAdapter);
     }
 
-    public void checkOut(View view) {
-        startActivity(new Intent(getApplicationContext(), PrepareOrderAddressActivity.class));
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -313,9 +310,10 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
                     @Override
                     public void onResponse(@NotNull Response<GetUnitPricesByUnitQuery.Data> response) {
                         GetUnitPricesByUnitQuery.Node node = response.data().allUnitPrices().nodes().get(0);
-                        Log.i("123456", node.price() + "");
+                        Log.i("price", node.price() + "VND");
                         obOrderDetail.setPrice(node.price());
                         obOrderDetail.setPriceID(node.id());
+                        obOrderDetail.setCount(Long.parseLong(weight));
                         Intent intent = new Intent(PrepareOrderActivity.this, DetailPrepareOrderClothesActivity.class);
                         intent.putExtra("OBOrderDetail", obOrderDetail);
                         startActivity(intent);
@@ -339,7 +337,7 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
                     @Override
                     public void onResponse(@NotNull Response<GetUnitPricesByUnitQuery.Data> response) {
                         GetUnitPricesByUnitQuery.Node node = response.data().allUnitPrices().nodes().get(0);
-                        Log.i("123456", node.price() + "");
+                        Log.i("price", node.price() + "VND");
                         obOrderDetail.setPrice(node.price());
                         obOrderDetail.setPriceID(node.id());
                         Intent intent = new Intent(PrepareOrderActivity.this, DetailPrepareOrderClothesActivity.class);

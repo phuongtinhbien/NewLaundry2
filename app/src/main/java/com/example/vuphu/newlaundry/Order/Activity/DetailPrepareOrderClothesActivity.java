@@ -275,9 +275,13 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
             public void onClick(View view) {
                 if(validate()) {
                     if(edit){
-                        obOrderDetail.setNote(note.getText().toString());
-                        count = (long) slidr.getCurrentValue();
-                        obOrderDetail.setCount(count);
+                        if(TextUtils.isEmpty(note.getText().toString())) {
+                            obOrderDetail.setNote(note.getText().toString());
+                        }
+                        if(obOrderDetail.getUnitID().equals(ITEM)) {
+                            count = (long) slidr.getCurrentValue();
+                            obOrderDetail.setCount(count);
+                        }
                         Intent intentResult = new Intent();
                         intentResult.putExtra("OBOrderDetailResult", obOrderDetail);
                         setResult(RESULT_OK, intentResult);
@@ -298,6 +302,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
 
                         ArrayList<OBOrderDetail> list = PreferenceUtil.getListOrderDetail(DetailPrepareOrderClothesActivity.this);
                         boolean flag = false;
+                        int k = 0;
                         for (OBOrderDetail orderDetail: list){
                             if(checkDuplicateClothes(orderDetail.getColorID(), obOrderDetail.getColorID())
                                     && checkDuplicateClothes(orderDetail.getLabelID(), obOrderDetail.getLabelID())
@@ -316,18 +321,48 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                             if(checkDuplicateClothes(orderDetail.getIdService(),obOrderDetail.getIdService())
                                  && checkDuplicateClothes(orderDetail.getUnitID(), obOrderDetail.getUnitID())
                                     && orderDetail.getUnitID().equals(KG)
-                                    && PreferenceUtil.isAllowAddCount(DetailPrepareOrderClothesActivity.this)
                             ){
-                                long count = orderDetail.getCount();
-                                orderDetail.setCount(count + obOrderDetail.getCount());
-                                list.set(list.indexOf(orderDetail), orderDetail);
+                                long count;
+                                if(PreferenceUtil.isAllowAddCount(DetailPrepareOrderClothesActivity.this)){
+                                    count = orderDetail.getCount() + obOrderDetail.getCount();
+                                    k++;
+                                } else {
+                                    count = orderDetail.getCount();
+                                }
+
+                                int i = 0;
+                                for(OBOrderDetail ob : list) {
+                                    if(checkDuplicateClothes(ob.getIdService(), obOrderDetail.getIdService())){
+                                        Log.i("vo day", "vo day");
+                                        ob.setCount(count);
+                                        list.set(list.indexOf(ob), ob);
+                                        if(!checkDuplicateClothes(orderDetail.getColorID(), obOrderDetail.getColorID())
+                                            || !checkDuplicateClothes(orderDetail.getLabelID(), obOrderDetail.getLabelID())
+                                            || !checkDuplicateClothes(orderDetail.getMaterialID(), obOrderDetail.getMaterialID())
+                                            || !checkDuplicateClothes(orderDetail.getProduct().getId(), obOrderDetail.getProduct().getId())) {
+                                           i++;
+                                            Log.i("123", i + "item");
+                                        }
+                                    }
+                                }
+                                Log.i("123456", i + "item");
+                                if(i == list.size()) {
+                                    flag = false;
+                                }
+                                else {
+                                    flag = true;
+                                }
                                 PreferenceUtil.setAllowAddCount(false, DetailPrepareOrderClothesActivity.this);
-                                flag = true;
+                                Log.i("allow123", Boolean.toString(PreferenceUtil.isAllowAddCount(DetailPrepareOrderClothesActivity.this)));
                                 break;
                             }
                         }
                         if(!flag) {
                             list.add(obOrderDetail);
+                        }
+                        if(k < 1 && obOrderDetail.getUnitID().equals(KG)) {
+                            PreferenceUtil.setAllowAddCount(false, DetailPrepareOrderClothesActivity.this);
+                            Log.i("allow123", Boolean.toString(PreferenceUtil.isAllowAddCount(DetailPrepareOrderClothesActivity.this)));
                         }
                         PreferenceUtil.setListOrderDetail(list, DetailPrepareOrderClothesActivity.this);
                         Intent intent = new Intent(DetailPrepareOrderClothesActivity.this, BagActivity.class);
@@ -338,6 +373,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
             }
         });
     }
+
 
     public boolean checkDuplicateClothes(String str1, String str2) {
         if(str1 != null && str2 != null) {

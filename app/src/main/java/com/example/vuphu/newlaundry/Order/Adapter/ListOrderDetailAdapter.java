@@ -64,7 +64,12 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
 
         if(obOrderDetail.getCount() > 0) {
             holder.count.setVisibility(View.VISIBLE);
-            holder.count.setText(obOrderDetail.getCount() + " " + context.getResources().getString(R.string.item));
+            if(obOrderDetail.getUnitID().equals(ITEM)) {
+                holder.count.setText(obOrderDetail.getCount() + " " + context.getResources().getString(R.string.item));
+            }
+            else if(obOrderDetail.getUnitID().equals(KG)) {
+                holder.count.setText(obOrderDetail.getCount() + " " + context.getResources().getString(R.string.kg));
+            }
             holder.btnDel.setVisibility(View.VISIBLE);
             holder.btnDel.setOnClickListener(new View.OnClickListener() {
                 @Override

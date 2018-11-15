@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
 import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
 import static com.example.vuphu.newlaundry.Utils.StringKey.LATITUDE;
 import static com.example.vuphu.newlaundry.Utils.StringKey.LONGITUDE;
