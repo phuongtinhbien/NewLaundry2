@@ -28,6 +28,7 @@ public class PreferenceUtil {
     private static final String CURRENT_USER = "CURRENT_USER";
     private static final String LIST_ORDER = "LIST_ORDER";
     private static final String ID_USER = "ID_USER";
+    private static final String IS_ALLOW_ADD = "IS_ALLOW_ADD";
 
 
     public static Long getLastCheckedAuthTokenTime(@NonNull Context context) {
@@ -114,16 +115,16 @@ public class PreferenceUtil {
         editor.apply();
     }
 
-    public static void setWeightService(String serviceID, String weight, Context context) {
+    public static void setAllowAddCount(boolean b, Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(serviceID, weight);
+        editor.putBoolean(IS_ALLOW_ADD, b);
         editor.apply();
     }
 
-    public static String getWeightService(Context context, String serviceID) {
+    public static boolean isAllowAddCount(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(serviceID, "");
+        return sharedPreferences.getBoolean(IS_ALLOW_ADD, false);
     }
 
     public static void removeKey(Context context, String key) {

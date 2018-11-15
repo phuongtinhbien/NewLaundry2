@@ -186,6 +186,7 @@
     <string name="time_delivery_null">Time Delivery have to not null!</string>
     <string name="time_pickup_2h">Time Pickup before Time Pickup 2 hour</string>
     <string name="date_delivery_pickup">Date Pickup must before Date Delivery</string>
+    <string name="order_fail">Create Order fail!</string>
 
 </resources>
 

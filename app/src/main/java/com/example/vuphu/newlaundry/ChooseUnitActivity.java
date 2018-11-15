@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.vuphu.newlaundry.Order.Activity.PrepareOrderActivity;
+import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.uniquestudio.library.CircleCheckBox;
 
 import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
@@ -84,6 +85,7 @@ public class ChooseUnitActivity extends AppCompatActivity {
                     if(!TextUtils.isEmpty(weight.getText().toString())){
                         weight_kg = weight.getText().toString();
                         intent1.putExtra("weight", weight_kg);
+                        PreferenceUtil.setAllowAddCount(true, ChooseUnitActivity.this);
                     }
                     else {
                         Toast.makeText(ChooseUnitActivity.this, R.string.weight_null, Toast.LENGTH_LONG).show();

@@ -220,7 +220,11 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
         if(intent.hasExtra("Edit")){
             edit = intent.getBooleanExtra("Edit", true);
             addToBag.setText(R.string.save);
-            countValue((obOrderDetail.getCount()));
+            if(obOrderDetail.getUnitID().equals(ITEM)){
+                countValue(obOrderDetail.getCount());
+            } else {
+                slidr.setVisibility(View.GONE);
+            }
             note.setText(obOrderDetail.getNote());
             if(obOrderDetail.getLabel() != null) {
                 productionValue.setText(obOrderDetail.getLabel());
@@ -251,7 +255,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
         } else {
             addToBag.setText(R.string.add_to_your_bag);
             if(obOrderDetail.getUnitID().equals(ITEM)){
-                countValue(1);
+                countValue(count);
             } else {
                 slidr.setVisibility(View.GONE);
             }
@@ -283,8 +287,15 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                         if(!TextUtils.isEmpty(note.getText().toString())){
                             obOrderDetail.setNote(note.getText().toString());
                         }
-                        count = (long) slidr.getCurrentValue();
-                        obOrderDetail.setCount(count);
+                        if(obOrderDetail.getUnitID().equals(ITEM)) {
+                            if(Float.toString(slidr.getCurrentValue()) != null) {
+                                count = (long) slidr.getCurrentValue();
+                            } else {
+                                count = 1;
+                            }
+                            obOrderDetail.setCount(count);
+                        }
+
                         ArrayList<OBOrderDetail> list = PreferenceUtil.getListOrderDetail(DetailPrepareOrderClothesActivity.this);
                         boolean flag = false;
                         for (OBOrderDetail orderDetail: list){
@@ -293,7 +304,8 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                                     && checkDuplicateClothes(orderDetail.getMaterialID(), obOrderDetail.getMaterialID())
                                     && checkDuplicateClothes(orderDetail.getProduct().getId(), obOrderDetail.getProduct().getId())
                                     && checkDuplicateClothes(orderDetail.getIdService(),obOrderDetail.getIdService())
-                                    && checkDuplicateClothes(orderDetail.getUnitID(), obOrderDetail.getUnitID()))
+                                    && checkDuplicateClothes(orderDetail.getUnitID(), obOrderDetail.getUnitID())
+                                    && orderDetail.getUnitID().equals(ITEM))
                                     {
                                 long count = orderDetail.getCount();
                                 orderDetail.setCount(count + obOrderDetail.getCount());
@@ -301,8 +313,20 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                                 flag = true;
                                 break;
                             }
+                            if(checkDuplicateClothes(orderDetail.getIdService(),obOrderDetail.getIdService())
+                                 && checkDuplicateClothes(orderDetail.getUnitID(), obOrderDetail.getUnitID())
+                                    && orderDetail.getUnitID().equals(KG)
+                                    && PreferenceUtil.isAllowAddCount(DetailPrepareOrderClothesActivity.this)
+                            ){
+                                long count = orderDetail.getCount();
+                                orderDetail.setCount(count + obOrderDetail.getCount());
+                                list.set(list.indexOf(orderDetail), orderDetail);
+                                PreferenceUtil.setAllowAddCount(false, DetailPrepareOrderClothesActivity.this);
+                                flag = true;
+                                break;
+                            }
                         }
-                        if(flag == false) {
+                        if(!flag) {
                             list.add(obOrderDetail);
                         }
                         PreferenceUtil.setListOrderDetail(list, DetailPrepareOrderClothesActivity.this);
