@@ -111,5 +111,5 @@
     <string name="time_pickup_2h">Giờ nhận đồ phải trước giờ giao đồ 2 giờ</string>
     <string name="date_delivery_pickup">Ngày nhận đồ phải trước ngày giao đồ</string>
     <string name="order_fail">Tạo đơn hàng thất bại!</string>
-
+    <string name="use_now">Truy cập ngay</string>
 </resources>
