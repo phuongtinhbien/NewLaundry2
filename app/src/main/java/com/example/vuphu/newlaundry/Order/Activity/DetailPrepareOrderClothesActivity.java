@@ -331,11 +331,13 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                                 }
 
                                 int i = 0;
+                                int a = 0;
                                 for(OBOrderDetail ob : list) {
                                     if(checkDuplicateClothes(ob.getIdService(), obOrderDetail.getIdService())){
                                         Log.i("vo day", "vo day");
                                         ob.setCount(count);
                                         list.set(list.indexOf(ob), ob);
+                                        a++;
                                         if(!checkDuplicateClothes(orderDetail.getColorID(), obOrderDetail.getColorID())
                                             || !checkDuplicateClothes(orderDetail.getLabelID(), obOrderDetail.getLabelID())
                                             || !checkDuplicateClothes(orderDetail.getMaterialID(), obOrderDetail.getMaterialID())
@@ -346,7 +348,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                                     }
                                 }
                                 Log.i("123456", i + "item");
-                                if(i == list.size()) {
+                                if(i == a) {
                                     flag = false;
                                     obOrderDetail.setCount(count);
                                 }
