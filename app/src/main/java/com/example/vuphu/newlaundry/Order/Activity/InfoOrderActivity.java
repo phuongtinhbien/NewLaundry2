@@ -51,9 +51,12 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -200,62 +203,63 @@ public class InfoOrderActivity extends AppCompatActivity implements
                 if(validate()){
                     popup.createLoadingDialog();
                     popup.show();
-                    CustomerOrderInput customerOrderInput = CustomerOrderInput.builder()
-                            .branchId(idBranch)
-                            .customerId(customer.id())
-                            .deliveryDate(dateDeliveryValue)
-                            .pickUpDate(datePickupValue)
-                            .pickUpTimeId(TimePickupOB.getId())
-                            .deliveryTimeId(TimeDeliveryOB.getId())
-                            .deliveryPlace(deliveryPlace.getText().toString())
-                            .pickUpPlace(pickupPlace.getText().toString())
-                            .promotionId(idPromotion)
-                            .status("PENDING")
-                            .build();
-
-
-                    List<OrderDetailInput> list = new ArrayList<>();
-                    for(OBOrderDetail obOrderDetail : orderDetailList){
-                        OrderDetailInput orderDetailInput = OrderDetailInput.builder()
-                                .amount((int) obOrderDetail.getCount())
-                                .colorId(obOrderDetail.getColorID())
-                                .materialId(obOrderDetail.getMaterialID())
-                                .labelId(obOrderDetail.getLabelID())
-                                .productId(obOrderDetail.getProduct().getId())
-                                .unitPrice(obOrderDetail.getPriceID())
-                                .unitId(obOrderDetail.getUnitID())
-                                .serviceTypeId(obOrderDetail.getIdService())
-                                .note(obOrderDetail.getNote())
+                    String delidate = parseDate(dateDeliveryValue);
+                    String pickdate = parseDate(datePickupValue);
+                    if(!TextUtils.isEmpty(delidate) && !TextUtils.isEmpty(pickdate)) {
+                        CustomerOrderInput customerOrderInput = CustomerOrderInput.builder()
+                                .branchId(idBranch)
+                                .customerId(customer.id())
+                                .deliveryDate(dateDeliveryValue)
+                                .pickUpDate(datePickupValue)
+                                .pickUpTimeId(TimePickupOB.getId())
+                                .deliveryTimeId(TimeDeliveryOB.getId())
+                                .deliveryPlace(deliveryPlace.getText().toString())
+                                .pickUpPlace(pickupPlace.getText().toString())
+                                .promotionId(idPromotion)
+                                .status("PENDING")
                                 .build();
-                        list.add(orderDetailInput);
+
+
+                        List<OrderDetailInput> list = new ArrayList<>();
+                        for(OBOrderDetail obOrderDetail : orderDetailList){
+                            OrderDetailInput orderDetailInput = OrderDetailInput.builder()
+                                    .amount((int) obOrderDetail.getCount())
+                                    .colorId(obOrderDetail.getColorID())
+                                    .materialId(obOrderDetail.getMaterialID())
+                                    .labelId(obOrderDetail.getLabelID())
+                                    .productId(obOrderDetail.getProduct().getId())
+                                    .unitPrice(obOrderDetail.getPriceID())
+                                    .unitId(obOrderDetail.getUnitID())
+                                    .serviceTypeId(obOrderDetail.getIdService())
+                                    .note(obOrderDetail.getNote())
+                                    .build();
+                            list.add(orderDetailInput);
+                        }
+
+
+                        GraphqlClient.getApolloClient(token, false).mutate(CreateOrderAndDetailMutation.builder()
+                                .order(customerOrderInput)
+                                .detailOrder(list)
+                                .build()
+                        ).enqueue(new ApolloCall.Callback<CreateOrderAndDetailMutation.Data>() {
+                            @Override
+                            public void onResponse(@NotNull Response<CreateOrderAndDetailMutation.Data> response) {
+                                idOder = response.data().createOrderAndDetail().customerOrder().id();
+                                Log.i("customer_order", idOder);
+                                clearPreference();
+                                popup.hide();
+                                startActivity(new Intent(getApplicationContext(), FinalOrderActivity.class).putExtra(ID_ORDER, idOder));
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailure(@NotNull ApolloException e) {
+                                Log.e("createOrderDetail_err", e.getCause() +" - "+e);
+                                popup.createFailDialog(getResources().getString(R.string.order_fail), "OK");
+
+                            }
+                        });
                     }
-
-
-                    GraphqlClient.getApolloClient(token, false).mutate(CreateOrderAndDetailMutation.builder()
-                            .order(customerOrderInput)
-                            .detailOrder(list)
-                            .build()
-                    ).enqueue(new ApolloCall.Callback<CreateOrderAndDetailMutation.Data>() {
-                        @Override
-                        public void onResponse(@NotNull Response<CreateOrderAndDetailMutation.Data> response) {
-                            idOder = response.data().createOrderAndDetail().customerOrder().id();
-                            Log.i("customer_order", idOder);
-                            clearPreference();
-                            popup.hide();
-                            startActivity(new Intent(getApplicationContext(), FinalOrderActivity.class).putExtra(ID_ORDER, idOder));
-                            finish();
-                        }
-
-                        @Override
-                        public void onFailure(@NotNull ApolloException e) {
-                            Log.e("createOrderDetail_err", e.getCause() +" - "+e);
-                            popup.createFailDialog(getResources().getString(R.string.order_fail), "OK");
-
-                        }
-                    });
-
-
-
                 }
             }
         });
@@ -276,6 +280,19 @@ public class InfoOrderActivity extends AppCompatActivity implements
         });
 
 
+    }
+
+    private String parseDate(String str) {
+        String result = "";
+        SimpleDateFormat sdfOld = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfNew = new SimpleDateFormat("yyyy/MM/dd");
+        try {
+            Date d = sdfOld.parse(str);
+            result = sdfNew.format(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     private void clearPreference() {
