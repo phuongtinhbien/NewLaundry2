@@ -348,6 +348,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                                 Log.i("123456", i + "item");
                                 if(i == list.size()) {
                                     flag = false;
+                                    obOrderDetail.setCount(count);
                                 }
                                 else {
                                     flag = true;
