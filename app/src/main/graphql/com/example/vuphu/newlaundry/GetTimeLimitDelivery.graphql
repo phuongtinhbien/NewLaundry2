@@ -1,0 +1,3 @@
+query getTimeLimitDelivery($branch : BigFloat!) {
+  getMinTimeForHandle(brId: $branch)
+}

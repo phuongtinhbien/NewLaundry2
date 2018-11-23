@@ -8,17 +8,27 @@ public class OBOrderFragment implements Serializable {
     private String status;
     private String branchAddress;
     private String reciever;
+    private String branchName;
 
     public OBOrderFragment() {
 
     }
 
-    public OBOrderFragment(String id, String date, String status, String branchAddress, String reciever) {
+    public OBOrderFragment(String id, String date, String status, String branchAddress, String reciever, String branchName) {
         this.id = id;
         this.date = date;
         this.status = status;
         this.branchAddress = branchAddress;
         this.reciever = reciever;
+        this.branchName = branchName;
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
     }
 
     public String getId() {

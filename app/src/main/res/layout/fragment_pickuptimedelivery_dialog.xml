@@ -34,15 +34,6 @@
                 android:textColor="@color/textColor"
                 android:textSize="18dp" />
 
-            <TextView
-                android:id="@+id/prepare_order_date_pick_up"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:fontFamily="sans-serif-black"
-                android:text="Today, AUG 30"
-                android:textSize="@dimen/font_size_text_mini" />
-
             <android.support.v7.widget.RecyclerView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,7 +42,19 @@
                 android:id="@+id/list_pickupTime"
                 tools:listitem="@layout/item_pickup_delivery">
             </android.support.v7.widget.RecyclerView>
+
+            <!--<TextView-->
+                <!--android:id="@+id/prepare_order_date_pick_up"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="4dp"-->
+                <!--android:fontFamily="sans-serif-black"-->
+                <!--android:text="Today, AUG 30"-->
+                <!--android:textSize="@dimen/font_size_text_mini"-->
+                <!--android:visibility="gone" />-->
+
             <DatePicker
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:datePickerMode="spinner"
@@ -77,13 +80,14 @@
                 android:text="@string/delivery"
                 android:textColor="@color/textColor"
                 android:textSize="18dp" />
-            <TextView
-                android:id="@+id/prepare_order_date_delivery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:fontFamily="sans-serif-black"
-                android:text="Today, AUG 30"
+            <!--<TextView-->
+                <!--android:visibility="gone"-->
+                <!--android:id="@+id/prepare_order_date_delivery"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="4dp"-->
+                <!--android:fontFamily="sans-serif-black"-->
+                <!--android:text="Today, AUG 30"-->
                 android:textSize="@dimen/font_size_text_mini" />
             <android.support.v7.widget.RecyclerView
                 android:layout_width="wrap_content"
@@ -95,6 +99,7 @@
 
 
             <DatePicker
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:datePickerMode="spinner"

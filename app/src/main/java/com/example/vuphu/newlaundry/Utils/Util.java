@@ -67,7 +67,24 @@ public class Util {
         return calendar.YEAR;
     }
 
-
+    public static boolean checkDuplicateClothes(String str1, String str2) {
+        if(str1 != null && str2 != null) {
+            if(str1.equals(str2)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            if(str1 == null && str2 == null) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
 
 
 }

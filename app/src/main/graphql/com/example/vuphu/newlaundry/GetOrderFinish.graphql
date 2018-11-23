@@ -5,6 +5,7 @@ query getOrderFinish($id: BigFloat!){
       status
       branchByBranchId{
         address
+        branchName
       }
       createDate
       receiptsByOrderId{

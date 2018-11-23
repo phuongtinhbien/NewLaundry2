@@ -34,6 +34,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.vuphu.newlaundry.Utils.StringKey.ID_SERVICE;
+import static com.example.vuphu.newlaundry.Utils.StringKey.NAME_SERVICE;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -144,9 +147,9 @@ public class HomeFragment extends Fragment implements iFService {
 
     @Override
     public void itemClick(int pos) {
-        Intent intent = new Intent(getActivity(), ChooseUnitActivity.class);
-        intent.putExtra("idService", listService.get(pos).getId());
-        intent.putExtra("NameService", listService.get(pos).getName());
+        Intent intent = new Intent(getActivity(), PrepareOrderActivity.class);
+        intent.putExtra(ID_SERVICE, listService.get(pos).getId());
+        intent.putExtra(NAME_SERVICE, listService.get(pos).getName());
         startActivity(intent);
     }
 

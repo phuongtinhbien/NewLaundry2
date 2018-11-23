@@ -60,35 +60,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|end"
                 android:layout_margin="@dimen/margin_item"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_item"
-                        android:drawablePadding="@dimen/margin_item"
-                        android:fontFamily="sans-serif-black"
-                        android:text="@string/total_weight"
-                        android:textColor="@color/charcoal_grey"
-                        android:textSize="@dimen/font_size_text" />
-
-                    <TextView
-                        android:id="@+id/item_info_order_total_weight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_item"
-                        android:drawablePadding="@dimen/margin_item"
-                        android:fontFamily="sans-serif-light"
-                        android:text="0 KG"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/font_size_text" />
-                </LinearLayout>
+                android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,102 +98,103 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="375dp"
             android:layout_gravity="center"
-            android:layout_marginVertical="8dp"
             android:layout_marginHorizontal="@dimen/margin_item_horizontal"
-            android:weightSum="2"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|start"
-                android:layout_weight="1"
-                android:foreground="?selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center_vertical|start"
-                android:layout_margin="@dimen/margin_item"
-                android:visibility="gone"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_item"
-                    android:drawablePadding="@dimen/margin_item"
-                    android:fontFamily="sans-serif"
-                    android:textAllCaps="true"
-                    android:layout_gravity="center"
-                    android:text="@string/input_note"
-                    android:textColor="@color/charcoal_grey"
-                    android:textSize="@dimen/font_size_text" />
+            android:layout_marginVertical="8dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-                <TextView
-                    android:id="@+id/item_prepare_order_note"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_item"
-                    android:drawablePadding="@dimen/margin_item"
-                    android:fontFamily="sans-serif-black"
-                    android:textStyle="bold"
-                    android:text=""
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/font_size_text" />
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:foreground="?selectableItemBackground"
-                android:clickable="true"
-                android:layout_weight="1"
                 android:layout_column="2"
+                android:layout_gravity="center"
                 android:layout_margin="@dimen/margin_item"
+                android:layout_weight="1"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_item"
-                    android:drawablePadding="@dimen/margin_item"
-                    android:fontFamily="sans-serif"
-                    android:textAllCaps="true"
-                    android:text="@string/promotion"
-                    android:textColor="@color/charcoal_grey"
-                    android:textSize="@dimen/font_size_text" />
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:id="@+id/promotion_layout"
+                    android:layout_weight="2">
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_item"
+                        android:drawablePadding="@dimen/margin_item"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/promotion"
+                        android:textAllCaps="true"
+                        android:textColor="@color/charcoal_grey"
+                        android:textSize="@dimen/font_size_text" />
 
-                <TextView
-                    android:id="@+id/item_prepare_order_promotion"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_marginTop="@dimen/margin_item"
+                        android:layout_weight="1"
+                        android:id="@+id/item_prepare_order_promotion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_item"
+                        android:drawablePadding="@dimen/margin_item"
+                        android:fontFamily="sans-serif-black"
+                        android:text=""
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/font_size_text"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_item"
-                    android:drawablePadding="@dimen/margin_item"
-                    android:fontFamily="sans-serif-black"
-                    android:text=""
-                    android:textStyle="bold"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/font_size_text" />
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/card_margin"
+                    android:weightSum="2">
+
+                    <Button
+                        android:layout_marginRight="@dimen/card_margin"
+                        android:id="@+id/edit_save_order"
+                        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorAccent"
+                        android:fontFamily="sans-serif"
+                        android:letterSpacing="0.3"
+                        android:text="@string/edit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_size_text" />
+
+                    <Button
+                        android:layout_marginLeft="@dimen/card_margin"
+                        android:id="@+id/cancel_order"
+                        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorAccent"
+                        android:fontFamily="sans-serif"
+                        android:letterSpacing="0.3"
+                        android:text="@string/Cancel_order"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_size_text" />
+                </LinearLayout>
+
                 <ImageView
                     android:id="@+id/info_detail_qrCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:scaleType="centerInside"
                     android:layout_margin="@dimen/card_margin"
+                    android:scaleType="centerInside"
                     android:src="@drawable/qr_code" />
             </LinearLayout>
 
         </LinearLayout>
-
-        <!--<Button-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:text="SUBMIT"-->
-            <!--android:textSize="@dimen/font_size_text"-->
-            <!--android:fontFamily="sans-serif"-->
-            <!--android:letterSpacing="0.3"-->
-            <!--android:id="@+id/btn_check_out"-->
-            <!--android:background="@color/colorAccent"/>-->
     </LinearLayout>
 </android.support.design.card.MaterialCardView>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item tools:ignore="MenuTitle"
+        
         android:icon="@drawable/ic_my_location"
         android:id="@+id/menu_location_action"
         app:showAsAction="always"></item>

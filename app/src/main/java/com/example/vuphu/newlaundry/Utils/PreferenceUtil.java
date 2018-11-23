@@ -115,18 +115,6 @@ public class PreferenceUtil {
         editor.apply();
     }
 
-    public static void setAllowAddCount(boolean b, Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(IS_ALLOW_ADD, b);
-        editor.apply();
-    }
-
-    public static boolean isAllowAddCount(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(IS_ALLOW_ADD, false);
-    }
-
     public static void removeKey(Context context, String key) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
-    private SharedPreferences token;
-    private SharedPreferences.Editor editor;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -115,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    private void init(){
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

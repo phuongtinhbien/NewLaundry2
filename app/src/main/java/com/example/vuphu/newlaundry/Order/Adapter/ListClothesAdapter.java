@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.vuphu.newlaundry.Order.IFOBPrepareOrder;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
@@ -26,10 +27,12 @@ public class ListClothesAdapter extends RecyclerView.Adapter<ListClothesViewHold
     List<OBOrderDetail> list;
     Activity context;
     private DecimalFormat dec;
+    IFOBPrepareOrder ifobPrepareOrder;
 
-    public ListClothesAdapter(Activity applicationContext, List<OBOrderDetail> listItem) {
+    public ListClothesAdapter(Activity applicationContext, List<OBOrderDetail> listItem, IFOBPrepareOrder ifobPrepareOrder) {
         this.context = applicationContext;
         this.list = listItem;
+        this.ifobPrepareOrder = ifobPrepareOrder;
     }
 
     @NonNull
@@ -45,22 +48,25 @@ public class ListClothesAdapter extends RecyclerView.Adapter<ListClothesViewHold
         dec = new DecimalFormat("##,###,###,###");
         OBOrderDetail obOrderDetail = list.get(position);
         holder.title.setText(obOrderDetail.getProduct().getTitle());
-        holder.price.setText(dec.format(obOrderDetail.getPrice()*obOrderDetail.getCount()) + " " + CURRENCY);
-//
-//        if(obOrderDetail.getUnitID().equals(ITEM)) {
-//            holder.price.setText(dec.format(obOrderDetail.getPrice()*obOrderDetail.getCount()) + " " + CURRENCY);
-//        } else {
-//            holder.price.setText(dec.format(obOrderDetail.getPrice()*obOrderDetail.getCount()) + " " + CURRENCY + " - " + obOrderDetail.getCount() + " Kg");
-//        }
         String unit_name = "";
         if(obOrderDetail.getUnitID().equals(KG)) {
             unit_name = context.getResources().getString(R.string.kg);
-        } else {
+            holder.price.setText(dec.format(obOrderDetail.getPrice()) + " " + CURRENCY + "/" + unit_name);
+            holder.count.setVisibility(View.GONE);
+            holder.badge.setVisibility(View.GONE);
+        } else if(obOrderDetail.getUnitID().equals(ITEM)) {
+            holder.count.setText(Long.toString(obOrderDetail.getCount()));
+            holder.price.setText(dec.format(obOrderDetail.getPrice()*obOrderDetail.getCount()) + " " + CURRENCY);
             unit_name = context.getResources().getString(R.string.item);
         }
         holder.serviceName.setChipText(obOrderDetail.getServiceName() + "-" + unit_name);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ifobPrepareOrder.clickClothes(obOrderDetail);
+            }
+        });
 
-        holder.count.setText(Long.toString(obOrderDetail.getCount()));
     }
 
     @Override
@@ -78,30 +84,18 @@ public class ListClothesAdapter extends RecyclerView.Adapter<ListClothesViewHold
         return count;
     }
     public long sumPrice() {
-        ArrayList<String> listService = new ArrayList<>();
+        boolean flag = false;
         long sum = 0;
         for (OBOrderDetail obOrderDetail: list) {
             if(obOrderDetail.getUnitID().equals(ITEM)){
                 sum += obOrderDetail.getPrice()*obOrderDetail.getCount();
-            } else if(!listService.contains(obOrderDetail.getIdService())){
-                listService.add(obOrderDetail.getIdService());
-                long weight = obOrderDetail.getCount();
-                sum += obOrderDetail.getPrice()*weight;
+            } else {
+                flag = true;
+                break;
             }
         }
-        return sum;
-    }
-
-    public long sumWeight() {
-        ArrayList<String> listService = new ArrayList<>();
-        long sum = 0;
-        for (OBOrderDetail obOrderDetail : list) {
-            if(obOrderDetail.getUnitID().equals(KG)) {
-                if(!listService.contains(obOrderDetail.getIdService())) {
-                    listService.add(obOrderDetail.getIdService());
-                    sum += obOrderDetail.getCount();
-                }
-            }
+        if(flag) {
+            sum = 0;
         }
         return sum;
     }

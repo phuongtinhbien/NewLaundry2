@@ -50,7 +50,6 @@
     <string name="confirm">Xác nhận</string>
     <string name="thanks">Cảm ơn!!!</string>
     <string name="your_code">Phía trên là mã QR Code đơn hàng của bạn</string>
-    <string name="back_to_home">Trở về trang chính</string>
     <string name="checkout">Hoàn tất</string>
     <string name="total_items">Số lượng</string>
     <string name="total_weight">Khối lượng</string>
@@ -58,7 +57,7 @@
     <string name="tab_order_history">Hoàn thành</string>
     <string name="see_your_bag">Xem giỏ đồ</string>
     <string name="add_to_your_bag">Thêm vào giỏ đồ</string>
-    <string name="branch">Chi nhánh</string>
+    <string name="branch_address">Địa chỉ chi nhánh: </string>
     <string name="recievcer">Người nhận đồ</string>
     <string name="choose_time">Chọn lịch giao-nhận đồ</string>
     <string name="about">Về chúng tôi</string>
@@ -112,4 +111,15 @@
     <string name="date_delivery_pickup">Ngày nhận đồ phải trước ngày giao đồ</string>
     <string name="order_fail">Tạo đơn hàng thất bại!</string>
     <string name="use_now">Truy cập ngay</string>
+    <string name="input_unit">Đơn vị tính</string>
+    <string name="validate_unit">Vui lòng chọn đơn vị tính</string>
+    <string name="total_price">_.000 VND</string>
+    <string name="other_service">Dịch vụ khác</string>
+    <string name="bag_empty">Giỏ hàng rỗng</string>
+    <string name="order">Đặt hàng</string>
+    <string name="succefful_order">Đơn hàng của bạn đã được gửi đi</string>
+    <string name="title_your_order">Đơn hàng của bạn</string>
+    <string name="BACK_TO_HOME">TRỞ VỀ TRANG CHÍNH</string>
+    <string name="edit">SỬA</string>
+    <string name="Cancel_order">HỦY ĐƠN HÀNG</string>
 </resources>

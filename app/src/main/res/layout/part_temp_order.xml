@@ -51,7 +51,7 @@
                     android:layout_marginLeft="@dimen/margin_item"
                     android:drawablePadding="@dimen/margin_item"
                     android:fontFamily="sans-serif-black"
-                    android:text="_.000 VND"
+                    android:text="@string/total_price"
                     android:textColor="@color/endGradientFail"
                     android:textSize="18dp" />
             </LinearLayout>
@@ -62,35 +62,8 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|end"
                 android:layout_margin="@dimen/margin_item"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    >
+                android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_item"
-                        android:drawablePadding="@dimen/margin_item"
-                        android:fontFamily="sans-serif-black"
-                        android:text="@string/total_weight"
-                        android:textColor="@color/charcoal_grey"
-                        android:textSize="@dimen/font_size_text" />
-
-                    <TextView
-                        android:id="@+id/item_prepare_order_total_weight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_item"
-                        android:drawablePadding="@dimen/margin_item"
-                        android:fontFamily="sans-serif-light"
-                        android:text="16 KG"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/font_size_text" />
-                </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -114,7 +87,7 @@
                         android:layout_marginLeft="@dimen/margin_item"
                         android:drawablePadding="@dimen/margin_item"
                         android:fontFamily="sans-serif-light"
-                        android:text="16 items"
+                        android:text="0 items"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/font_size_text" />
                 </LinearLayout>

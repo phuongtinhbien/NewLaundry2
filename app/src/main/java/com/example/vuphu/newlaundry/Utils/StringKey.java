@@ -23,4 +23,15 @@ public interface StringKey {
     public static final String UNIT_NAME_ITEM = "Item";
     public static final String LATITUDE = "LATITUDE";
     public static final String LONGITUDE = "LONGITUDE";
+    public static final String ID_SERVICE = "ID_SERVICE";
+    public static final String NAME_SERVICE = "NAME_SERVICE";
+    public static final String TYPE_LIST_PRODUCTION = "P";
+    public static final String TYPE_LIST_COLOR = "C";
+    public static final String TYPE_LIST_MATERIAL = "M";
+    public static final String TYPE_LIST_UNIT = "U";
+    public static final String OB_UNIT_PRICE_ITEM = "OB_UNIT_PRICE_ITEM";
+    public static final String OB_UNIT_PRICE_KG = "OB_UNIT_PRICE_KG";
+    public static final String OB_ORDERDETAIL = "OB_ORDERDETAIL";
+    public static final String EDIT = "EDIT";
+    public static final String STATUS = "STATUS";
 }

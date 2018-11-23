@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +25,7 @@ import com.example.vuphu.newlaundry.GetCustomerQuery;
 import com.example.vuphu.newlaundry.GetOrdetailByOrderidQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Order.Adapter.ListClothesAdapter;
+import com.example.vuphu.newlaundry.Order.IFOBPrepareOrder;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 
 import com.example.vuphu.newlaundry.Popup.Popup;
@@ -52,8 +54,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
 import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
+import static com.example.vuphu.newlaundry.Utils.StringKey.UNIT_NAME_ITEM;
+import static com.example.vuphu.newlaundry.Utils.StringKey.UNIT_NAME_KG;
 
-public class InfoOrderDetailActivity extends AppCompatActivity {
+public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPrepareOrder {
 
     private String token;
     private Toolbar toolbar;
@@ -62,12 +66,14 @@ public class InfoOrderDetailActivity extends AppCompatActivity {
     private ListClothesAdapter adapter;
     private List<OBOrderDetail> orderDetailList;
     private String datePickupValue, dateDeliveryValue, promotionValue, pickupPlaceValue, deliveryPlaceValue, pickupTimeValue, deliveryTimeValue ;
-    private TextView promotion, name, email, phone, pickupPlace, deliveryPlace, pickUpdate, deliveryDate, pickupTime, deliveryTime, countTotal, totalPrice, totalWeight;;
+    private TextView promotion, name, email, phone, pickupPlace, deliveryPlace, pickUpdate, deliveryDate, pickupTime, deliveryTime, countTotal, totalPrice;
     private Popup popup;
     private String idOder;
     private GetCustomerQuery.CustomerById customer;
     private DecimalFormat dec;
     private ImageView img_qrcode;
+    private Button btnSave_Edit, btnCancelOrder, btnChooseSchedule;
+    private LinearLayout promotionLayout;
 
 
     public InfoOrderDetailActivity() {
@@ -96,9 +102,14 @@ public class InfoOrderDetailActivity extends AppCompatActivity {
         pickupTime = findViewById(R.id.prepare_order_time_pick_up);
         deliveryTime = findViewById(R.id.prepare_order_time_delivery);
         countTotal = findViewById(R.id.item_prepare_order_total_items);
-        totalWeight = findViewById(R.id.item_info_order_total_weight);
         totalPrice = findViewById(R.id.item_prepare_order_total);
         img_qrcode = findViewById(R.id.info_detail_qrCode);
+        btnSave_Edit = findViewById(R.id.edit_save_order);
+        btnCancelOrder = findViewById(R.id.cancel_order);
+        btnChooseSchedule = findViewById(R.id.item_prepare_order_btn_schedule);
+        promotionLayout = findViewById(R.id.promotion_layout);
+        promotion = findViewById(R.id.item_prepare_order_promotion);
+
         popup = new Popup(InfoOrderDetailActivity.this);
         dec = new DecimalFormat("##,###,###,###");
 
@@ -107,7 +118,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity {
             idOder = intent.getStringExtra(ID_ORDER);
         }
         try {
-            generateQRCodeImage(idOder, 500, 500);
+            generateQRCodeImage(idOder, 700, 700);
         } catch (WriterException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -128,7 +139,33 @@ public class InfoOrderDetailActivity extends AppCompatActivity {
         listClothes.setHasFixedSize(true);
         getOrderDetailFromServer();
 
-        promotion = findViewById(R.id.item_prepare_order_promotion);
+        btnSave_Edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(btnSave_Edit.getText().toString().equals(getResources().getString(R.string.edit))) {
+                    editOrder();
+                }
+                else if(btnSave_Edit.getText().toString().equals(getResources().getString(R.string.save))) {
+                    saveOrder();
+                }
+            }
+        });
+
+        btnCancelOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+    }
+
+    private void saveOrder() {
+
+    }
+
+    private void editOrder() {
 
     }
 
@@ -173,11 +210,11 @@ public class InfoOrderDetailActivity extends AppCompatActivity {
                             OBOrderDetail obOrderDetail = new OBOrderDetail();
                             obProduct.setTitle(node.productByProductId().productName());
                             obOrderDetail.setProduct(obProduct);
-                            obOrderDetail.setCount(node.amount());
                             if(node.unitId().equals(KG)){
-                                obOrderDetail.setUnit("Kg");
+                                obOrderDetail.setUnit(UNIT_NAME_KG);
                             } else {
-                                obOrderDetail.setUnit("Item");
+                                obOrderDetail.setUnit(UNIT_NAME_ITEM);
+                                obOrderDetail.setCount(node.amount().longValue());
                             }
                             obOrderDetail.setUnitID(node.unitId());
                             obOrderDetail.setPrice(node.unitPriceByUnitPrice().price());
@@ -224,11 +261,10 @@ public class InfoOrderDetailActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(pickupPlaceValue)){
             pickupPlace.setText(pickupPlaceValue);
         }
-        adapter = new ListClothesAdapter(InfoOrderDetailActivity.this , orderDetailList);
+        adapter = new ListClothesAdapter(InfoOrderDetailActivity.this , orderDetailList, this);
         listClothes.setAdapter(adapter);
         countTotal.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
         totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
-        totalWeight.setText(adapter.sumWeight() + " " + getResources().getString(R.string.kg));
     }
 
     private String parseDate(String date) {
@@ -262,4 +298,13 @@ public class InfoOrderDetailActivity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    public void clickClothes(OBOrderDetail obOrderDetail) {
+
+    }
+
+    @Override
+    public void clickDel(int position) {
+
+    }
 }

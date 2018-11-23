@@ -24,14 +24,17 @@ import com.apollographql.apollo.exception.ApolloException;
 import com.example.vuphu.newlaundry.CreateOrderAndDetailMutation;
 import com.example.vuphu.newlaundry.CurrentUserQuery;
 import com.example.vuphu.newlaundry.GetCustomerQuery;
+import com.example.vuphu.newlaundry.GetListUnitPriceMutation;
 import com.example.vuphu.newlaundry.GetPromotionBranchsQuery;
 import com.example.vuphu.newlaundry.GetTimeSchedulesQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.InputDialogFragment;
 import com.example.vuphu.newlaundry.ItemListDialogFragment;
 import com.example.vuphu.newlaundry.Order.Adapter.ListClothesAdapter;
+import com.example.vuphu.newlaundry.Order.IFOBPrepareOrder;
 import com.example.vuphu.newlaundry.Order.OBBranch;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
+import com.example.vuphu.newlaundry.Order.OBPrice;
 import com.example.vuphu.newlaundry.Order.OBTimeSchedule;
 import com.example.vuphu.newlaundry.Payment.OBPayment;
 import com.example.vuphu.newlaundry.PickupTimeDeliveryDialogFragment;
@@ -45,6 +48,7 @@ import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.example.vuphu.newlaundry.Utils.Util;
 import com.example.vuphu.newlaundry.type.CustomerOrderInput;
 import com.example.vuphu.newlaundry.type.OrderDetailInput;
+import com.example.vuphu.newlaundry.type.UnitPriceInput;
 import com.github.florent37.androidslidr.Slidr;
 import com.squareup.picasso.Picasso;
 
@@ -62,16 +66,23 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.vuphu.newlaundry.Utils.PreferenceUtil.removeOrderList;
+import static com.example.vuphu.newlaundry.Utils.StringKey.EDIT;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
+import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
 import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
 import static com.example.vuphu.newlaundry.Utils.StringKey.LIST_SERVICE;
+import static com.example.vuphu.newlaundry.Utils.StringKey.OB_ORDERDETAIL;
+import static com.example.vuphu.newlaundry.Utils.StringKey.OB_UNIT_PRICE_ITEM;
+import static com.example.vuphu.newlaundry.Utils.StringKey.OB_UNIT_PRICE_KG;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_PRICE;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_WEIGHT;
+import static com.example.vuphu.newlaundry.Utils.Util.checkDuplicateClothes;
 
 public class InfoOrderActivity extends AppCompatActivity implements
         ItemPromotionListDialogFragment.Listener,
-        PickupTimeDeliveryDialogFragment.GetPickupTimeDelivery {
+        PickupTimeDeliveryDialogFragment.GetPickupTimeDelivery,
+        IFOBPrepareOrder {
     private String token;
     private static CurrentUserQuery.CurrentUser currentUser;
     private static GetCustomerQuery.CustomerById customer;
@@ -79,13 +90,14 @@ public class InfoOrderActivity extends AppCompatActivity implements
     private RecyclerView listClothes;
     private CircleImageView avatar;
     private Button checkOut;
-    private ArrayList<OBTimeSchedule> listTime;
+    private ArrayList<OBTimeSchedule> listTimePickup;
+    private ArrayList<OBTimeSchedule> listTimeDelivery;
     final ArrayList<OBPromotion> promotionList = new ArrayList<>();
     private ListClothesAdapter adapter;
-    private List<OBOrderDetail> orderDetailList = new ArrayList<>();
+    private ArrayList<OBOrderDetail> orderDetailList;
     private String datePickupValue, dateDeliveryValue;
     private OBTimeSchedule TimePickupOB, TimeDeliveryOB;
-    private TextView promotionValue, name, email, phone, pickupPlace, deliveryPlace, pickUpdate, deliveryDate, pickupTime, deliveryTime, totalItem, weightTotal, priceTotal;
+    private TextView promotionValue, name, email, phone, pickupPlace, deliveryPlace, pickUpdate, deliveryDate, pickupTime, deliveryTime, totalItem, priceTotal;
     private LinearLayout promotion;
     private MaterialButton chooseSchedule;
     private String idBranch;
@@ -94,7 +106,10 @@ public class InfoOrderActivity extends AppCompatActivity implements
     private String idOder;
     private String idPromotion = null;
     private DecimalFormat dec;
+    private int position;
 
+
+    private static final int REQUEST_CODE = 7;
     private static final String PICKUP_KEY = "PICKUP_KEY";
     private static final String DROPOFF_KEY = "DROPOFF_KEY";
 
@@ -120,7 +135,6 @@ public class InfoOrderActivity extends AppCompatActivity implements
         pickupTime = findViewById(R.id.prepare_order_time_pick_up);
         deliveryTime = findViewById(R.id.prepare_order_time_delivery);
         totalItem = findViewById(R.id.item_prepare_order_total_items);
-        weightTotal = findViewById(R.id.item_info_order_total_weight);
         priceTotal = findViewById(R.id.item_prepare_order_total);
         popup = new Popup(InfoOrderActivity.this);
         dec = new DecimalFormat("##,###,###,###");
@@ -174,7 +188,8 @@ public class InfoOrderActivity extends AppCompatActivity implements
         }
 
 
-        listTime = new ArrayList<>();
+        listTimePickup = new ArrayList<>();
+        listTimeDelivery = new ArrayList<>();
 
         checkOut = findViewById(R.id.btn_check_out);
         listClothes = findViewById(R.id.list_prepare_order_clothes);
@@ -190,21 +205,25 @@ public class InfoOrderActivity extends AppCompatActivity implements
 
         orderDetailList = new ArrayList<>();
         orderDetailList = PreferenceUtil.getListOrderDetail(InfoOrderActivity.this);
-        adapter = new ListClothesAdapter(this, orderDetailList);
+        adapter = new ListClothesAdapter(this, orderDetailList, this);
 
         listClothes.setAdapter(adapter);
         totalItem.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
-        weightTotal.setText(adapter.sumWeight() + " " + getResources().getString(R.string.kg));
-        priceTotal.setText(dec.format(adapter.sumPrice()) + " VND");
-
+        if(adapter.sumPrice() != 0) {
+            priceTotal.setText(dec.format(adapter.sumPrice()) + " VND");
+        } else {
+            priceTotal.setText(getResources().getString(R.string.total_price));
+        }
         checkOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(validate()){
                     popup.createLoadingDialog();
                     popup.show();
-                    String delidate = parseDate(dateDeliveryValue);
-                    String pickdate = parseDate(datePickupValue);
+                    String delidate = dateDeliveryValue;
+                    String pickdate = datePickupValue;
+//                    String delidate = parseDate(dateDeliveryValue);
+//                    String pickdate = parseDate(datePickupValue);
                     if(!TextUtils.isEmpty(delidate) && !TextUtils.isEmpty(pickdate)) {
                         CustomerOrderInput customerOrderInput = CustomerOrderInput.builder()
                                 .branchId(idBranch)
@@ -217,13 +236,14 @@ public class InfoOrderActivity extends AppCompatActivity implements
                                 .pickUpPlace(pickupPlace.getText().toString())
                                 .promotionId(idPromotion)
                                 .status("PENDING")
+                                .createBy(customer.id())
                                 .build();
 
 
                         List<OrderDetailInput> list = new ArrayList<>();
                         for(OBOrderDetail obOrderDetail : orderDetailList){
                             OrderDetailInput orderDetailInput = OrderDetailInput.builder()
-                                    .amount((int) obOrderDetail.getCount())
+                                    .amount((double) obOrderDetail.getCount())
                                     .colorId(obOrderDetail.getColorID())
                                     .materialId(obOrderDetail.getMaterialID())
                                     .labelId(obOrderDetail.getLabelID())
@@ -297,13 +317,6 @@ public class InfoOrderActivity extends AppCompatActivity implements
 
     private void clearPreference() {
         removeOrderList(InfoOrderActivity.this);
-        if(listService.size() > 0) {
-            for (String service : listService) {
-                if(PreferenceUtil.checkKeyExist( InfoOrderActivity.this, service)) {
-                    PreferenceUtil.removeKey(InfoOrderActivity.this, service);
-                }
-            }
-        }
     }
 
     private boolean validate() {
@@ -359,19 +372,22 @@ public class InfoOrderActivity extends AppCompatActivity implements
                     @Override
                     public void onResponse(@NotNull Response<GetTimeSchedulesQuery.Data> response) {
                         List<GetTimeSchedulesQuery.Node> list = response.data().allTimeSchedules().nodes();
-                        listTime.clear();
+                        listTimePickup.clear();
                         for (GetTimeSchedulesQuery.Node node: list) {
-                            listTime.add(new OBTimeSchedule(node.id(), node.timeStart(), node.timeEnd(), true));
+                            OBTimeSchedule ob1 = new OBTimeSchedule(node.id(), node.timeStart(), node.timeEnd(), true);
+                            OBTimeSchedule ob2 = new OBTimeSchedule(node.id(), node.timeStart(), node.timeEnd(), true);
+                            listTimePickup.add(ob1);
+                            listTimeDelivery.add(ob2);
                         }
                         InfoOrderActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 if(datePickupValue != null && dateDeliveryValue != null && TimePickupOB != null && TimeDeliveryOB != null) {
-                                    PickupTimeDeliveryDialogFragment pickupTimeDeliveryDialogFragment = PickupTimeDeliveryDialogFragment.newInstance(listTime, TimePickupOB, TimeDeliveryOB, datePickupValue, dateDeliveryValue);
+                                    PickupTimeDeliveryDialogFragment pickupTimeDeliveryDialogFragment = PickupTimeDeliveryDialogFragment.newInstance(listTimePickup, listTimeDelivery, TimePickupOB, TimeDeliveryOB, datePickupValue, dateDeliveryValue, idBranch);
                                     pickupTimeDeliveryDialogFragment.show(getSupportFragmentManager(), pickupTimeDeliveryDialogFragment.getTag());
                                 }
                                 else {
-                                    PickupTimeDeliveryDialogFragment pickupTimeDeliveryDialogFragment = PickupTimeDeliveryDialogFragment.newInstance(listTime, null, null, null, null);
+                                    PickupTimeDeliveryDialogFragment pickupTimeDeliveryDialogFragment = PickupTimeDeliveryDialogFragment.newInstance(listTimePickup, listTimeDelivery, null, null, null, null, idBranch);
                                     pickupTimeDeliveryDialogFragment.show(getSupportFragmentManager(), pickupTimeDeliveryDialogFragment.getTag());
                                 }
                             }
@@ -408,5 +424,110 @@ public class InfoOrderActivity extends AppCompatActivity implements
         TimeDeliveryOB = delivery;
         datePickupValue = datePickup;
         dateDeliveryValue = dateDelivery;
+    }
+
+    @Override
+    public void clickClothes(OBOrderDetail obOrderDetail) {
+        if(obOrderDetail != null){
+            position = orderDetailList.indexOf(obOrderDetail);
+            List<UnitPriceInput> list = new ArrayList<>();
+            if(obOrderDetail.getUnitID().equals(ITEM)) {
+                UnitPriceInput unitPriceInputItem = UnitPriceInput.builder()
+                        .productId(null)
+                        .unitId(KG)
+                        .serviceTypeId(obOrderDetail.getIdService())
+                        .build();
+                list.add(unitPriceInputItem);
+            }
+            else if(obOrderDetail.getUnitID().equals(KG)) {
+                UnitPriceInput unitPriceInputKG = UnitPriceInput.builder()
+                        .productId(obOrderDetail.getProduct().getId())
+                        .unitId(ITEM)
+                        .serviceTypeId(obOrderDetail.getIdService())
+                        .build();
+                list.add(unitPriceInputKG);
+            }
+
+            GraphqlClient.getApolloClient(token, false).mutate(GetListUnitPriceMutation.builder()
+                    .list(list)
+                    .build())
+                    .enqueue(new ApolloCall.Callback<GetListUnitPriceMutation.Data>() {
+                                 @Override
+                                 public void onResponse(@NotNull Response<GetListUnitPriceMutation.Data> response) {
+                                     List<GetListUnitPriceMutation.UnitPrice> unitPrices = response.data().getlistproductprice().unitPrices();
+                                     if(unitPrices.size() > 0) {
+                                         if(obOrderDetail.getUnitID().equals(ITEM)) {
+                                             OBPrice obPriceKg = new OBPrice(unitPrices.get(0).id(), unitPrices.get(0).price());
+                                             OBPrice obPriceItem = new OBPrice(obOrderDetail.getPriceID(), obOrderDetail.getPrice());
+                                             Intent intent = new Intent(InfoOrderActivity.this, DetailPrepareOrderClothesActivity.class);
+                                             intent.putExtra(OB_ORDERDETAIL, obOrderDetail);
+                                             intent.putExtra(EDIT, true);
+                                             intent.putExtra(OB_UNIT_PRICE_ITEM, obPriceItem);
+                                             intent.putExtra(OB_UNIT_PRICE_KG, obPriceKg);
+                                             startActivityForResult(intent, REQUEST_CODE);
+                                         } else if(obOrderDetail.getUnitID().equals(KG)) {
+                                             OBPrice obPriceItem = new OBPrice(unitPrices.get(0).id(), unitPrices.get(0).price());
+                                             OBPrice obPriceKg = new OBPrice(obOrderDetail.getPriceID(), obOrderDetail.getPrice());
+                                             Intent intent = new Intent(InfoOrderActivity.this, DetailPrepareOrderClothesActivity.class);
+                                             intent.putExtra(OB_ORDERDETAIL, obOrderDetail);
+                                             intent.putExtra(EDIT, true);
+                                             intent.putExtra(OB_UNIT_PRICE_ITEM, obPriceItem);
+                                             intent.putExtra(OB_UNIT_PRICE_KG, obPriceKg);
+                                             startActivityForResult(intent, REQUEST_CODE);
+                                         }
+                                     }
+                                 }
+
+                                 @Override
+                                 public void onFailure(@NotNull ApolloException e) {
+                                     Log.e("getListUnitPrice", e.getCause() +" - "+e);
+                                 }
+                             }
+                    );
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            OBOrderDetail obOrderDetailResult = (OBOrderDetail) data.getSerializableExtra(OB_ORDERDETAIL);
+            Log.i("obOrderDetailResult", obOrderDetailResult.getUnit() + "---" + obOrderDetailResult.getColor());
+            boolean flag = true;
+            int pos = -1;
+            for(OBOrderDetail ob : orderDetailList) {
+                if(checkDuplicateClothes(ob.getColorID(), obOrderDetailResult.getColorID())
+                        && checkDuplicateClothes(ob.getLabelID(), obOrderDetailResult.getLabelID())
+                        && checkDuplicateClothes(ob.getMaterialID(), obOrderDetailResult.getMaterialID())
+                        && checkDuplicateClothes(ob.getProduct().getId(), obOrderDetailResult.getProduct().getId())
+                        && checkDuplicateClothes(ob.getIdService(), obOrderDetailResult.getIdService())
+                        && checkDuplicateClothes(ob.getUnitID(), obOrderDetailResult.getUnitID())) {
+                    pos = orderDetailList.indexOf(ob);
+                    orderDetailList.set(pos, obOrderDetailResult);
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag) {
+                orderDetailList.add(obOrderDetailResult);
+            }
+            if(position != pos) {
+                orderDetailList.remove(position);
+            }
+            PreferenceUtil.setListOrderDetail(orderDetailList, this);
+            Log.i("ListOrderDetail", "Size: " + orderDetailList.size());
+            adapter.notifyDataSetChanged();
+            if(adapter.sumPrice() != 0) {
+                priceTotal.setText(dec.format(adapter.sumPrice()) + " VND");
+            } else {
+                priceTotal.setText(getResources().getString(R.string.total_price));
+            }
+            totalItem.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
+        }
+    }
+
+    @Override
+    public void clickDel(int position) {
+
     }
 }

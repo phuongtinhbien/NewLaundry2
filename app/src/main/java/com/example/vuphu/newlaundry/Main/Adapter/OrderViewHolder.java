@@ -10,12 +10,13 @@ import com.robertlevonyan.views.chip.Chip;
 
 class OrderViewHolder extends RecyclerView.ViewHolder {
     Chip status;
-    TextView date, branchAdress, reciever;
+    TextView date, branchAdress, branchName,reciever;
 
     public OrderViewHolder(@NonNull View itemView) {
         super(itemView);
         status = itemView.findViewById(R.id.status_order);
         date = itemView.findViewById(R.id.item_order_date);
+        branchName = itemView.findViewById(R.id.item_order_branch_name);
         branchAdress =  itemView.findViewById(R.id.item_order_branch_address);
         reciever = itemView.findViewById(R.id.item_order_reciever);
     }

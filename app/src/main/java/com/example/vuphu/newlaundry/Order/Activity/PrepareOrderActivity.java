@@ -21,6 +21,7 @@ import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 import com.example.vuphu.newlaundry.Categories.OBCategory;
 import com.example.vuphu.newlaundry.Categories.iFCategory;
+import com.example.vuphu.newlaundry.GetListUnitPriceMutation;
 import com.example.vuphu.newlaundry.GetProductQuery;
 import com.example.vuphu.newlaundry.GetProductTypeQuery;
 import com.example.vuphu.newlaundry.GetUnitPricesByUnitQuery;
@@ -29,10 +30,12 @@ import com.example.vuphu.newlaundry.Order.Adapter.ListChipAdapter;
 import com.example.vuphu.newlaundry.Order.Adapter.ListOrderDetailAdapter;
 import com.example.vuphu.newlaundry.Order.IFOBPrepareOrder;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
+import com.example.vuphu.newlaundry.Order.OBPrice;
 import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.Product.OBProduct;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
+import com.example.vuphu.newlaundry.type.UnitPriceInput;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.jetbrains.annotations.NotNull;
@@ -44,23 +47,26 @@ import me.aflak.libraries.OBOrderDetailFilter;
 import me.aflak.libraries.OBProductFilter;
 import me.aflak.utils.Condition;
 
+import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
+import static com.example.vuphu.newlaundry.Utils.StringKey.ID_SERVICE;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
 import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
+import static com.example.vuphu.newlaundry.Utils.StringKey.NAME_SERVICE;
+import static com.example.vuphu.newlaundry.Utils.StringKey.OB_ORDERDETAIL;
+import static com.example.vuphu.newlaundry.Utils.StringKey.OB_UNIT_PRICE_ITEM;
+import static com.example.vuphu.newlaundry.Utils.StringKey.OB_UNIT_PRICE_KG;
 import static com.example.vuphu.newlaundry.Utils.StringKey.UNIT_NAME_ITEM;
 import static com.example.vuphu.newlaundry.Utils.StringKey.UNIT_NAME_KG;
 
 public class PrepareOrderActivity extends AppCompatActivity implements iFCategory, IFOBPrepareOrder{
 
-//    private static final int PREPARE_ORDER_REQUEST = 1;
     private RecyclerView listPrepareOrder;
     private ListOrderDetailAdapter adapter;
     private List<OBOrderDetail> orderDetailList = new ArrayList<>();
     private List<OBOrderDetail> orderDetailFilterList = new ArrayList<>();
-//    private List<OBOrderDetail> orderDetailSelectedList = new ArrayList<>();
     private List<OBCategory> categoryList = new ArrayList<>();
     private RecyclerView listFilter;
     private ListChipAdapter listChipAdapter;
-//    private FloatingActionButton floatingActionButton;
     private Popup popup;
 
     private Toolbar toolbar;
@@ -70,9 +76,6 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
     private String token;
     private String idService;
     private String serviceName;
-    private String unitID;
-    private String weight;
-    private int position;
     private LinearLayout linearLayout;
 
     @Override
@@ -94,20 +97,13 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
         linearLayout = findViewById(R.id.total_panel_spml);
         linearLayout.setVisibility(View.GONE);
         Intent intent = getIntent();
-        idService = intent.getStringExtra("idServiceChoose");
-        serviceName = intent.getStringExtra("nameServiceChoose");
-        unitID = intent.getStringExtra("unit");
-        if(intent.hasExtra("weight")){
-            weight = intent.getStringExtra("weight");
-//            if(PreferenceUtil.checkKeyExist(this, idService)){
-//                String weightOld = PreferenceUtil.getWeightService(this, idService);
-//                float weightNew = Float.parseFloat(weight) + Float.parseFloat(weightOld);
-//                weight = Float.toString(weightNew);
-//            }
-//            PreferenceUtil.setWeightService(idService, weight, this);
-//            Log.i("TestWeight", weight);
+        if(intent.hasExtra(ID_SERVICE)) {
+            idService = intent.getStringExtra(ID_SERVICE);
         }
-//        Log.i("weight",idService + "--" + PreferenceUtil.getWeightService(this, idService) );
+        if(intent.hasExtra(NAME_SERVICE)) {
+            serviceName = intent.getStringExtra(NAME_SERVICE);
+        }
+
         token = PreferenceUtil.getAuthToken(getApplicationContext());
         listPrepareOrder = findViewById(R.id.prepare_order_list_category);
 //        listPrepareOrder.setHasFixedSize(true);
@@ -199,12 +195,6 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
                             obOrderDetail.setProduct(product);
                             obOrderDetail.setIdService(idService);
                             obOrderDetail.setServiceName(serviceName);
-                            obOrderDetail.setUnitID(unitID);
-                            if(unitID.equals(KG)){
-                                obOrderDetail.setUnit(UNIT_NAME_KG);
-                            } else {
-                                obOrderDetail.setUnit(UNIT_NAME_ITEM);
-                            }
                             orderDetailList.add(obOrderDetail);
                         }
                         PrepareOrderActivity.this.runOnUiThread(new Runnable() {
@@ -300,60 +290,54 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
         popup.createLoadingDialog();
         popup.show();
         if(obOrderDetail != null) {
-            if(obOrderDetail.getUnitID().equals(KG)){
-                GraphqlClient.getApolloClient(token, false).query(GetUnitPricesByUnitQuery.builder()
-                        .service(obOrderDetail.getIdService())
-                        .unit(KG)
-                        .product(null)
-                        .build()
-                ).enqueue(new ApolloCall.Callback<GetUnitPricesByUnitQuery.Data>() {
-                    @Override
-                    public void onResponse(@NotNull Response<GetUnitPricesByUnitQuery.Data> response) {
-                        GetUnitPricesByUnitQuery.Node node = response.data().allUnitPrices().nodes().get(0);
-                        Log.i("price", node.price() + "VND");
-                        obOrderDetail.setPrice(node.price());
-                        obOrderDetail.setPriceID(node.id());
-                        obOrderDetail.setCount(Long.parseLong(weight));
-                        Intent intent = new Intent(PrepareOrderActivity.this, DetailPrepareOrderClothesActivity.class);
-                        intent.putExtra("OBOrderDetail", obOrderDetail);
-                        startActivity(intent);
-                        popup.hide();
-                    }
-
-                    @Override
-                    public void onFailure(@NotNull ApolloException e) {
-                        Log.e("getPrice", e.getCause() +" - "+e);
-                        Toast.makeText(PrepareOrderActivity.this, "can not get price. Please try again", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-            else if(obOrderDetail.getUnitID().equals(ITEM)) {
-                GraphqlClient.getApolloClient(token, false).query(GetUnitPricesByUnitQuery.builder()
-                        .service(obOrderDetail.getIdService())
-                        .unit(ITEM)
-                        .product(obOrderDetail.getProduct().getId())
-                        .build()
-                ).enqueue(new ApolloCall.Callback<GetUnitPricesByUnitQuery.Data>() {
-                    @Override
-                    public void onResponse(@NotNull Response<GetUnitPricesByUnitQuery.Data> response) {
-                        GetUnitPricesByUnitQuery.Node node = response.data().allUnitPrices().nodes().get(0);
-                        Log.i("price", node.price() + "VND");
-                        obOrderDetail.setPrice(node.price());
-                        obOrderDetail.setPriceID(node.id());
-                        Intent intent = new Intent(PrepareOrderActivity.this, DetailPrepareOrderClothesActivity.class);
-                        intent.putExtra("OBOrderDetail", obOrderDetail);
-                        startActivity(intent);
-                        popup.hide();
-                    }
-
-                    @Override
-                    public void onFailure(@NotNull ApolloException e) {
-                        Log.e("getPrice", e.getCause() +" - "+e);
-                        Toast.makeText(PrepareOrderActivity.this, "can not get price. Please try again", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+            getUnitPrice(obOrderDetail);
         }
+    }
+
+    private void getUnitPrice(OBOrderDetail obOrderDetail) {
+        List<UnitPriceInput> list = new ArrayList<>();
+        UnitPriceInput unitPriceInputItem = UnitPriceInput.builder()
+                .productId(obOrderDetail.getProduct().getId())
+                .unitId(ITEM)
+                .serviceTypeId(obOrderDetail.getIdService())
+                .build();
+        list.add(unitPriceInputItem);
+        UnitPriceInput unitPriceInputKG = UnitPriceInput.builder()
+                .productId(null)
+                .unitId(KG)
+                .serviceTypeId(obOrderDetail.getIdService())
+                .build();
+        list.add(unitPriceInputKG);
+        GraphqlClient.getApolloClient(token, false).mutate(GetListUnitPriceMutation.builder().list(list).build()).enqueue(new ApolloCall.Callback<GetListUnitPriceMutation.Data>() {
+            @Override
+            public void onResponse(@NotNull Response<GetListUnitPriceMutation.Data> response) {
+                List<GetListUnitPriceMutation.UnitPrice> unitPrices = response.data().getlistproductprice().unitPrices();
+                if(unitPrices.size() > 0) {
+                    OBPrice obPriceItem = new OBPrice();
+                    OBPrice obPriceKG = new OBPrice();
+                    for(GetListUnitPriceMutation.UnitPrice unitPrice : unitPrices) {
+                        if(unitPrice.unitId().equals(ITEM)) {
+                            obPriceItem.setId(unitPrice.id());
+                            obPriceItem.setUnitPrice(unitPrice.price());
+                        } else if(unitPrice.unitId().equals(KG)) {
+                            obPriceKG.setId(unitPrice.id());
+                            obPriceKG.setUnitPrice(unitPrice.price());
+                        }
+                    }
+                    Intent intent = new Intent(PrepareOrderActivity.this, DetailPrepareOrderClothesActivity.class);
+                    intent.putExtra(OB_ORDERDETAIL, obOrderDetail);
+                    intent.putExtra(OB_UNIT_PRICE_ITEM, obPriceItem);
+                    intent.putExtra(OB_UNIT_PRICE_KG, obPriceKG);
+                    startActivity(intent);
+                    popup.hide();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull ApolloException e) {
+                Log.e("getListUnitPrice", e.getCause() +" - "+e);
+            }
+        });
     }
 
     @Override

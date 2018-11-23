@@ -1,0 +1,9 @@
+mutation getListUnitPrice($list: [UnitPriceInput!]) {
+  getlistproductprice(input: {unitprice: $list}) {
+    unitPrices {
+      id
+      price
+      unitId
+    }
+  }
+}

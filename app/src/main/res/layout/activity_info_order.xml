@@ -179,8 +179,7 @@
 
                 </android.support.design.card.MaterialCardView>
 
-                <include
-                    layout="@layout/part_check_out"></include>
+                <include layout="@layout/part_check_out"></include>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

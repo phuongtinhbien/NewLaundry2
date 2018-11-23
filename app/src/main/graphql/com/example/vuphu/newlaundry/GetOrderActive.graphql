@@ -5,6 +5,7 @@ query getOrderActive($id: BigFloat!){
       status
       branchByBranchId{
         address
+        branchName
       }
       createDate
       receiptsByOrderId{

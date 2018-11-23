@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,23 +53,22 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
     @Override
     public void onBindViewHolder(@NonNull ListOrderDetailViewHolder holder, final int position) {
         final OBOrderDetail obOrderDetail = list.get(position);
-        Picasso.get().load(Uri.parse(obOrderDetail.getProduct().getAvatar())).into(holder.img);
         holder.title.setText(obOrderDetail.getProduct().getTitle());
         String unit_name = "";
-        if(obOrderDetail.getUnitID().equals(KG)) {
-            unit_name = context.getResources().getString(R.string.kg);
-        } else {
-            unit_name = context.getResources().getString(R.string.item);
-        }
-        holder.serviceName.setChipText(obOrderDetail.getServiceName() + " - " + unit_name);
+        if(!TextUtils.isEmpty(obOrderDetail.getUnitID())) {
+            holder.img.setVisibility(View.GONE);
+            if(obOrderDetail.getUnitID().equals(KG)) {
+                unit_name = context.getResources().getString(R.string.kg);
+            } else {
+                unit_name = context.getResources().getString(R.string.item);
+            }
 
-        if(obOrderDetail.getCount() > 0) {
-            holder.count.setVisibility(View.VISIBLE);
             if(obOrderDetail.getUnitID().equals(ITEM)) {
+                holder.count.setVisibility(View.VISIBLE);
                 holder.count.setText(obOrderDetail.getCount() + " " + context.getResources().getString(R.string.item));
             }
             else if(obOrderDetail.getUnitID().equals(KG)) {
-                holder.count.setText(obOrderDetail.getCount() + " " + context.getResources().getString(R.string.kg));
+                holder.count.setVisibility(View.GONE);
             }
             holder.btnDel.setVisibility(View.VISIBLE);
             holder.btnDel.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +77,16 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
                     ifobPrepareOrder.clickDel(position);
                 }
             });
+        } else {
+            holder.img.setVisibility(View.VISIBLE);
+            Picasso.get().load(Uri.parse(obOrderDetail.getProduct().getAvatar())).into(holder.img);
         }
+        if(!TextUtils.isEmpty(unit_name)) {
+            holder.serviceName.setChipText(obOrderDetail.getServiceName() + " - " + unit_name);
+        } else {
+            holder.serviceName.setChipText(obOrderDetail.getServiceName());
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,31 +117,20 @@ public class ListOrderDetailAdapter extends RecyclerView.Adapter<ListOrderDetail
     }
 
     public long sumPrice() {
-        ArrayList<String> listService = new ArrayList<>();
+        boolean flag = false;
         long sum = 0;
         for (OBOrderDetail obOrderDetail: list) {
             if(obOrderDetail.getUnitID().equals(ITEM)){
                 sum += obOrderDetail.getPrice()*obOrderDetail.getCount();
-            } else if(!listService.contains(obOrderDetail.getIdService())){
-                listService.add(obOrderDetail.getIdService());
-                long weight = obOrderDetail.getCount();
-                sum += obOrderDetail.getPrice()*weight;
+            } else {
+                flag = true;
+                break;
             }
+        }
+        if(flag) {
+            sum = 0;
         }
         return sum;
     }
 
-    public long sumWeight() {
-        ArrayList<String> listService = new ArrayList<>();
-        long sum = 0;
-        for (OBOrderDetail obOrderDetail : list) {
-            if(obOrderDetail.getUnitID().equals(KG)) {
-                if(!listService.contains(obOrderDetail.getIdService())) {
-                    listService.add(obOrderDetail.getIdService());
-                    sum += obOrderDetail.getCount();
-                }
-            }
-        }
-        return sum;
-    }
 }

@@ -26,33 +26,59 @@
 
         <activity
             android:name=".Main.MainActivity"
-            android:label="@string/app_name" />
-        <activity android:name=".Promotion.PromotionActivity" />
-        <activity android:name=".Payment.PaymentActivity" />
+            android:label="@string/app_name"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Promotion.PromotionActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Payment.PaymentActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Order.Activity.InfoOrderActivity"
-            android:parentActivityName=".Order.Activity.PrepareOrderAddressActivity" />
+            android:parentActivityName=".Order.Activity.PrepareOrderAddressActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Order.Activity.PrepareOrderActivity"
             android:parentActivityName=".Main.MainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Order.Activity.PrepareOrderAddressActivity" />
-        <activity android:name=".Order.Activity.PrepareOrderPaymentActivity" />
-        <activity android:name=".Order.Activity.FinalOrderActivity" />
-        <activity android:name=".Order.Activity.BagActivity" />
+        <activity android:name=".Order.Activity.PrepareOrderAddressActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Order.Activity.PrepareOrderPaymentActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Order.Activity.FinalOrderActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Order.Activity.BagActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ServiceActivity" />
-        <activity android:name=".Order.Activity.DetailPrepareOrderClothesActivity" />
-        <activity android:name=".Authen.LoginActivity">
+        <activity android:name=".Order.Activity.DetailPrepareOrderClothesActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Authen.LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Authen.SignUpActivity" />
-        <activity android:name=".Authen.SetUpInfoActivity" />
+        <activity android:name=".Authen.SignUpActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Authen.SetUpInfoActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ChooseUnitActivity" />
-        <activity android:name=".Main.InfoOrderDetailActivity"></activity>
+        <activity android:name=".Main.InfoOrderDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

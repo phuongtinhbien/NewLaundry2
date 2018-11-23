@@ -11,20 +11,31 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
 import com.example.vuphu.newlaundry.GetCustomerQuery;
+import com.example.vuphu.newlaundry.GetListUnitPriceMutation;
+import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
+import com.example.vuphu.newlaundry.Main.MainActivity;
 import com.example.vuphu.newlaundry.Order.Adapter.ListOrderDetailAdapter;
 import com.example.vuphu.newlaundry.Order.IFOBPrepareOrder;
 import com.example.vuphu.newlaundry.Order.OBOrder;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
+import com.example.vuphu.newlaundry.Order.OBPrice;
 import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
+import com.example.vuphu.newlaundry.type.UnitPriceInput;
 import com.google.android.gms.maps.model.LatLng;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -32,12 +43,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.vuphu.newlaundry.Utils.StringKey.EDIT;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
 import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
 import static com.example.vuphu.newlaundry.Utils.StringKey.LATITUDE;
 import static com.example.vuphu.newlaundry.Utils.StringKey.LONGITUDE;
+import static com.example.vuphu.newlaundry.Utils.StringKey.OB_ORDERDETAIL;
+import static com.example.vuphu.newlaundry.Utils.StringKey.OB_UNIT_PRICE_ITEM;
+import static com.example.vuphu.newlaundry.Utils.StringKey.OB_UNIT_PRICE_KG;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_PRICE;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_WEIGHT;
+import static com.example.vuphu.newlaundry.Utils.Util.checkDuplicateClothes;
 
 public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
     private static final int REQUEST_CODE = 7;
@@ -46,7 +62,8 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
     private RecyclerView listChooseClothes;
     private ListOrderDetailAdapter adapter;
     private ArrayList<OBOrderDetail> list;
-    private TextView countTotal, totalPrice, totalWeight;
+    private TextView countTotal, totalPrice;
+    private String token;
     private int position;
     private DecimalFormat dec;
     private static GetCustomerQuery.CustomerById customer;
@@ -61,10 +78,10 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
 
     private void init() {
         customer = PreferenceUtil.getCurrentUser(getApplicationContext());
+        token = PreferenceUtil.getAuthToken(BagActivity.this);
         dec = new DecimalFormat("##,###,###,###");
         countTotal = findViewById(R.id.item_prepare_order_total_items);
         totalPrice = findViewById(R.id.item_prepare_order_total);
-        totalWeight = findViewById(R.id.item_prepare_order_total_weight);
         listChooseClothes = findViewById(R.id.list_choose_cloth);
         list = PreferenceUtil.getListOrderDetail(BagActivity.this);
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
@@ -72,9 +89,12 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
         listChooseClothes.setLayoutManager(gridLayoutManager);
         adapter = new ListOrderDetailAdapter(list, BagActivity.this, this);
         listChooseClothes.setAdapter(adapter);
+        if(adapter.sumPrice() != 0) {
+            totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
+        } else {
+            totalPrice.setText(getResources().getString(R.string.total_price));
+        }
         countTotal.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
-        totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
-        totalWeight.setText(adapter.sumWeight() + " " + getResources().getString(R.string.kg));
         checkOut = findViewById(R.id.see_your_bag);
         checkOut.setText(R.string.checkout);
         checkOut.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +105,7 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
                   }
                   else {
                       Popup popup = new Popup(BagActivity.this);
-                      popup.createFailDialog("Bag is empty", "ORDER", new View.OnClickListener() {
+                      popup.createFailDialog(getResources().getString(R.string.bag_empty), getResources().getString(R.string.order), new View.OnClickListener() {
                           @Override
                           public void onClick(View view) {
                               onBackPressed();
@@ -139,23 +159,84 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_bag, menu);
+        return true;
+    }
 
-        if (item.getItemId() == android.R.id.home){
-            onBackPressed();
-            return true;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                onBackPressed();
+                return true;
+            }
+            case R.id.menu_other_service: {
+               startActivity(new Intent(BagActivity.this, MainActivity.class));
+               finish();
+            }
+            default: return false;
         }
-        return false;
     }
 
     @Override
     public void clickClothes(OBOrderDetail obOrderDetail) {
         if(obOrderDetail != null){
             position = list.indexOf(obOrderDetail);
-            Intent intent = new Intent(BagActivity.this, DetailPrepareOrderClothesActivity.class);
-            intent.putExtra("OBOrderDetail", obOrderDetail);
-            intent.putExtra("Edit", true);
-            startActivityForResult(intent, REQUEST_CODE);
+            List<UnitPriceInput> list = new ArrayList<>();
+            if(obOrderDetail.getUnitID().equals(ITEM)) {
+                UnitPriceInput unitPriceInputItem = UnitPriceInput.builder()
+                        .productId(null)
+                        .unitId(KG)
+                        .serviceTypeId(obOrderDetail.getIdService())
+                        .build();
+                list.add(unitPriceInputItem);
+            }
+            else if(obOrderDetail.getUnitID().equals(KG)) {
+                UnitPriceInput unitPriceInputKG = UnitPriceInput.builder()
+                        .productId(obOrderDetail.getProduct().getId())
+                        .unitId(ITEM)
+                        .serviceTypeId(obOrderDetail.getIdService())
+                        .build();
+                list.add(unitPriceInputKG);
+            }
+
+            GraphqlClient.getApolloClient(token, false).mutate(GetListUnitPriceMutation.builder()
+                    .list(list)
+                    .build())
+                    .enqueue(new ApolloCall.Callback<GetListUnitPriceMutation.Data>() {
+                  @Override
+                  public void onResponse(@NotNull Response<GetListUnitPriceMutation.Data> response) {
+                      List<GetListUnitPriceMutation.UnitPrice> unitPrices = response.data().getlistproductprice().unitPrices();
+                      if(unitPrices.size() > 0) {
+                          if(obOrderDetail.getUnitID().equals(ITEM)) {
+                              OBPrice obPriceKg = new OBPrice(unitPrices.get(0).id(), unitPrices.get(0).price());
+                              OBPrice obPriceItem = new OBPrice(obOrderDetail.getPriceID(), obOrderDetail.getPrice());
+                              Intent intent = new Intent(BagActivity.this, DetailPrepareOrderClothesActivity.class);
+                              intent.putExtra(OB_ORDERDETAIL, obOrderDetail);
+                              intent.putExtra(EDIT, true);
+                              intent.putExtra(OB_UNIT_PRICE_ITEM, obPriceItem);
+                              intent.putExtra(OB_UNIT_PRICE_KG, obPriceKg);
+                              startActivityForResult(intent, REQUEST_CODE);
+                          } else if(obOrderDetail.getUnitID().equals(KG)) {
+                              OBPrice obPriceItem = new OBPrice(unitPrices.get(0).id(), unitPrices.get(0).price());
+                              OBPrice obPriceKg = new OBPrice(obOrderDetail.getPriceID(), obOrderDetail.getPrice());
+                              Intent intent = new Intent(BagActivity.this, DetailPrepareOrderClothesActivity.class);
+                              intent.putExtra(OB_ORDERDETAIL, obOrderDetail);
+                              intent.putExtra(EDIT, true);
+                              intent.putExtra(OB_UNIT_PRICE_ITEM, obPriceItem);
+                              intent.putExtra(OB_UNIT_PRICE_KG, obPriceKg);
+                              startActivityForResult(intent, REQUEST_CODE);
+                          }
+                      }
+                  }
+
+                  @Override
+                  public void onFailure(@NotNull ApolloException e) {
+                      Log.e("getListUnitPrice", e.getCause() +" - "+e);
+                  }
+              }
+            );
         }
     }
 
@@ -163,54 +244,56 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            OBOrderDetail obOrderDetailResult = (OBOrderDetail) data.getSerializableExtra("OBOrderDetailResult");
-            Log.i("Bag", obOrderDetailResult.getCount() + "");
-            list.set(position, obOrderDetailResult);
+            OBOrderDetail obOrderDetailResult = (OBOrderDetail) data.getSerializableExtra(OB_ORDERDETAIL);
+            Log.i("obOrderDetailResult", obOrderDetailResult.getUnit() + "---" + obOrderDetailResult.getColor());
+            boolean flag = true;
+            int pos = -1;
+            for(OBOrderDetail ob : list) {
+                if(checkDuplicateClothes(ob.getColorID(), obOrderDetailResult.getColorID())
+                        && checkDuplicateClothes(ob.getLabelID(), obOrderDetailResult.getLabelID())
+                        && checkDuplicateClothes(ob.getMaterialID(), obOrderDetailResult.getMaterialID())
+                        && checkDuplicateClothes(ob.getProduct().getId(), obOrderDetailResult.getProduct().getId())
+                        && checkDuplicateClothes(ob.getIdService(), obOrderDetailResult.getIdService())
+                        && checkDuplicateClothes(ob.getUnitID(), obOrderDetailResult.getUnitID())) {
+                    pos = list.indexOf(ob);
+                    if(ob.getUnitID().equals(ITEM)) {
+                        long count = obOrderDetailResult.getCount() + ob.getCount();
+                        obOrderDetailResult.setCount(count);
+                    }
+                    list.set(pos, obOrderDetailResult);
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag) {
+                list.add(obOrderDetailResult);
+            }
+            if(position != pos) {
+                list.remove(position);
+            }
             PreferenceUtil.setListOrderDetail(list, this);
+            Log.i("ListOrderDetail", "Size: " + list.size());
             adapter.notifyDataSetChanged();
+            if(adapter.sumPrice() != 0) {
+                totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
+            } else {
+                totalPrice.setText(getResources().getString(R.string.total_price));
+            }
+            countTotal.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
         }
     }
 
-    public boolean checkDuplicateClothes(String str1, String str2) {
-        if(str1 != null && str2 != null) {
-            if(str1.equals(str2)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            if(str1 == null && str2 == null) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-    }
 
     @Override
     public void clickDel(int position) {
-        if(list.get(position).getUnitID().equals(KG)) {
-            boolean isDeleteWeight = true;
-            for(int i=0; i<list.size(); i++) {
-                if(i != position) {
-                    if(list.get(i).getUnitID().equals(KG) && list.get(i).getIdService().equals(list.get(position).getIdService())) {
-                        isDeleteWeight = false;
-                        break;
-                    }
-                }
-            }
-            if(isDeleteWeight) {
-                PreferenceUtil.removeKey(BagActivity.this, list.get(position).getIdService());
-            }
-        }
         list.remove(position);
         adapter.notifyDataSetChanged();
         PreferenceUtil.setListOrderDetail(list, BagActivity.this);
         countTotal.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
-        totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
-        totalWeight.setText(adapter.sumWeight() + " " + getResources().getString(R.string.kg));
+        if(adapter.sumPrice() != 0) {
+            totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
+        } else {
+            totalPrice.setText(getResources().getString(R.string.total_price));
+        }
     }
 }
