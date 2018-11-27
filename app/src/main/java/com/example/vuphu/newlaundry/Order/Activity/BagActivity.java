@@ -1,7 +1,6 @@
 package com.example.vuphu.newlaundry.Order.Activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +25,6 @@ import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Main.MainActivity;
 import com.example.vuphu.newlaundry.Order.Adapter.ListOrderDetailAdapter;
 import com.example.vuphu.newlaundry.Order.IFOBPrepareOrder;
-import com.example.vuphu.newlaundry.Order.OBOrder;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 import com.example.vuphu.newlaundry.Order.OBPrice;
 import com.example.vuphu.newlaundry.Popup.Popup;
@@ -52,7 +50,6 @@ import static com.example.vuphu.newlaundry.Utils.StringKey.OB_ORDERDETAIL;
 import static com.example.vuphu.newlaundry.Utils.StringKey.OB_UNIT_PRICE_ITEM;
 import static com.example.vuphu.newlaundry.Utils.StringKey.OB_UNIT_PRICE_KG;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_PRICE;
-import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_WEIGHT;
 import static com.example.vuphu.newlaundry.Utils.Util.checkDuplicateClothes;
 
 public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
@@ -66,6 +63,7 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
     private String token;
     private int position;
     private DecimalFormat dec;
+
     private static GetCustomerQuery.CustomerById customer;
 
     @Override

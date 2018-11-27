@@ -119,7 +119,7 @@ public class SetUpInfoActivity extends AppCompatActivity {
     private void initToolbar() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Set up information");
+        setTitle(getResources().getString(R.string.Set_up_information));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -245,7 +245,7 @@ public class SetUpInfoActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 popup.hide();
-                                popup.createFailDialog(er, "Fail");
+                                popup.createFailDialog(er, getResources().getString(R.string.btn_fail));
                                 popup.show();
                             }
                         });
@@ -323,7 +323,7 @@ public class SetUpInfoActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             popup.hide();
-                            popup.createFailDialog(er, "Fail");
+                            popup.createFailDialog(er, getResources().getString(R.string.btn_fail));
                             popup.show();
                         }
                     });

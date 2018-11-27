@@ -1,9 +1,10 @@
 query getOrderActive($id: BigFloat!){
-  allCustomerOrders(orderBy:CREATE_DATE_DESC, filter:{customerId:{equalTo: $id}, status:{notEqualTo:"FINISHED"}}) {
+  allCustomerOrders(orderBy:CREATE_DATE_DESC, filter:{customerId:{equalTo: $id}, status:{notIn:["FINISHED", "DRAFT"]}}) {
     nodes {
       id
       status
       branchByBranchId{
+        id
         address
         branchName
       }

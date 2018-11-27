@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView android:id="@+id/bottom_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_gravity="bottom"
+    app:cardCornerRadius="0dp"
+    app:cardBackgroundColor="@color/bgWhite"
+    app:cardElevation="@dimen/card_elevation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="@dimen/margin_item_horizontal"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:layout_weight="1"
+                android:gravity="center_vertical|start"
+                android:layout_margin="@dimen/margin_item"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:drawablePadding="@dimen/margin_item"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/total"
+                    android:textColor="@color/charcoal_grey"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/item_receipt_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:drawablePadding="@dimen/margin_item"
+                    android:fontFamily="sans-serif-black"
+                    android:text="_.000 VND"
+                    android:textColor="@color/endGradientFail"
+                    android:textSize="18dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:layout_weight="1"
+                android:gravity="center_vertical|end"
+                android:layout_margin="@dimen/margin_item"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:id="@+id/receipt_layout_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_item"
+                        android:drawablePadding="@dimen/margin_item"
+                        android:fontFamily="sans-serif-black"
+                        android:text="@string/total_items"
+                        android:textColor="@color/charcoal_grey"
+                        android:textSize="@dimen/font_size_text" />
+
+                    <TextView
+                        android:id="@+id/item_receipt_total_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_item"
+                        android:drawablePadding="@dimen/margin_item"
+                        android:fontFamily="sans-serif-light"
+                        android:text="0 Item"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/font_size_text" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_item"
+                        android:drawablePadding="@dimen/margin_item"
+                        android:fontFamily="sans-serif-black"
+                        android:text="@string/total_items"
+                        android:textColor="@color/charcoal_grey"
+                        android:textSize="@dimen/font_size_text" />
+
+                    <TextView
+                        android:id="@+id/item_receipt_total_items"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_item"
+                        android:drawablePadding="@dimen/margin_item"
+                        android:fontFamily="sans-serif-light"
+                        android:text="0 Item"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/font_size_text" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/charcoal_grey"
+            android:layout_marginHorizontal="@dimen/margin_item_horizontal"
+            android:layout_height="0.1dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="@dimen/margin_item_horizontal"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:layout_weight="1"
+                android:id="@+id/check_out_note"
+                android:foreground="?selectableItemBackground"
+                android:clickable="true"
+                android:visibility="gone"
+                android:gravity="center_vertical|start"
+                android:layout_margin="@dimen/margin_item"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:drawablePadding="@dimen/margin_item"
+                    android:fontFamily="sans-serif"
+                    android:textAllCaps="true"
+                    android:layout_gravity="center"
+                    android:text="@string/input_note"
+                    android:textColor="@color/charcoal_grey"
+                    android:textSize="@dimen/font_size_text" />
+
+                <TextView
+                    android:id="@+id/item_prepare_order_note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:drawablePadding="@dimen/margin_item"
+                    android:fontFamily="sans-serif-black"
+                    android:textStyle="bold"
+                    android:text=""
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/font_size_text" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/check_out_promotion"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:foreground="?selectableItemBackground"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:layout_column="2"
+                android:layout_margin="@dimen/margin_item"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:drawablePadding="@dimen/margin_item"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/promotion"
+                    android:textAllCaps="true"
+                    android:textColor="@color/charcoal_grey"
+                    android:textSize="@dimen/font_size_text" />
+
+                <TextView
+                    android:id="@+id/item_receipt_promotion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:drawablePadding="@dimen/margin_item"
+                    android:fontFamily="sans-serif-black"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/font_size_text" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.design.card.MaterialCardView>

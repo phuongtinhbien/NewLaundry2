@@ -1,0 +1,7 @@
+mutation updateStatusDraft($idOrder: BigFloat!) {
+  updateCustomerOrderById(input: {id: $idOrder, customerOrderPatch: {status: "DRAFT"}}) {
+    customerOrder {
+      status
+    }
+  }
+}

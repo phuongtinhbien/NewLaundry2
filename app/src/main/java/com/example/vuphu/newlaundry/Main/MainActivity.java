@@ -44,11 +44,13 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     setTitle(R.string.title_home);
                     toolbar.getMenu().findItem(R.id.menu_read_action).setVisible(false);
+                    toolbar.getMenu().findItem(R.id.menu_search_action).setVisible(false);
                    fragment = HomeFragment.newInstance();
                    break;
                 case R.id.navigation_dashboard:
                     setTitle(R.string.yout_order);
                     toolbar.getMenu().findItem(R.id.menu_read_action).setVisible(false);
+                    toolbar.getMenu().findItem(R.id.menu_search_action).setVisible(false);
                     fragment = OrderFragment.newInstance();
                     break;
                 case R.id.navigation_notifications:

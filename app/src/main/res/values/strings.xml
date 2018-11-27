@@ -86,6 +86,7 @@
     <string name="delivery">Delivery</string>
     <string name="input_promotion">Enter your promotion</string>
     <string name="title_all_your_clothes">All your clothes here</string>
+    <string name="title_service_weight">All service - weight</string>
     <string name="confirm">Confirm</string>
 
     <string name="succefful_order">Your order have been sent</string>
@@ -164,7 +165,7 @@
     <string name="location_permission_denied">Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'NewLaundry\'.</string>
     <string name="permission_required_toast">Location permission is required for NewLuandry.</string>
     <string name="app_name">NewLuandry</string>
-    <string name="name_item">Item</string>
+    <string name="item">Item</string>
     <string name="please_select">Please select</string>
     <string name="Undefine">Undefine</string>
     <string name="choose_unit_of_clothes">Choose unit of clothes</string>
@@ -195,6 +196,12 @@
     <string name="BACK_TO_HOME">BACK TO HOME</string>
     <string name="edit">EDIT</string>
     <string name="Cancel_order">CANCLE ORDER</string>
+    <string name="err_not_found_branch">ERR! Branch not found</string>
+    <string name="title_receipt">Information Receipt</string>
+    <string name="view_reipt">View Receipt</string>
+    <string name="view_orderdetail">View Order</string>
+    <string name="order_result">Order creation results</string>
+    <string name="Set_up_information">Set up information</string>
 
 </resources>
 

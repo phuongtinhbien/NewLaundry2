@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/margin_item"
+    android:orientation="vertical">
+
+    <com.github.florent37.expansionpanel.ExpansionHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:expansion_headerIndicator="@id/headerIndicator"
+        app:expansion_layout="@id/expansion_service_weight"
+        app:expansion_toggleOnClick="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="@dimen/margin_item"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_item_service"
+                android:id="@+id/item_clothes"
+                android:scaleType="centerInside"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_item"
+                    android:drawablePadding="@dimen/margin_item"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/title_service_weight"
+                    android:textColor="@color/textColor"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/headerIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_expand_more" />
+        </LinearLayout>
+    </com.github.florent37.expansionpanel.ExpansionHeader>
+
+    <com.github.florent37.expansionpanel.ExpansionLayout
+        android:id="@+id/expansion_service_weight"
+        android:layout_width="match_parent"
+        app:expansion_expanded="false"
+        android:layout_height="wrap_content">
+
+        <include
+            layout="@layout/part_item_receipt_service_weight_expand"></include>
+
+    </com.github.florent37.expansionpanel.ExpansionLayout>
+</LinearLayout>

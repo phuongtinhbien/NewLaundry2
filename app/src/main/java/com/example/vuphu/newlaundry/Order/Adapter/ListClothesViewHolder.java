@@ -19,7 +19,7 @@ public class ListClothesViewHolder extends ViewHolder {
 
   /*  EditText value;
     Button   decrement, increment;*/
-    OBOrderDetail detail;
+
     public ListClothesViewHolder(View itemView) {
         super(itemView);
         title = itemView.findViewById(R.id.item_prepare_order_txt_title);

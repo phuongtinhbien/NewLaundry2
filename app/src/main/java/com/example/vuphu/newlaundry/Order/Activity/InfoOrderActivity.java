@@ -66,6 +66,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.vuphu.newlaundry.Utils.PreferenceUtil.removeOrderList;
+import static com.example.vuphu.newlaundry.Utils.StringKey.DROPOFF_KEY;
 import static com.example.vuphu.newlaundry.Utils.StringKey.EDIT;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
@@ -75,6 +76,7 @@ import static com.example.vuphu.newlaundry.Utils.StringKey.LIST_SERVICE;
 import static com.example.vuphu.newlaundry.Utils.StringKey.OB_ORDERDETAIL;
 import static com.example.vuphu.newlaundry.Utils.StringKey.OB_UNIT_PRICE_ITEM;
 import static com.example.vuphu.newlaundry.Utils.StringKey.OB_UNIT_PRICE_KG;
+import static com.example.vuphu.newlaundry.Utils.StringKey.PICKUP_KEY;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_PRICE;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_WEIGHT;
 import static com.example.vuphu.newlaundry.Utils.Util.checkDuplicateClothes;
@@ -110,8 +112,7 @@ public class InfoOrderActivity extends AppCompatActivity implements
 
 
     private static final int REQUEST_CODE = 7;
-    private static final String PICKUP_KEY = "PICKUP_KEY";
-    private static final String DROPOFF_KEY = "DROPOFF_KEY";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

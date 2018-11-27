@@ -67,7 +67,7 @@ public class FinalOrderActivity extends AppCompatActivity {
     private void initToolbar() {
         toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Your invoice");
+        setTitle(getResources().getString(R.string.order_result));
     }
 
     private void generateQRCodeImage(String text, int width, int height)

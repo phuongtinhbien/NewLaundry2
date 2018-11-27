@@ -2,11 +2,8 @@
 <android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="0.2dp"
-    app:cardElevation="@dimen/card_elevation"
     android:clickable="true"
     app:cardCornerRadius="0dp"
-    android:foreground="?selectableItemBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -21,7 +18,7 @@
                 <com.robertlevonyan.views.chip.Chip
                     android:id="@+id/status_order"
                     android:textColor="@color/white"
-                    app:mcv_chipText=""
+                    app:mcv_chipText="PENDING"
                     app:mcv_textColor="@color/white"
                     app:mcv_backgroundColor="@color/colorAccent"
                     app:mcv_cornerRadius="8dp"
@@ -126,7 +123,40 @@
             </LinearLayout>
 
         </TableLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <android.support.design.button.MaterialButton
+                android:layout_marginRight="@dimen/card_margin"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical|end"
+                android:id="@+id/view_orderdetail"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/view_orderdetail"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_text" />
+            <android.support.design.button.MaterialButton
+                android:layout_marginLeft="@dimen/card_margin"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical|end"
+                android:id="@+id/view_receipt"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/view_reipt"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_text" />
+        </LinearLayout>
+        <TextView
+            android:layout_marginTop="@dimen/card_elevation"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/charcoal_grey"/>
 
     </LinearLayout>
+
 
 </android.support.design.card.MaterialCardView>

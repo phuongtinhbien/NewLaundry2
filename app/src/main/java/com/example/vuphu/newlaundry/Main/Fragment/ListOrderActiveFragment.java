@@ -58,6 +58,7 @@ public class ListOrderActiveFragment extends Fragment{
                         obOrderFragment.setDate(node.createDate());
                         obOrderFragment.setBranchAddress(node.branchByBranchId().address());
                         obOrderFragment.setBranchName(node.branchByBranchId().branchName());
+                        obOrderFragment.setIdBranch(node.branchByBranchId().id());
                         if(node.receiptsByOrderId().nodes().size() > 0) {
                             obOrderFragment.setReciever(node.receiptsByOrderId().nodes().get(0).staffByStaffPickUp().fullName());
                         }

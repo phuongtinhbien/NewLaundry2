@@ -5,10 +5,12 @@ query getOrdetailByOrderid($idOrder: BigFloat!) {
     deliveryDate
     deliveryPlace
     timeScheduleByPickUpTimeId {
+      id
       timeStart
       timeEnd
     }
     timeScheduleByDeliveryTimeId {
+      id
       timeEnd
       timeStart
     }
@@ -18,16 +20,35 @@ query getOrdetailByOrderid($idOrder: BigFloat!) {
     orderDetailsByOrderId {
       nodes {
         productByProductId {
+          id
           productName
+          postByProductAvatar {
+            headerImageFile
+          }
         }
         amount
         unitId
         unitPriceByUnitPrice {
+          id
           price
         }
         serviceTypeByServiceTypeId {
+          id
           serviceTypeName
         }
+        materialByMaterialId {
+          id
+          materialName
+        }
+        colorByColorId {
+          id
+          colorName
+        }
+        labelByLabelId {
+          id
+          labelName
+        }
+
       }
     }
   }

@@ -4,6 +4,7 @@ query getOrderFinish($id: BigFloat!){
       id
       status
       branchByBranchId{
+        id
         address
         branchName
       }

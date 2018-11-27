@@ -47,6 +47,7 @@
     <string name="total">Tổng cộng</string>
     <string name="delivery">Giao đồ</string>
     <string name="title_all_your_clothes">Danh sách đồ</string>
+    <string name="title_service_weight">Danh sách dịch vụ - khối lượng</string>
     <string name="confirm">Xác nhận</string>
     <string name="thanks">Cảm ơn!!!</string>
     <string name="your_code">Phía trên là mã QR Code đơn hàng của bạn</string>
@@ -122,4 +123,12 @@
     <string name="BACK_TO_HOME">TRỞ VỀ TRANG CHÍNH</string>
     <string name="edit">SỬA</string>
     <string name="Cancel_order">HỦY ĐƠN HÀNG</string>
+    <string name="err_not_found_branch">Lỗi! Cửa hàng không xác định</string>
+    <string name="title_receipt">Thông tin biên nhận</string>
+    <string name="view_reipt">Xem biên nhận</string>
+    <string name="view_orderdetail">Xem đơn hàng</string>
+    <string name="order_result">Kết quả tạo đơn hàng</string>
+    <string name="Set_up_information">Cập nhật thông tin cá nhân</string>
+    <string name="email_password_wrong">Email/Mật khẩu của bạn không đúng</string>
+    <string name="notify_fail">Xảy ra sự cố\nLàm ơn kiểm tra lại!</string>
 </resources>

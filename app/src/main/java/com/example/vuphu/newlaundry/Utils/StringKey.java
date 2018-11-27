@@ -34,4 +34,9 @@ public interface StringKey {
     public static final String OB_ORDERDETAIL = "OB_ORDERDETAIL";
     public static final String EDIT = "EDIT";
     public static final String STATUS = "STATUS";
+    public static final String PENDING = "PENDING";
+    public static final String DRAFT = "DRAFT";
+    public static final String APPROVED = "APPROVED";
+    public static final String UNDEFINE = "_";
+
 }

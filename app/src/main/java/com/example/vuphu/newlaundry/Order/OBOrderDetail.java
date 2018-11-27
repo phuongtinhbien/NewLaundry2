@@ -24,6 +24,7 @@ public class OBOrderDetail implements Serializable {
     private String serviceName;
     private double price = 0;
     private String priceID;
+    private Double weight;
 
     public OBOrderDetail() {
         this.product = null;
@@ -57,6 +58,13 @@ public class OBOrderDetail implements Serializable {
         this.serviceName = serviceName;
     }
 
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
 
     public String getPriceID() {
         return priceID;

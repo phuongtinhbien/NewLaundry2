@@ -24,25 +24,19 @@ import com.apollographql.apollo.exception.ApolloException;
 import com.example.vuphu.newlaundry.GetColorsQuery;
 import com.example.vuphu.newlaundry.GetLabelQuery;
 import com.example.vuphu.newlaundry.GetMaterialsQuery;
-import com.example.vuphu.newlaundry.GetUnitPricesByUnitQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.ItemListDialogFragment;
-import com.example.vuphu.newlaundry.Order.OBOrder;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 import com.example.vuphu.newlaundry.Order.OBPrice;
-import com.example.vuphu.newlaundry.Product.OBProduct;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
-import com.example.vuphu.newlaundry.Utils.Util;
 import com.github.florent37.androidslidr.Slidr;
-import com.robertlevonyan.views.chip.Chip;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.example.vuphu.newlaundry.Utils.StringKey.EDIT;

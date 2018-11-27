@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.vuphu.newlaundry.Main.InfoOrderDetailActivity;
 import com.example.vuphu.newlaundry.Main.OBOrderFragment;
+import com.example.vuphu.newlaundry.Main.ReceiptActivity;
 import com.example.vuphu.newlaundry.R;
 
 import java.text.ParseException;
@@ -17,8 +18,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.example.vuphu.newlaundry.Utils.StringKey.APPROVED;
 import static com.example.vuphu.newlaundry.Utils.StringKey.DATE_SYMBOL;
+import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
+import static com.example.vuphu.newlaundry.Utils.StringKey.PENDING;
 import static com.example.vuphu.newlaundry.Utils.StringKey.STATUS;
 
 public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
@@ -46,15 +50,28 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
         holder.branchName.setText(obOrderFragment.getBranchName());
         holder.branchAdress.setText(obOrderFragment.getBranchAddress());
         holder.reciever.setText(obOrderFragment.getReciever());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.view_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, InfoOrderDetailActivity.class);
                 intent.putExtra(ID_ORDER, obOrderFragment.getId());
                 intent.putExtra(STATUS, obOrderFragment.getStatus());
+                intent.putExtra(ID_BRANCH, obOrderFragment.getIdBranch());
                 context.startActivity(intent);
             }
         });
+        if(!obOrderFragment.getStatus().equals(PENDING)) {
+            holder.view_receipt.setVisibility(View.VISIBLE);
+            holder.view_receipt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ReceiptActivity.class);
+                    intent.putExtra(ID_ORDER, obOrderFragment.getId());
+                    context.startActivity(intent);
+                }
+            });
+        }
+
     }
 
     @Override
