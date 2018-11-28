@@ -162,7 +162,7 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
                         if(!listMaterial.isEmpty()) {
                             for(GetMaterialsQuery.Node node : listMaterial){
                                 materialList.add(node.materialName());
-                                materialIDList.add(node.materialName());
+                                materialIDList.add(node.id());
                             }
                             DetailPrepareOrderClothesActivity.this.runOnUiThread(new Runnable() {
                                 @Override
