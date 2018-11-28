@@ -4727,6 +4727,93 @@
             "deprecationReason": null
           },
           {
+            "name": "getNotificationCustomer",
+            "description": "Reads and enables pagination through a set of `Task`.",
+            "args": [
+              {
+                "name": "cusId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "BigFloat",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "first",
+                "description": "Only read the first `n` values of the set.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "last",
+                "description": "Only read the last `n` values of the set.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "offset",
+                "description": "Skip the first `n` values from our `after` cursor, an alternative to cursor based pagination. May not be used with `last`.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "before",
+                "description": "Read all values in the set before (above) this cursor.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Cursor",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "after",
+                "description": "Read all values in the set after (below) this cursor.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Cursor",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "filter",
+                "description": "A filter to be used in determining which values should be returned by the collection.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TaskFilter",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "TasksConnection",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getprepareorderserving",
             "description": "Reads and enables pagination through a set of `Receipt`.",
             "args": [
@@ -47532,6 +47619,33 @@
             "deprecationReason": null
           },
           {
+            "name": "updateOrderAndDetail",
+            "description": null,
+            "args": [
+              {
+                "name": "input",
+                "description": "The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "UpdateOrderAndDetailInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "UpdateOrderAndDetailPayload",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "updatereceiptanddetail",
             "description": null,
             "args": [
@@ -75563,6 +75677,189 @@
             "type": {
               "kind": "OBJECT",
               "name": "BillsEdge",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "UpdateOrderAndDetailInput",
+        "description": "All input for the `updateOrderAndDetail` mutation.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "clientMutationId",
+            "description": "An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "o",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "CustomerOrderInput",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "d",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "OrderDetailInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "UpdateOrderAndDetailPayload",
+        "description": "The output of our `updateOrderAndDetail` mutation.",
+        "fields": [
+          {
+            "name": "clientMutationId",
+            "description": "The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "customerOrder",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CustomerOrder",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "query",
+            "description": "Our root query field type. Allows us to run any query from our mutation payload.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Query",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "customerByCustomerId",
+            "description": "Reads a single `Customer` that is related to this `CustomerOrder`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Customer",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "branchByBranchId",
+            "description": "Reads a single `Branch` that is related to this `CustomerOrder`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Branch",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "timeScheduleByPickUpTimeId",
+            "description": "Reads a single `TimeSchedule` that is related to this `CustomerOrder`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TimeSchedule",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "timeScheduleByDeliveryTimeId",
+            "description": "Reads a single `TimeSchedule` that is related to this `CustomerOrder`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "TimeSchedule",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "promotionByPromotionId",
+            "description": "Reads a single `Promotion` that is related to this `CustomerOrder`.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Promotion",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "customerOrderEdge",
+            "description": "An edge for our `CustomerOrder`. May be used by Relay 1.",
+            "args": [
+              {
+                "name": "orderBy",
+                "description": "The method to use when ordering `CustomerOrder`.",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "CustomerOrdersOrderBy",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": "[PRIMARY_KEY_ASC]"
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CustomerOrdersEdge",
               "ofType": null
             },
             "isDeprecated": false,

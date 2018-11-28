@@ -59,6 +59,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -209,13 +210,35 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
         btnCancelOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // TODO: check (time pickup - current time) > 1h
+                if(checkTime()){
+                    setStatusOrder();
+                }
             }
         });
     }
 
-    private void saveOrder() {
+    private boolean checkTime() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(datePickupValue);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(date);
+        calendar1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(pickupTimeValue.substring(0,2)));
+        calendar1.set(Calendar.HOUR_OF_DAY, 0);
+        calendar1.set(Calendar.MINUTE, 0);
+        calendar1.set(Calendar.SECOND, 0);
+        calendar1.set(Calendar.MILLISECOND, 0);
+        return false;
+    }
 
+    private void saveOrder() {
+        // TODO: Update Customer_order and order detail
     }
 
     private void editOrder() {

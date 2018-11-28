@@ -245,11 +245,11 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
         adapterService = new AdapterListServiceWeight(listService_weight, ReceiptActivity.this);
         list_clothes.setAdapter(adapterClothes);
         list_receipt_service_weight.setAdapter(adapterService);
-        if(adapterClothes.sumPrice() > 0) {
+        if(adapterClothes.sumPrice() +  adapterService.sumPrice() > 0) {
             item_receipt_total.setText(adapterClothes.sumPrice() + adapterService.sumPrice() + " VND");
         }
         else {
-            item_receipt_total.setText(getResources().getString(R.string.total_price) + " VND");
+            item_receipt_total.setText(getResources().getString(R.string.total_price));
         }
         if(adapterClothes.sumCount() > 0) {
             item_receipt_total_items.setText(adapterClothes.sumCount() + " " + getResources().getString(R.string.item));

@@ -52,7 +52,7 @@ public class NotificationFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(getContext(), "User refreshes", Toast.LENGTH_SHORT).show();
+                // TODO: Refresh list notification
             }
         });
 
@@ -60,7 +60,6 @@ public class NotificationFragment extends Fragment {
     }
 
     public static NotificationFragment newInstance() {
-        
         Bundle args = new Bundle();
         NotificationFragment fragment = new NotificationFragment();
         fragment.setArguments(args);
@@ -69,6 +68,7 @@ public class NotificationFragment extends Fragment {
 
     public void createList(){
         list = new ArrayList<>();
+        
 
         OBNotification item = new OBNotification();
         item.setContent("Bạn đã tạo đơn ngày có mã số 27 vào ngày 23/11/2018.");

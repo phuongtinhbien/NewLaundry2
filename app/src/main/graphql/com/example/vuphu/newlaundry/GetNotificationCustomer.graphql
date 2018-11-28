@@ -1,0 +1,25 @@
+query getNotificationCustomer($cusId: BigFloat!) {
+  getNotificationCustomer(cusId: $cusId, filter: {previousTask: {equalTo: "N"}}) {
+    nodes {
+      createDate
+      updateDate
+      taskType
+      customerOrder
+      currentStatus
+      previousStatus
+      receiptByReceipt{
+        orderId
+        staffByStaffPickUp{
+          fullName
+        }
+        staffByStaffDelivery{
+          fullName
+        }
+        pickUpDate
+        deliveryDate
+        pickUpTime
+        deliveryTime
+      }
+    }
+  }
+}

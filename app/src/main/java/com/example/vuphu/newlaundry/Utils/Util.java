@@ -6,10 +6,15 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.vuphu.newlaundry.R;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import static com.example.vuphu.newlaundry.Utils.StringKey.PENDING;
+import static com.example.vuphu.newlaundry.Utils.StringKey.PENDING_SERVING;
 
 public class Util {
 
@@ -86,5 +91,11 @@ public class Util {
         }
     }
 
+    public static String translateStatus(String status, Context context) {
+        String result = status;
+        result  = context.getResources().getString(context.getResources().getIdentifier(status, "string", context.getPackageName()));
+        return result;
+
+    }
 
 }

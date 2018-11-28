@@ -253,7 +253,11 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
         dateDelivery.init(year, month, day, new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                calendar.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
+                calendar.set(year, monthOfYear, dayOfMonth);
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
                 mDateDelivery = sdf.format(calendar.getTime());
                 if(calendar.getTimeInMillis() > timeLimit) {
                     Log.i("LonHon", "Yes");

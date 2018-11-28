@@ -24,6 +24,7 @@ import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
 import static com.example.vuphu.newlaundry.Utils.StringKey.PENDING;
 import static com.example.vuphu.newlaundry.Utils.StringKey.STATUS;
+import static com.example.vuphu.newlaundry.Utils.Util.translateStatus;
 
 public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
     private Context context;
@@ -44,7 +45,7 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         OBOrderFragment obOrderFragment = listOrder.get(position);
-        holder.status.setChipText(obOrderFragment.getStatus());
+        holder.status.setChipText(translateStatus(obOrderFragment.getStatus(), context) + " - " + obOrderFragment.getId());
         String strDate = obOrderFragment.getDate().substring(8, 10) + DATE_SYMBOL + obOrderFragment.getDate().substring(5, 7) + DATE_SYMBOL + obOrderFragment.getDate().substring(0, 4);
         holder.date.setText(strDate);
         holder.branchName.setText(obOrderFragment.getBranchName());

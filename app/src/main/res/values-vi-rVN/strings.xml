@@ -131,4 +131,19 @@
     <string name="Set_up_information">Cập nhật thông tin cá nhân</string>
     <string name="email_password_wrong">Email/Mật khẩu của bạn không đúng</string>
     <string name="notify_fail">Xảy ra sự cố\nLàm ơn kiểm tra lại!</string>
+    <string name="PENDING">Đang chờ</string>
+    <string name="PENDING_SERVING">Đang chờ xử lí </string>
+    <string name="RECEIVED">Đã nhận đồ</string>
+    <string name="SERVING">Đang xử lí</string>
+    <string name="FINISHED_SERVING">Xử lí hoàn tất</string>
+    <string name="APPROVED">Đã xác nhận</string>
+    <string name="PENDING_DELIVERY">Đang chờ trả đồ</string>
+    <string name="FINISHED">Hoàn tất</string>
+    <string name="DECLINED">Đã hủy</string>
+    <string name="DRAFT">Tạm</string>
+    <string name="ACTIVE">Đang hoạt động</string>
+    <string name="INACTIVE">Ngưng hoạt động</string>
+    <string name="DELIVERIED">Đã trả đồ</string>
+    <string name="ORDER_NUMBER">Đơn hàng mã số</string>
+
 </resources>

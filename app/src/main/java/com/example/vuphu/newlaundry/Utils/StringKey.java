@@ -38,5 +38,17 @@ public interface StringKey {
     public static final String DRAFT = "DRAFT";
     public static final String APPROVED = "APPROVED";
     public static final String UNDEFINE = "_";
+    public static final String PENDING_SERVING = "PENDING_SERVING";
+    public static final String RECEIVED = "RECEIVED";
+    public static final String SERVING = "SERVING";
+    public static final String FINISHED_SERVING = "FINISHED_SERVING";
+    public static final String PENDING_DELIVERY = "PENDING_DELIVERY";
+    public static final String FINISHED = "FINISHED";
+    public static final String DECLINED = "DECLINED";
+    public static final String ACTIVE = "ACTIVE";
+    public static final String INACTIVE = "INACTIVE";
+    public static final String DELIVERIED = "DELIVERIED";
+    public static final String TASK_CUSTOMER_ORDER = "TASK_CUSTOMER_ORDER";
+    public static final String TASK_RECEIPT = "TASK_RECEIPT";
 
 }

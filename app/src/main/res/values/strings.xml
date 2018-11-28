@@ -202,6 +202,19 @@
     <string name="view_orderdetail">View Order</string>
     <string name="order_result">Order creation results</string>
     <string name="Set_up_information">Set up information</string>
-
+    <string name="PENDING">PENDING</string>
+    <string name="PENDING_SERVING">PENDING_SERVING </string>
+    <string name="RECEIVED">RECEIVED</string>
+    <string name="SERVING">SERVING</string>
+    <string name="FINISHED_SERVING">FINISHED_SERVING</string>
+    <string name="APPROVED">APPROVED</string>
+    <string name="PENDING_DELIVERY">PENDING_DELIVERY</string>
+    <string name="FINISHED">FINISHED</string>
+    <string name="DECLINED">DECLINED</string>
+    <string name="DRAFT">DRAFT</string>
+    <string name="ACTIVE">ACTIVE</string>
+    <string name="INACTIVE">INACTIVE</string>
+    <string name="DELIVERIED">Đã trả đồ</string>
+    <string name="ORDER_NUMBER">Order</string>
 </resources>
 
