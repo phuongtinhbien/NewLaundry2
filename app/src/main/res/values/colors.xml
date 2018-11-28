@@ -21,6 +21,7 @@
     <color name="textColorHintFail">#FFAFBD</color>
 
     <color name="yellow">#ffe000</color>
+    <color name="orange">#ff9800</color>
     <color name="green">#38ef7d</color>
     <color name="charcoal_grey">#464646</color>
     <color name="cool_grey">#8c92ac</color>

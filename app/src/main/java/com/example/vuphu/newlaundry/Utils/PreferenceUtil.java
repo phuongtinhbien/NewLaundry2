@@ -45,7 +45,7 @@ public class PreferenceUtil {
 
     public static String getAuthToken(@NonNull Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
-        return sharedPref.getString(AUTH_TOKEN, "");
+        return sharedPref.getString(AUTH_TOKEN, null);
     }
 
     public static void setAuthToken(@NonNull Context context, @NonNull String authToken) {
