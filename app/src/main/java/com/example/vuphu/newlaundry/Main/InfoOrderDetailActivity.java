@@ -248,7 +248,6 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
     }
 
     private void initializePromotion() {
-        promotionLayout.setVisibility(View.VISIBLE);
         promotionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -451,8 +450,8 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
     private void initializeView() {
         if(TextUtils.isEmpty(promotionValue)) {
             promotionLayout.setVisibility(View.GONE);
-        }
-        if(!TextUtils.isEmpty(promotionValue)){
+        } else {
+            promotionLayout.setVisibility(View.VISIBLE);
             promotion.setText(promotionValue);
         }
         if(!TextUtils.isEmpty(dateDeliveryValue)){
