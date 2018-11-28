@@ -187,9 +187,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                 btnCancelOrder.setVisibility(View.GONE);
             }
         }
-        if(TextUtils.isEmpty(promotionValue)) {
-            promotionLayout.setVisibility(View.GONE);
-        }
+
 
     }
 
@@ -451,6 +449,9 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
     }
 
     private void initializeView() {
+        if(TextUtils.isEmpty(promotionValue)) {
+            promotionLayout.setVisibility(View.GONE);
+        }
         if(!TextUtils.isEmpty(promotionValue)){
             promotion.setText(promotionValue);
         }
