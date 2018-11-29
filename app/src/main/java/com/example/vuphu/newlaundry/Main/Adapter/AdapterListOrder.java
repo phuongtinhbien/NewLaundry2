@@ -12,6 +12,7 @@ import com.example.vuphu.newlaundry.Main.InfoOrderDetailActivity;
 import com.example.vuphu.newlaundry.Main.OBOrderFragment;
 import com.example.vuphu.newlaundry.Main.ReceiptActivity;
 import com.example.vuphu.newlaundry.R;
+import com.example.vuphu.newlaundry.Utils.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +47,7 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         OBOrderFragment obOrderFragment = listOrder.get(position);
         holder.status.setChipText(translateStatus(obOrderFragment.getStatus(), context) + " - " + obOrderFragment.getId());
-        String strDate = obOrderFragment.getDate().substring(8, 10) + DATE_SYMBOL + obOrderFragment.getDate().substring(5, 7) + DATE_SYMBOL + obOrderFragment.getDate().substring(0, 4);
+        String strDate = Util.parseDate(obOrderFragment.getDate().substring(0, 10), "yyyy-MM-dd", "dd/MM/yyyy");
         holder.date.setText(strDate);
         holder.branchName.setText(obOrderFragment.getBranchName());
         holder.branchAdress.setText(obOrderFragment.getBranchAddress());

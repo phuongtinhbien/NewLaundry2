@@ -34,10 +34,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Payment.PaymentActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Order.Activity.InfoOrderActivity"
             android:configChanges="orientation"
             android:parentActivityName=".Order.Activity.PrepareOrderAddressActivity"

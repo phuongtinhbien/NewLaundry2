@@ -208,7 +208,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
         btnCancelOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: check (time pickup - current time) > 1h
+                // TODO: check (time pickup - current time) > 2h
                 if(checkTime()){
                     setStatusOrder();
                 }
@@ -232,6 +232,10 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
         calendar1.set(Calendar.MINUTE, 0);
         calendar1.set(Calendar.SECOND, 0);
         calendar1.set(Calendar.MILLISECOND, 0);
+        long timeCondition = calendar1.getTimeInMillis() - calendar.getTimeInMillis();
+        if(timeCondition > 2*3600000) {
+            return true;
+        }
         return false;
     }
 

@@ -8,6 +8,7 @@ import android.widget.Spinner;
 
 import com.example.vuphu.newlaundry.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,6 +52,20 @@ public class Util {
         returnValue = simpleDateFormat.format(date);
         return returnValue;
     }
+
+    public static String parseDate(String date, String formatold, String formatnew) {
+        SimpleDateFormat simpleDateFormatOld = new SimpleDateFormat(formatold);
+        SimpleDateFormat simpleDateFormatNew = new SimpleDateFormat(formatnew);
+        String result = "";
+        try {
+            Date d = simpleDateFormatOld.parse(date);
+            result = simpleDateFormatNew.format(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return  result;
+    }
+
 
     public static Date getDate (){
         return calendar.getTime();

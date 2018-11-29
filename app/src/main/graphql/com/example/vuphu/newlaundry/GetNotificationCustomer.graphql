@@ -6,7 +6,6 @@ query getNotificationCustomer($cusId: BigFloat!) {
       taskType
       customerOrder
       currentStatus
-      previousStatus
       receiptByReceipt{
         orderId
         staffByStaffPickUp{

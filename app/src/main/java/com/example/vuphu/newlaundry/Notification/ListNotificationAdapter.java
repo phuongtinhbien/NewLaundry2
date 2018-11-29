@@ -8,14 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.vuphu.newlaundry.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListNotificationAdapter extends RecyclerView.Adapter<ListNotificationViewHolder> {
 
     Context context;
-    List<OBNotification> listNotification;
+    ArrayList<OBNotification> listNotification;
 
-    public ListNotificationAdapter(Context context, List<OBNotification> listNotification) {
+    public ListNotificationAdapter(Context context, ArrayList<OBNotification> listNotification) {
         this.context = context;
         this.listNotification = listNotification;
     }
@@ -35,6 +36,12 @@ public class ListNotificationAdapter extends RecyclerView.Adapter<ListNotificati
 
     @Override
     public int getItemCount() {
-        return listNotification.size();
+       return listNotification.size();
+    }
+
+    public void refreshAdapter(ArrayList<OBNotification> list) {
+        this.listNotification.clear();
+        this.listNotification.addAll(list);
+        notifyDataSetChanged();
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NewLaundry</string>
+    <string name="app_name">Laundry</string>
     <string name="title_home">Trang chính</string>
     <string name="title_notifications">Thông báo</string>
     <string name="notify_loading">Đang tải</string>
@@ -144,6 +144,25 @@
     <string name="ACTIVE">Đang hoạt động</string>
     <string name="INACTIVE">Ngưng hoạt động</string>
     <string name="DELIVERIED">Đã trả đồ</string>
-    <string name="ORDER_NUMBER">Đơn hàng mã số</string>
+    <string name="ORDER_NUMBER">Đơn hàng mã số </string>
+    <string name="RECEIPT_OF">Biên nhận của đơn hàng mã số </string>
+    <string name="CONTENT_APPROVED">đã được chấp nhận</string>
+    <string name="CONTENT_DECLINED">đã được hủy</string>
+    <string name="CONTENT_FINISHED">đã được hoàn thành. Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi</string>
+    <string name="CONTENT_SERVING">đang được xử lý</string>
+    <string name="CONTENT_FINISHED_SERVING">đã được xử lý hoàn tất</string>
+    <string name="CONTENT_RECEIVED">đã lấy đồ thành công</string>
+    <string name="CONTENT_DELIVERIED">đã giao đồ thành công</string>
+    <string name="CONTENT_PENDING_RECEIPT">đã được tạo</string>
+    <string name="CONTENT_PENDING_SERVING">đang chờ xử lý</string>
+    <string name="CONTENT_PENDING_DELIVERY">sẽ được giao đồ vào lúc </string>
+    <string name="CONTENT_PENDING_DELIVERY_CONTINUE"> bởi nhân viên giao đồ </string>
+    
+    <string name="Female">Nữ</string>
+    <string name="Male">Nam</string>
+    <string-array name="arr_gender">
+        <item>Nam</item>
+        <item>Nữ</item>
+    </string-array>
 
 </resources>
