@@ -135,7 +135,12 @@ public class NotificationFragment extends Fragment {
                             });
                         }
                         else {
-                           inittializeView(view);
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    inittializeView(view);
+                                }
+                            });
                         }
                     }
 
