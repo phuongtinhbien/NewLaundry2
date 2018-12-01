@@ -233,7 +233,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
 
     private boolean checkTime() {
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
             date = simpleDateFormat.parse(datePickupValue);
@@ -263,6 +263,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
         if(!TextUtils.isEmpty(delidate) && !TextUtils.isEmpty(pickdate)) {
             CustomerOrderInput customerOrderInput = CustomerOrderInput.builder()
                     .customerId(customer.id())
+                    .id(idOder)
                     .deliveryDate(delidate)
                     .pickUpDate(pickdate)
                     .pickUpTimeId(TimePickupOB.getId())

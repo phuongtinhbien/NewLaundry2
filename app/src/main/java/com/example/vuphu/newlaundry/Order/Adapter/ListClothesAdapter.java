@@ -89,7 +89,7 @@ public class ListClothesAdapter extends RecyclerView.Adapter<ListClothesViewHold
         for (OBOrderDetail obOrderDetail: list) {
             if(obOrderDetail.getUnitID().equals(ITEM)){
                 sum += obOrderDetail.getPrice()*obOrderDetail.getCount();
-            } else {
+            } else if(!(obOrderDetail.getWeight() > 0)){
                 flag = true;
                 break;
             }

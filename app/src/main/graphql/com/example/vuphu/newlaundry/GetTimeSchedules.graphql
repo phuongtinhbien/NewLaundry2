@@ -1,5 +1,5 @@
-query getTimeSchedules{
-  allTimeSchedules {
+query getTimeSchedules {
+  allTimeSchedules(condition: {status: "ACTIVE"}) {
     nodes {
       id
       timeStart
