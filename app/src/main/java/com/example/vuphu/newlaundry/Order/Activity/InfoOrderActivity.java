@@ -267,17 +267,22 @@ public class InfoOrderActivity extends AppCompatActivity implements
                             public void onResponse(@NotNull Response<CreateOrderAndDetailMutation.Data> response) {
                                 idOder = response.data().createOrderAndDetail().customerOrder().id();
                                 Log.i("customer_order", idOder);
-                                clearPreference();
                                 popup.hide();
-                                startActivity(new Intent(getApplicationContext(), FinalOrderActivity.class).putExtra(ID_ORDER, idOder));
-                                finish();
+                                if(!TextUtils.isEmpty(idOder)) {
+                                    clearPreference();
+                                    startActivity(new Intent(getApplicationContext(), FinalOrderActivity.class).putExtra(ID_ORDER, idOder));
+                                    finish();
+                                }
+                                else {
+                                    popup.createFailDialog(getResources().getString(R.string.order_fail), "OK");
+                                }
+
                             }
 
                             @Override
                             public void onFailure(@NotNull ApolloException e) {
                                 Log.e("createOrderDetail_err", e.getCause() +" - "+e);
                                 popup.createFailDialog(getResources().getString(R.string.order_fail), "OK");
-
                             }
                         });
                     }
