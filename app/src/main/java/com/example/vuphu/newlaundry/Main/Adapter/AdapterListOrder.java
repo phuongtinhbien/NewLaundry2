@@ -96,4 +96,10 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
     public int getItemCount() {
         return listOrder.size();
     }
+
+    public void refreshAdapter(ArrayList<OBOrderFragment> list) {
+        this.listOrder.clear();
+        this.listOrder.addAll(list);
+        notifyDataSetChanged();
+    }
 }

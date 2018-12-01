@@ -184,7 +184,7 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
                                     }
                                     else if(node1.unitId().equals(KG)) {
                                         if(node1.recievedAmount() != null) {
-                                            obOrderDetail.setCount(node1.recievedAmount().longValue());
+                                            obOrderDetail.setWeight(node1.recievedAmount());
                                         }
                                         obOrderDetail.setUnitID(node1.unitId());
                                         obOrderDetail.setUnit(getResources().getString(R.string.kg));
@@ -211,7 +211,7 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
                                         obService_weight.setPrice(obOrderDetail.getPrice());
                                         obService_weight.setServiceName(obOrderDetail.getServiceName());
                                         if(obOrderDetail.getCount() > 0) {
-                                            obService_weight.setWeight(obOrderDetail.getCount());
+                                            obService_weight.setWeight(obOrderDetail.getWeight());
                                         } else {
                                             obService_weight.setWeight(0.0d);
                                         }
