@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity{
                         @Override
                         public void run() {
                             popup.hide();
-                            popup.createFailDialog(er, "Fail");
+                            popup.createFailDialog(er, getResources().getString(R.string.btn_fail));
                             popup.show();
                         }
                     });

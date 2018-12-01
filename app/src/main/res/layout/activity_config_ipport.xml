@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ConfigIPPort">
+
+    <android.support.design.widget.TextInputEditText
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="PORT"
+        android:id="@+id/ipconfig"
+        android:inputType="numberDecimal"
+        />
+    <android.support.design.widget.TextInputEditText
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="IP"
+        android:id="@+id/portconfig"
+        android:inputType="numberDecimal"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/btn_OK"
+        />
+
+</LinearLayout>

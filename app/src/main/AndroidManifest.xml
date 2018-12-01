@@ -86,7 +86,8 @@
             android:name=".Main.InfoOrderDetailActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".Main.ReceiptActivity"></activity>
+        <activity android:name=".Main.ReceiptActivity" />
+        <activity android:name=".ConfigIPPort"></activity>
     </application>
 
 </manifest>

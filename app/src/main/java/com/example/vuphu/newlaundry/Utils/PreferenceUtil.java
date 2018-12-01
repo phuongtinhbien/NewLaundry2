@@ -21,6 +21,8 @@ import java.util.List;
 import static com.facebook.stetho.inspector.network.PrettyPrinterDisplayType.JSON;
 
 public class PreferenceUtil {
+    public static final String CONFIG = "CONFIG";
+    public static final String IPCONFIG = "IPCONFIG";
     public static final String PREFERENCE = "CUSTOMER";
     private static final String AUTH_TOKEN_TIME = "AUTH_TOKEN_TIME";
     private static final String AUTH_TOKEN = "AUTH_TOKEN";
@@ -143,6 +145,18 @@ public class PreferenceUtil {
 
     public static void removeOrderList(Context context) {
         removeKey(context, LIST_ORDER);
+    }
+
+    public static void setIpconfig(Context context, String ip_port){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(CONFIG, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(IPCONFIG, ip_port);
+        editor.apply();
+    }
+
+    public static String getIpconfig(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(CONFIG, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(IPCONFIG, "");
     }
 
 }

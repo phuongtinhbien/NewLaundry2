@@ -1,5 +1,7 @@
 package com.example.vuphu.newlaundry.Graphql;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import com.apollographql.apollo.ApolloCall;
@@ -10,6 +12,7 @@ import com.apollographql.apollo.exception.ApolloException;
 import com.apollographql.apollo.internal.interceptor.ApolloCacheInterceptor;
 import com.apollographql.apollo.rx2.Rx2Apollo;
 import com.example.vuphu.newlaundry.AuthenticateMutation;
+import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,10 +31,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 
 
-public class GraphqlClient {
-
-    private static final String BASE_URL = "http://192.168.1.13:5000/graphql";
-    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/jpg");
+public class GraphqlClient extends Activity {
+    private static final String BASE_URL = "http://192.168.1.11:5000/graphql";
+//    private static final String BASE_URL = "http://" + PreferenceUtil.getIpconfig(this) + "/graphql";
     private static final int TIME_OUT = 30000;
     private static OkHttpClient okHttpClient;
 
@@ -72,39 +74,6 @@ public class GraphqlClient {
 
         return builder.build();
     }
-
-
-    public static ApolloClient uploadImage(final File image, final String imageName, final String authToken){
-
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
-        // set the timeouts
-        builder.connectTimeout(TIME_OUT, TimeUnit.MILLISECONDS);
-        builder.readTimeout(TIME_OUT, TimeUnit.MILLISECONDS);
-        builder.writeTimeout(TIME_OUT, TimeUnit.MILLISECONDS);
-        builder.interceptors().clear();
-        builder.addInterceptor(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
-                Request.Builder builder = request.newBuilder();
-                RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("headerImageFile", imageName, RequestBody.create(MEDIA_TYPE_PNG, image))
-                        .addPart(request.body())
-                        .build();
-                builder.addHeader("Authorization", "BEARER " + authToken);
-                builder.method(request.method(), request.body());
-                builder.post(requestBody);
-                return chain.proceed(builder.build());
-            }
-        });
-        return ApolloClient.builder()
-                .serverUrl(BASE_URL)
-                .okHttpClient(builder.build())
-                .build();
-
-    }
-
 
 
 }

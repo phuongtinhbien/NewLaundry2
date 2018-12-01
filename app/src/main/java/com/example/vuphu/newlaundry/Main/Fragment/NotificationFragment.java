@@ -1,6 +1,7 @@
 package com.example.vuphu.newlaundry.Main.Fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -154,7 +155,7 @@ public class NotificationFragment extends Fragment {
             @Override
             public void onRefresh() {
                 // TODO: Refresh list notification
-//                refresh();
+                refresh();
             }
         });
     }
@@ -166,6 +167,8 @@ public class NotificationFragment extends Fragment {
                     public void onResponse(@NotNull Response<GetNotificationCustomerQuery.Data> response) {
                         if(response.data().getNotificationCustomer().nodes().size() > 0){
                             List<GetNotificationCustomerQuery.Node> nodes = response.data().getNotificationCustomer().nodes();
+                            ArrayList<OBNotification> listRefresh = new ArrayList<>();
+                            listRefresh.clear();
                             for(GetNotificationCustomerQuery.Node node : nodes) {
                                 OBNotification obNotification = new OBNotification();
                                 String content = "";
@@ -201,20 +204,18 @@ public class NotificationFragment extends Fragment {
 
                                 obNotification.setContent(content);
                                 obNotification.setTime(time);
-                                list.clear();
-                                list.add(obNotification);
+                                listRefresh.add(obNotification);
                             }
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if(list.size() > 0){
-                                        adapter.refreshAdapter(list);
+                                    Log.i("listRefresh", listRefresh.size() + "****");
+                                    if(listRefresh.size() > 0){
+                                        adapter.refreshAdapter(listRefresh);
                                     }
+                                    swipeRefreshLayout.setRefreshing(false);
                                 }
                             });
-                        }
-                        else {
-
                         }
                     }
 
