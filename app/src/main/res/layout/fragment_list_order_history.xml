@@ -5,12 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="Main.Fragment.ListOrderHistoryFragment"
     >
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_height="match_parent"
-        android:id="@+id/list_order_history"
-        tools:listitem="@layout/item_your_order"
-        >
-    </android.support.v7.widget.RecyclerView>
+        android:layout_width="match_parent"
+        android:id="@+id/swipe_list_order_history">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/list_order_history"
+            tools:listitem="@layout/item_your_order"
+            >
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

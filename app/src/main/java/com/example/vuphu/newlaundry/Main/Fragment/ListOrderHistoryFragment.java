@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
+import com.example.vuphu.newlaundry.GetOrderActiveQuery;
 import com.example.vuphu.newlaundry.GetOrderFinishQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Main.Adapter.AdapterListOrder;
@@ -32,6 +34,7 @@ public class ListOrderHistoryFragment extends Fragment{
     private AdapterListOrder adapterListOrder;
     private String token;
     private String idUser;
+    private SwipeRefreshLayout swipeRefreshLayout;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,7 +94,60 @@ public class ListOrderHistoryFragment extends Fragment{
     }
 
     private void addControls(View v) {
+        swipeRefreshLayout = v.findViewById(R.id.swipe_list_order_history);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
         listOrderFinish = v.findViewById(R.id.list_order_history);
         list = new ArrayList<>();
+    }
+
+    private void refresh() {
+        token = PreferenceUtil.getAuthToken(getActivity());
+        idUser = PreferenceUtil.getIdUser(getActivity());
+        ArrayList<OBOrderFragment> listRefresh = new ArrayList<>();
+        GraphqlClient.getApolloClient(token, false).query(GetOrderFinishQuery.builder()
+                .id(idUser)
+                .build()
+        ).enqueue(new ApolloCall.Callback<GetOrderFinishQuery.Data>() {
+            @Override
+            public void onResponse(@NotNull Response<GetOrderFinishQuery.Data> response) {
+                List<GetOrderFinishQuery.Node> nodes = response.data().allCustomerOrders().nodes();
+                if(nodes != null){
+                    for(GetOrderFinishQuery.Node node : nodes) {
+                        OBOrderFragment obOrderFragment = new OBOrderFragment();
+                        obOrderFragment.setId(node.id());
+                        obOrderFragment.setDate(node.createDate());
+                        obOrderFragment.setBranchAddress(node.branchByBranchId().address());
+                        obOrderFragment.setBranchName(node.branchByBranchId().branchName());
+                        obOrderFragment.setIdBranch(node.branchByBranchId().id());
+                        if(node.receiptsByOrderId().nodes().size() > 0) {
+                            obOrderFragment.setReciever(node.receiptsByOrderId().nodes().get(0).staffByStaffPickUp().fullName());
+                        }
+                        obOrderFragment.setStatus(node.status());
+                        listRefresh.add(obOrderFragment);
+                    }
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(listRefresh.size() > 0) {
+                            adapterListOrder.refreshAdapter(listRefresh);
+                        }
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                });
+
+            }
+
+            @Override
+            public void onFailure(@NotNull ApolloException e) {
+                Log.e("getOrderHistory", e.getCause() +" - "+e);
+            }
+        });
     }
 }
