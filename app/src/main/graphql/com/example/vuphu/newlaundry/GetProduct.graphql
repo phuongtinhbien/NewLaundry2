@@ -1,12 +1,14 @@
-query getProduct{
-    allProducts(orderBy: PRODUCT_NAME_ASC, condition: {status: "ACTIVE"}){
-          nodes {
-                id
-                productName
-                productTypeId
-                postByProductAvatar{
-                    headerImageFile
-                }
-          }
-     }
+query getProduct($service: BigFloat!) {
+  allServiceProducts(condition: {serviceTypeId: $service}) {
+    nodes {
+      productByProductId {
+        id
+        productName
+        productTypeId
+        postByProductAvatar {
+          headerImageFile
+        }
+      }
+    }
+  }
 }

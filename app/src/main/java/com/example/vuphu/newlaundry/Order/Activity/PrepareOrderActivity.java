@@ -184,25 +184,34 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
                 enqueue(new ApolloCall.Callback<GetProductQuery.Data>() {
                     @Override
                     public void onResponse(@NotNull Response<GetProductQuery.Data> response) {
-                        List<GetProductQuery.Node> list = response.data().allProducts().nodes();
-                        for(GetProductQuery.Node node: list) {
-                            OBOrderDetail obOrderDetail = new OBOrderDetail();
-                            OBProduct product = new OBProduct();
-                            product.setAvatar(node.postByProductAvatar().headerImageFile());
-                            product.setTitle(node.productName());
-                            product.setCategory(node.productTypeId());
-                            product.setId(node.id());
-                            obOrderDetail.setProduct(product);
-                            obOrderDetail.setIdService(idService);
-                            obOrderDetail.setServiceName(serviceName);
-                            orderDetailList.add(obOrderDetail);
-                        }
-                        PrepareOrderActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                initListClothes();
+                        List<GetProductQuery.Node> list = response.data().allServiceProducts().nodes();
+                        if(list.size() > 0) {
+                            for(GetProductQuery.Node node: list) {
+                                OBOrderDetail obOrderDetail = new OBOrderDetail();
+                                OBProduct product = new OBProduct();
+                                product.setAvatar(node.productByProductId().postByProductAvatar().headerImageFile());
+                                product.setTitle(node.productByProductId().productName());
+                                product.setCategory(node.productByProductId().productTypeId());
+                                product.setId(node.productByProductId().id());
+                                obOrderDetail.setProduct(product);
+                                obOrderDetail.setIdService(idService);
+                                obOrderDetail.setServiceName(serviceName);
+                                orderDetailList.add(obOrderDetail);
                             }
-                        });
+                            PrepareOrderActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    initListClothes();
+                                }
+                            });
+                        } else {
+                            PrepareOrderActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    initListClothes();
+                                }
+                            });
+                        }
                     }
 
                     @Override
