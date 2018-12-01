@@ -122,10 +122,11 @@ public class NotificationFragment extends Fragment {
                                 else {
                                     time = Util.parseDate(node.createDate().substring(0, 10), "yyyy-MM-dd", "dd/MM/yyyy") + " " + node.updateDate().substring(11, 19);
                                 }
-
-                                obNotification.setContent(content);
-                                obNotification.setTime(time);
-                                list.add(obNotification);
+                                if(!TextUtils.isEmpty(content) && !TextUtils.isEmpty(time)) {
+                                    obNotification.setContent(content);
+                                    obNotification.setTime(time);
+                                    list.add(obNotification);
+                                }
                             }
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
@@ -206,10 +207,11 @@ public class NotificationFragment extends Fragment {
                                 else {
                                     time = Util.parseDate(node.createDate().substring(0, 10), "yyyy-MM-dd", "dd/MM/yyyy") + " " + node.updateDate().substring(11, 19);
                                 }
-
-                                obNotification.setContent(content);
-                                obNotification.setTime(time);
-                                listRefresh.add(obNotification);
+                                if(!TextUtils.isEmpty(content) && !TextUtils.isEmpty(time)) {
+                                    obNotification.setContent(content);
+                                    obNotification.setTime(time);
+                                    listRefresh.add(obNotification);
+                                }
                             }
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
