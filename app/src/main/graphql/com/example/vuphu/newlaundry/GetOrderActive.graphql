@@ -1,5 +1,5 @@
 query getOrderActive($id: BigFloat!){
-  allCustomerOrders(orderBy:CREATE_DATE_DESC, filter:{customerId:{equalTo: $id}, status:{notIn:["FINISHED", "DRAFT"]}}) {
+  allCustomerOrders(orderBy:CREATE_DATE_DESC, filter:{customerId:{equalTo: $id}, status:{notIn:["FINISHED", "DRAFT", "DECLINED"]}}) {
     nodes {
       id
       status

@@ -15,6 +15,7 @@ query getOrdetailByOrderid($idOrder: BigFloat!) {
       timeStart
     }
     promotionByPromotionId {
+      id
       sale
     }
     orderDetailsByOrderId {

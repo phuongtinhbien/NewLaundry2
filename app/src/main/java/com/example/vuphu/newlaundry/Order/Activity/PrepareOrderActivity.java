@@ -180,37 +180,39 @@ public class PrepareOrderActivity extends AppCompatActivity implements iFCategor
     private void prepareList() {
         popup.createLoadingDialog();
         popup.show();
-        GraphqlClient.getApolloClient(token, false).query(GetProductQuery.builder().build()).
+        GraphqlClient.getApolloClient(token, false).query(GetProductQuery.builder().service(idService).build()).
                 enqueue(new ApolloCall.Callback<GetProductQuery.Data>() {
                     @Override
                     public void onResponse(@NotNull Response<GetProductQuery.Data> response) {
-                        List<GetProductQuery.Node> list = response.data().allServiceProducts().nodes();
-                        if(list.size() > 0) {
-                            for(GetProductQuery.Node node: list) {
-                                OBOrderDetail obOrderDetail = new OBOrderDetail();
-                                OBProduct product = new OBProduct();
-                                product.setAvatar(node.productByProductId().postByProductAvatar().headerImageFile());
-                                product.setTitle(node.productByProductId().productName());
-                                product.setCategory(node.productByProductId().productTypeId());
-                                product.setId(node.productByProductId().id());
-                                obOrderDetail.setProduct(product);
-                                obOrderDetail.setIdService(idService);
-                                obOrderDetail.setServiceName(serviceName);
-                                orderDetailList.add(obOrderDetail);
+                        if(response.data().allServiceProducts().nodes() != null) {
+                            List<GetProductQuery.Node> list = response.data().allServiceProducts().nodes();
+                            if(list.size() > 0) {
+                                for(GetProductQuery.Node node: list) {
+                                    OBOrderDetail obOrderDetail = new OBOrderDetail();
+                                    OBProduct product = new OBProduct();
+                                    product.setAvatar(node.productByProductId().postByProductAvatar().headerImageFile());
+                                    product.setTitle(node.productByProductId().productName());
+                                    product.setCategory(node.productByProductId().productTypeId());
+                                    product.setId(node.productByProductId().id());
+                                    obOrderDetail.setProduct(product);
+                                    obOrderDetail.setIdService(idService);
+                                    obOrderDetail.setServiceName(serviceName);
+                                    orderDetailList.add(obOrderDetail);
+                                }
+                                PrepareOrderActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initListClothes();
+                                    }
+                                });
+                            } else {
+                                PrepareOrderActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        initListClothes();
+                                    }
+                                });
                             }
-                            PrepareOrderActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    initListClothes();
-                                }
-                            });
-                        } else {
-                            PrepareOrderActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    initListClothes();
-                                }
-                            });
                         }
                     }
 

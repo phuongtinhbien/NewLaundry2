@@ -130,13 +130,12 @@ public class ItemPromotionListDialogFragment extends BottomSheetDialogFragment {
                 e.printStackTrace();
             }
             holder.time.setText(strDateStart + " - " + strDateEnd);
-            holder.saleoff.setText("Giảm giá " + obPromotion.getSale() + "%");
+            holder.saleoff.setText(getActivity().getResources().getString(R.string.sale_off) + " " + obPromotion.getSale() + "%");
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
                         mListener.onItemPromotionClicked(position);
-                        Toast.makeText(getContext(), "Promotion applied", Toast.LENGTH_SHORT).show();
                         dismiss();
                     }
                 }

@@ -30345,7 +30345,7 @@
             "description": "Checks for equality with the object’s `createDate` field.",
             "type": {
               "kind": "SCALAR",
-              "name": "Date",
+              "name": "Datetime",
               "ofType": null
             },
             "defaultValue": null
@@ -30355,7 +30355,7 @@
             "description": "Checks for equality with the object’s `updateDate` field.",
             "type": {
               "kind": "SCALAR",
-              "name": "Date",
+              "name": "Datetime",
               "ofType": null
             },
             "defaultValue": null
@@ -30496,7 +30496,7 @@
             "description": "Filter by the object’s `createDate` field.",
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "DateFilter",
+              "name": "DatetimeFilter",
               "ofType": null
             },
             "defaultValue": null
@@ -30506,7 +30506,7 @@
             "description": "Filter by the object’s `updateDate` field.",
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "DateFilter",
+              "name": "DatetimeFilter",
               "ofType": null
             },
             "defaultValue": null
@@ -30786,7 +30786,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Date",
+              "name": "Datetime",
               "ofType": null
             },
             "isDeprecated": false,
@@ -30798,7 +30798,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Date",
+              "name": "Datetime",
               "ofType": null
             },
             "isDeprecated": false,
@@ -54779,7 +54779,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Date",
+              "name": "Datetime",
               "ofType": null
             },
             "defaultValue": null
@@ -54789,7 +54789,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Date",
+              "name": "Datetime",
               "ofType": null
             },
             "defaultValue": null

@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity{
 
                         if (response.hasErrors()){
                             popup.hide();
-                            popup.createFailDialog(response.errors().get(0).message(), "Fail");
+                            popup.createFailDialog(response.errors().get(0).message(), getResources().getString(R.string.btn_fail));
                             popup.show();
                         }
 

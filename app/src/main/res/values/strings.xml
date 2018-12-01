@@ -238,5 +238,6 @@
     <string name="CONTENT_PENDING_SERVING">is waiting to process</string>
     <string name="CONTENT_PENDING_DELIVERY">will delievry in</string>
     <string name="CONTENT_PENDING_DELIVERY_CONTINUE">by staff</string>
+    <string name="sale_off">Sale off</string>
 </resources>
 

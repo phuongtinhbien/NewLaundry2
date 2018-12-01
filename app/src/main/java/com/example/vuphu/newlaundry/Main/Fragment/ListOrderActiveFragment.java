@@ -97,6 +97,7 @@ public class ListOrderActiveFragment extends Fragment{
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                Log.i("RefreshClick", "Yes");
                 refresh();
             }
         });
@@ -133,9 +134,7 @@ public class ListOrderActiveFragment extends Fragment{
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(listRefresh.size() > 0) {
-                            adapterListOrder.refreshAdapter(listRefresh);
-                        }
+                        adapterListOrder.refreshAdapter(listRefresh);
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });
@@ -148,4 +147,11 @@ public class ListOrderActiveFragment extends Fragment{
             }
         });
     }
+
+//    @Override
+//    public void onResume() {
+//        refresh();
+//        super.onResume();
+//    }
+
 }

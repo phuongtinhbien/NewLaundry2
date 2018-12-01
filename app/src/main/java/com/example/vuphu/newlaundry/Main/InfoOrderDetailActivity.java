@@ -226,6 +226,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                             popup.hide();
                         }
                     });
+                    popup.show();
                 }
             }
         });
@@ -233,7 +234,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
 
     private boolean checkTime() {
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date date = null;
         try {
             date = simpleDateFormat.parse(datePickupValue);
@@ -243,11 +244,11 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
         Calendar calendar1 = Calendar.getInstance();
         calendar1.setTime(date);
         calendar1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(pickupTimeValue.substring(0,2)));
-        calendar1.set(Calendar.HOUR_OF_DAY, 0);
         calendar1.set(Calendar.MINUTE, 0);
         calendar1.set(Calendar.SECOND, 0);
         calendar1.set(Calendar.MILLISECOND, 0);
         long timeCondition = calendar1.getTimeInMillis() - calendar.getTimeInMillis();
+        Log.i("timeCondition", timeCondition + " ms");
         if(timeCondition > 2*3600000) {
             return true;
         }
@@ -269,6 +270,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                     .pickUpTimeId(TimePickupOB.getId())
                     .deliveryTimeId(TimeDeliveryOB.getId())
                     .status(status)
+                    .promotionId(idPromotion)
                     .updateBy(customer.id())
                     .updateDate(Util.getDate().toString())
                     .build();
@@ -329,6 +331,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
     }
 
     private void initializePromotion() {
+        promotionLayout.setVisibility(View.VISIBLE);
         promotionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -373,14 +376,21 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                     @Override
                     public void onResponse(@NotNull Response<UpdateStatusMutation.Data> response) {
                         if(response.data().updateCustomerOrderById().customerOrder().status().equals(DECLINED)){
-                           popup.createSuccessDialog(R.string.cancel_order_result, R.string.btn_ok, new View.OnClickListener() {
-                               @Override
-                               public void onClick(View view) {
-                                   // TODO route parent
-                                   finish();
-                                   popup.hide();
-                               }
-                           });
+                            InfoOrderDetailActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    popup.createSuccessDialog(R.string.cancel_order_result, R.string.btn_ok, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            // TODO route parent
+                                            finish();
+                                            popup.hide();
+                                        }
+                                    });
+                                    popup.show();
+                                }
+                            });
+
                         }
                     }
 
@@ -467,8 +477,8 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
             public void onResponse(@NotNull Response<GetOrdetailByOrderidQuery.Data> response) {
                 if(response.data().customerOrderById() != null){
                     Log.i("responsedata", response.data().toString());
-                    datePickupValue = response.data().customerOrderById().pickUpDate();
-                    dateDeliveryValue = response.data().customerOrderById().deliveryDate();
+                    datePickupValue = parseDate(response.data().customerOrderById().pickUpDate(), "yyyy-MM-dd", "dd/MM/yyyy");
+                    dateDeliveryValue = parseDate(response.data().customerOrderById().deliveryDate(), "yyyy-MM-dd", "dd/MM/yyyy");
                     deliveryPlaceValue = response.data().customerOrderById().deliveryPlace();
                     pickupPlaceValue = response.data().customerOrderById().pickUpPlace();
 
@@ -486,6 +496,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                     deliveryTimeValue = response.data().customerOrderById().timeScheduleByDeliveryTimeId().timeStart() + "-" + response.data().customerOrderById().timeScheduleByDeliveryTimeId().timeEnd();
                     if(response.data().customerOrderById().promotionByPromotionId() != null){
                         promotionValue = response.data().customerOrderById().promotionByPromotionId().sale();
+                        idPromotion = response.data().customerOrderById().promotionByPromotionId().id();
                     }
                     List<GetOrdetailByOrderidQuery.Node> nodes = response.data().customerOrderById().orderDetailsByOrderId().nodes();
                     if(nodes.size() > 0) {
@@ -547,10 +558,10 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
             promotion.setText(promotionValue + "%");
         }
         if(!TextUtils.isEmpty(dateDeliveryValue)){
-            deliveryDate.setText(parseDate(dateDeliveryValue, "yyyy-MM-dd", "dd/MM/yyyy"));
+            deliveryDate.setText(dateDeliveryValue);
         }
         if(!TextUtils.isEmpty(datePickupValue)){
-            pickUpdate.setText(parseDate(datePickupValue, "yyyy-MM-dd", "dd/MM/yyyy"));
+            pickUpdate.setText(datePickupValue);
         }
         if(!TextUtils.isEmpty(deliveryTimeValue)){
             deliveryTime.setText(deliveryTimeValue);
@@ -676,7 +687,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
 
     @Override
     public void onItemPromotionClicked(int position) {
-        promotion.setText(promotionList.get(position).getTitle());
+        promotion.setText(promotionList.get(position).getSale() + "%");
         salePercent = Integer.parseInt(promotionList.get(position).getSale());
         idPromotion = promotionList.get(position).getId();
     }

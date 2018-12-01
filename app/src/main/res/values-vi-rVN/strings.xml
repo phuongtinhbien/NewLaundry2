@@ -164,7 +164,7 @@
     <string name="CONTENT_PENDING_DELIVERY">sẽ được giao đồ vào lúc </string>
     <string name="CONTENT_PENDING_DELIVERY_CONTINUE"> bởi nhân viên giao đồ </string>
     <string name="can_not_cancel_order">Bạn không thể hủy đơn hàng. bạn có thể hủy đơn hàng trước giờ lấy đồ tối thiểu là 2 giờ </string>
-
+    <string name="sale_off">Giảm giá</string>
 
     <string name="Female">Nữ</string>
     <string name="Male">Nam</string>

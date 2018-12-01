@@ -216,10 +216,7 @@ public class NotificationFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Log.i("listRefresh", listRefresh.size() + "****");
-                                    if(listRefresh.size() > 0){
-                                        adapter.refreshAdapter(listRefresh);
-                                    }
+                                    adapter.refreshAdapter(listRefresh);
                                     swipeRefreshLayout.setRefreshing(false);
                                 }
                             });

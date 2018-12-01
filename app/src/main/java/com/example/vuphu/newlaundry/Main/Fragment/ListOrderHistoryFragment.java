@@ -134,9 +134,7 @@ public class ListOrderHistoryFragment extends Fragment{
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(listRefresh.size() > 0) {
-                            adapterListOrder.refreshAdapter(listRefresh);
-                        }
+                        adapterListOrder.refreshAdapter(listRefresh);
                         swipeRefreshLayout.setRefreshing(false);
                     }
 
@@ -150,4 +148,10 @@ public class ListOrderHistoryFragment extends Fragment{
             }
         });
     }
+
+//    @Override
+//    public void onResume() {
+//        refresh();
+//        super.onResume();
+//    }
 }
