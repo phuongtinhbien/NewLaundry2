@@ -1,0 +1,7 @@
+mutation updateOrderAndDetail($cus: CustomerOrderInput!, $list: [OrderDetailInput]!) {
+  updateOrderAndDetail(input: {o: $cus, d : $list}) {
+    customerOrder{
+      id
+    }
+  }
+}

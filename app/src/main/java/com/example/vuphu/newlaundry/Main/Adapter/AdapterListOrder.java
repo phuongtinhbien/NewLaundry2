@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.vuphu.newlaundry.Main.BillActivity;
 import com.example.vuphu.newlaundry.Main.InfoOrderDetailActivity;
 import com.example.vuphu.newlaundry.Main.OBOrderFragment;
 import com.example.vuphu.newlaundry.Main.ReceiptActivity;
@@ -21,6 +22,7 @@ import java.util.Date;
 
 import static com.example.vuphu.newlaundry.Utils.StringKey.APPROVED;
 import static com.example.vuphu.newlaundry.Utils.StringKey.DATE_SYMBOL;
+import static com.example.vuphu.newlaundry.Utils.StringKey.FINISHED;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
 import static com.example.vuphu.newlaundry.Utils.StringKey.PENDING;
@@ -52,28 +54,42 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
         holder.branchName.setText(obOrderFragment.getBranchName());
         holder.branchAdress.setText(obOrderFragment.getBranchAddress());
         holder.reciever.setText(obOrderFragment.getReciever());
-        holder.view_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, InfoOrderDetailActivity.class);
-                intent.putExtra(ID_ORDER, obOrderFragment.getId());
-                intent.putExtra(STATUS, obOrderFragment.getStatus());
-                intent.putExtra(ID_BRANCH, obOrderFragment.getIdBranch());
-                context.startActivity(intent);
-            }
-        });
-        if(!obOrderFragment.getStatus().equals(PENDING)) {
-            holder.view_receipt.setVisibility(View.VISIBLE);
-            holder.view_receipt.setOnClickListener(new View.OnClickListener() {
+        if(obOrderFragment.getStatus().equals(FINISHED)) {
+            holder.view_order.setText(R.string.view_bill);
+            holder.view_receipt.setVisibility(View.GONE);
+            holder.view_order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, ReceiptActivity.class);
-                    intent.putExtra(ID_ORDER, obOrderFragment.getId());
+                    // TODO route BillActivity.
+                    Intent intent = new Intent(context, BillActivity.class);
                     context.startActivity(intent);
                 }
             });
         }
-
+        else {
+            holder.view_order.setText(R.string.view_orderdetail);
+            holder.view_order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, InfoOrderDetailActivity.class);
+                    intent.putExtra(ID_ORDER, obOrderFragment.getId());
+                    intent.putExtra(STATUS, obOrderFragment.getStatus());
+                    intent.putExtra(ID_BRANCH, obOrderFragment.getIdBranch());
+                    context.startActivity(intent);
+                }
+            });
+            if(!obOrderFragment.getStatus().equals(PENDING)) {
+                holder.view_receipt.setVisibility(View.VISIBLE);
+                holder.view_receipt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, ReceiptActivity.class);
+                        intent.putExtra(ID_ORDER, obOrderFragment.getId());
+                        context.startActivity(intent);
+                    }
+                });
+            }
+        }
     }
 
     @Override

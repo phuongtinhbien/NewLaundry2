@@ -80,6 +80,7 @@ import static com.example.vuphu.newlaundry.Utils.StringKey.PICKUP_KEY;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_PRICE;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_WEIGHT;
 import static com.example.vuphu.newlaundry.Utils.Util.checkDuplicateClothes;
+import static com.example.vuphu.newlaundry.Utils.Util.parseDate;
 
 public class InfoOrderActivity extends AppCompatActivity implements
         ItemPromotionListDialogFragment.Listener,
@@ -107,6 +108,7 @@ public class InfoOrderActivity extends AppCompatActivity implements
     private ArrayList<String> listService;
     private String idOder;
     private String idPromotion = null;
+    private int salePercent = 0;
     private DecimalFormat dec;
     private int position;
 
@@ -210,8 +212,8 @@ public class InfoOrderActivity extends AppCompatActivity implements
 
         listClothes.setAdapter(adapter);
         totalItem.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
-        if(adapter.sumPrice() != 0) {
-            priceTotal.setText(dec.format(adapter.sumPrice()) + " VND");
+        if(adapter.sumPrice(salePercent) != 0) {
+            priceTotal.setText(dec.format(adapter.sumPrice(salePercent)) + " VND");
         } else {
             priceTotal.setText(getResources().getString(R.string.total_price));
         }
@@ -223,8 +225,8 @@ public class InfoOrderActivity extends AppCompatActivity implements
                     popup.show();
                     String delidate = dateDeliveryValue;
                     String pickdate = datePickupValue;
-//                    String delidate = parseDate(dateDeliveryValue);
-//                    String pickdate = parseDate(datePickupValue);
+//                    String delidate = parseDate(dateDeliveryValue, "dd/MM/yyyy", "yyyy/MM/dd");
+//                    String pickdate = parseDate(datePickupValue, "dd/MM/yyyy", "yyyy/MM/dd");
                     if(!TextUtils.isEmpty(delidate) && !TextUtils.isEmpty(pickdate)) {
                         CustomerOrderInput customerOrderInput = CustomerOrderInput.builder()
                                 .branchId(idBranch)
@@ -308,18 +310,6 @@ public class InfoOrderActivity extends AppCompatActivity implements
 
     }
 
-    private String parseDate(String str) {
-        String result = "";
-        SimpleDateFormat sdfOld = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat sdfNew = new SimpleDateFormat("yyyy/MM/dd");
-        try {
-            Date d = sdfOld.parse(str);
-            result = sdfNew.format(d);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
     private void clearPreference() {
         removeOrderList(InfoOrderActivity.this);
@@ -416,7 +406,8 @@ public class InfoOrderActivity extends AppCompatActivity implements
 
     @Override
     public void onItemPromotionClicked(int position) {
-        promotionValue.setText(promotionList.get(position).getCode());
+        salePercent = Integer.parseInt(promotionList.get(position).getSale());
+        promotionValue.setText(promotionList.get(position).getSale() + "%");
         idPromotion = promotionList.get(position).getId();
     }
 
@@ -523,8 +514,8 @@ public class InfoOrderActivity extends AppCompatActivity implements
             PreferenceUtil.setListOrderDetail(orderDetailList, this);
             Log.i("ListOrderDetail", "Size: " + orderDetailList.size());
             adapter.notifyDataSetChanged();
-            if(adapter.sumPrice() != 0) {
-                priceTotal.setText(dec.format(adapter.sumPrice()) + " VND");
+            if(adapter.sumPrice(salePercent) != 0) {
+                priceTotal.setText(dec.format(adapter.sumPrice(salePercent)) + " VND");
             } else {
                 priceTotal.setText(getResources().getString(R.string.total_price));
             }

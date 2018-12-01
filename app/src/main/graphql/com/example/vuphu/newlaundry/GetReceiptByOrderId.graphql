@@ -20,6 +20,9 @@ query getReceiptByOrderId($idOrder: BigFloat!) {
           timeEnd
           timeStart
         }
+        promotionByPromotionId{
+          sale
+        }
       }
       receiptDetailsByReceiptId{
         nodes{

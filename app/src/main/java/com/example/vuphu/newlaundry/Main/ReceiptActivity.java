@@ -64,6 +64,7 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
     private GetCustomerQuery.CustomerById customer;
     private String idOrder;
     private ArrayList<OBPromotion> promotionList = new ArrayList<>();
+    private int salePercent = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +90,6 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
         item_receipt_total_weight = findViewById(R.id.item_receipt_total_weight);
         item_receipt_total_items = findViewById(R.id.item_receipt_total_items);
         check_out_promotion = findViewById(R.id.check_out_promotion);
-        check_out_promotion.setVisibility(View.GONE);
         list_clothes = findViewById(R.id.list_prepare_order_clothes);
         list_receipt_service_weight = findViewById(R.id.list_receipt_service_weight);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -159,6 +159,11 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
                             }
                             else {
                                 pickupTimeValue = node.customerOrderByOrderId().timeScheduleByPickUpTimeId().timeStart() + "-" + node.customerOrderByOrderId().timeScheduleByPickUpTimeId().timeEnd();
+                            }
+
+                            if(node.customerOrderByOrderId().promotionByPromotionId() != null) {
+                                promotionValue = node.customerOrderByOrderId().promotionByPromotionId().sale();
+                                salePercent = Integer.parseInt(promotionValue);
                             }
 
                             List<GetReceiptByOrderIdQuery.Node1> list = node.receiptDetailsByReceiptId().nodes();
@@ -240,13 +245,19 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
         receipt_date_pick_up.setText(parseDate(datePickupValue));
         receipt_time_pick_up.setText(pickupTimeValue);
         receipt_time_delivery.setText(deliveryTimeValue);
-
+        if(!TextUtils.isEmpty(promotionValue)) {
+            item_receipt_promotion.setText(promotionValue + "%");
+        }
+        else {
+            check_out_promotion.setVisibility(View.GONE);
+        }
         adapterClothes = new ListClothesAdapter(ReceiptActivity.this, listOBOrderDetail, this);
         adapterService = new AdapterListServiceWeight(listService_weight, ReceiptActivity.this);
         list_clothes.setAdapter(adapterClothes);
         list_receipt_service_weight.setAdapter(adapterService);
-        if(adapterClothes.sumPrice() +  adapterService.sumPrice() > 0) {
-            item_receipt_total.setText(adapterClothes.sumPrice() + adapterService.sumPrice() + " VND");
+        if(adapterClothes.sumPrice(0) +  adapterService.sumPrice() > 0) {
+            double totalPrice = adapterClothes.sumPrice(0) + adapterService.sumPrice();
+            item_receipt_total.setText(totalPrice*(100-salePercent)/100 + " VND");
         }
         else {
             item_receipt_total.setText(getResources().getString(R.string.total_price));

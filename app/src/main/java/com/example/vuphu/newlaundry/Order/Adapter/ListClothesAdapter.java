@@ -83,7 +83,7 @@ public class ListClothesAdapter extends RecyclerView.Adapter<ListClothesViewHold
         }
         return count;
     }
-    public long sumPrice() {
+    public long sumPrice(int percentSale) {
         boolean flag = false;
         long sum = 0;
         for (OBOrderDetail obOrderDetail: list) {
@@ -97,6 +97,7 @@ public class ListClothesAdapter extends RecyclerView.Adapter<ListClothesViewHold
         if(flag) {
             sum = 0;
         }
+        sum = sum*(100-percentSale)/100;
         return sum;
     }
 }

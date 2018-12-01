@@ -1,7 +1,0 @@
-mutation cancelOrder($idOrder: BigFloat!) {
-  updateCustomerOrderById(input: {id: $idOrder, customerOrderPatch: {status: "DECLINED"}}) {
-    customerOrder {
-      status
-    }
-  }
-}

@@ -102,7 +102,7 @@ public class Popup {
         loading.setVisibility(View.GONE);
     }
 
-    public void createFailDialog(String content, String button,View.OnClickListener onClickListener){
+    public void createFailDialog(String content, String button, View.OnClickListener onClickListener){
         dialogButton.setVisibility(View.VISIBLE);
         text.setText(content);
         dialogButton.setText(button);

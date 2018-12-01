@@ -44,6 +44,7 @@
     <string name="login">Login</string>
     <string name="btn_continue">Continue</string>
     <string name="btn_finish">Finish</string>
+    <string name="view_bill">View bill</string>
     <string name="service">Service</string>
     <string name="title_service">Name of the service</string>
     <string name="service_sub_title">Short description</string>
@@ -157,7 +158,6 @@
     <string name="serviceDetail">Detail</string>
     <string name="choose_unit">Choose unit of clohtes</string>
     <string name="choose_unit_desc">Two options for you, just choose one</string>
-    <string name="input_weight">Weight</string>
     <string name="submit">Submit</string>
 
     <!--    Permissions    -->
@@ -198,6 +198,7 @@
     <string name="Cancel_order">CANCLE ORDER</string>
     <string name="err_not_found_branch">ERR! Branch not found</string>
     <string name="title_receipt">Information Receipt</string>
+    <string name="title_bill">Information Bill</string>
     <string name="view_reipt">View Receipt</string>
     <string name="view_orderdetail">View Order</string>
     <string name="order_result">Order creation results</string>
@@ -215,9 +216,27 @@
     <string name="ACTIVE">ACTIVE</string>
     <string name="INACTIVE">INACTIVE</string>
     <string name="DELIVERIED">Đã trả đồ</string>
-    <string name="ORDER_NUMBER">Order</string>
+    <string name="ORDER_NUMBER">Order No</string>
     <string name="Female">Female</string>
     <string name="Male">Male</string>
-
+    <string name="cancel_order_result">Successful! Your Order was Cancel</string>
+    <string name="can_not_cancel_order">You can not cancel your order. You can cancel your order at least 2 hours before the pick up time </string>
+    <string name="Update_order_detail_fail">Missing some information</string>
+    <string name="Update_order_detail_success">Update Order successful</string>
+    <string name="RECEIPT_OF">Receipt of order No</string>
+    <string name="CONTENT_APPROVED">accepted</string>
+    <string name="CONTENT_DECLINED">declined</string>
+    <string name="CONTENT_FINISHED">finished</string>
+    <string name="CONTENT_SERVING">is processing</string>
+    <string name="CONTENT_FINISHED_SERVING">has been processed completely</string>
+    <string name="CONTENT_RECEIVED">was pickup clothes success</string>
+    <string name="CONTENT_DELIVERIED">was delivery clothes success</string>
+    <string name="CONTENT_PENDING_RECEIPT">created</string>
+    <string name="CONTENT_PENDING_RECEIPT_PICKUP">will pickup</string>
+    <string name="CONTENT_PENDING_RECEIPT_PICKUP_TIME">in</string>
+    <string name="CONTENT_PENDING_RECEIPT_PICKUP_STAFF">by staff</string>
+    <string name="CONTENT_PENDING_SERVING">is waiting to process</string>
+    <string name="CONTENT_PENDING_DELIVERY">will delievry in</string>
+    <string name="CONTENT_PENDING_DELIVERY_CONTINUE">by staff</string>
 </resources>
 

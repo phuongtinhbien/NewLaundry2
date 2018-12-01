@@ -43,8 +43,12 @@ import com.example.vuphu.newlaundry.Product.OBProduct;
 import com.example.vuphu.newlaundry.Promotion.ItemPromotionListDialogFragment;
 import com.example.vuphu.newlaundry.Promotion.OBPromotion;
 import com.example.vuphu.newlaundry.R;
-import com.example.vuphu.newlaundry.UpdateStatusDraftMutation;
+import com.example.vuphu.newlaundry.UpdateOrderAndDetailMutation;
+import com.example.vuphu.newlaundry.UpdateStatusMutation;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
+import com.example.vuphu.newlaundry.Utils.Util;
+import com.example.vuphu.newlaundry.type.CustomerOrderInput;
+import com.example.vuphu.newlaundry.type.OrderDetailInput;
 import com.example.vuphu.newlaundry.type.UnitPriceInput;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -66,6 +70,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
+import static com.example.vuphu.newlaundry.Utils.StringKey.DECLINED;
 import static com.example.vuphu.newlaundry.Utils.StringKey.DRAFT;
 import static com.example.vuphu.newlaundry.Utils.StringKey.EDIT;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
@@ -80,6 +85,7 @@ import static com.example.vuphu.newlaundry.Utils.StringKey.STATUS;
 import static com.example.vuphu.newlaundry.Utils.StringKey.UNIT_NAME_ITEM;
 import static com.example.vuphu.newlaundry.Utils.StringKey.UNIT_NAME_KG;
 import static com.example.vuphu.newlaundry.Utils.Util.checkDuplicateClothes;
+import static com.example.vuphu.newlaundry.Utils.Util.parseDate;
 
 public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPrepareOrder,
         ItemPromotionListDialogFragment.Listener,
@@ -108,6 +114,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
     private static final int REQUEST_CODE = 7;
     private ArrayList<OBPromotion> promotionList = new ArrayList<>();
     private String idPromotion;
+    private int salePercent = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,7 +217,15 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
             public void onClick(View view) {
                 // TODO: check (time pickup - current time) > 2h
                 if(checkTime()){
-                    setStatusOrder();
+                    setStatusOrder(DECLINED);
+                }
+                else {
+                    popup.createFailDialog(getResources().getString(R.string.can_not_cancel_order), getResources().getString(R.string.btn_fail), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            popup.hide();
+                        }
+                    });
                 }
             }
         });
@@ -241,10 +256,71 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
 
     private void saveOrder() {
         // TODO: Update Customer_order and order detail
+        String delidate = dateDeliveryValue;
+        String pickdate = datePickupValue;
+//                    String delidate = parseDate(dateDeliveryValue, "dd/MM/yyyy", "yyyy/MM/dd");
+//                    String pickdate = parseDate(datePickupValue, "dd/MM/yyyy", "yyyy/MM/dd");
+        if(!TextUtils.isEmpty(delidate) && !TextUtils.isEmpty(pickdate)) {
+            CustomerOrderInput customerOrderInput = CustomerOrderInput.builder()
+                    .customerId(customer.id())
+                    .deliveryDate(delidate)
+                    .pickUpDate(pickdate)
+                    .pickUpTimeId(TimePickupOB.getId())
+                    .deliveryTimeId(TimeDeliveryOB.getId())
+                    .status(status)
+                    .updateBy(customer.id())
+                    .updateDate(Util.getDate().toString())
+                    .build();
+            List<OrderDetailInput> list = new ArrayList<>();
+            for(OBOrderDetail obOrderDetail : orderDetailList){
+                OrderDetailInput orderDetailInput = OrderDetailInput.builder()
+                        .amount((double) obOrderDetail.getCount())
+                        .colorId(obOrderDetail.getColorID())
+                        .materialId(obOrderDetail.getMaterialID())
+                        .labelId(obOrderDetail.getLabelID())
+                        .productId(obOrderDetail.getProduct().getId())
+                        .unitPrice(obOrderDetail.getPriceID())
+                        .unitId(obOrderDetail.getUnitID())
+                        .serviceTypeId(obOrderDetail.getIdService())
+                        .note(obOrderDetail.getNote())
+                        .build();
+                list.add(orderDetailInput);
+            }
+
+            GraphqlClient.getApolloClient(token, false).mutate(UpdateOrderAndDetailMutation.builder()
+                    .cus(customerOrderInput)
+                    .list(list)
+                    .build()
+            ).enqueue(new ApolloCall.Callback<UpdateOrderAndDetailMutation.Data>() {
+                @Override
+                public void onResponse(@NotNull Response<UpdateOrderAndDetailMutation.Data> response) {
+                    Log.i("UpdateOrderAndetail", response.data().toString());
+                    if(response.data().updateOrderAndDetail().customerOrder() != null) {
+                        if(!TextUtils.isEmpty(response.data().updateOrderAndDetail().customerOrder().id())) {
+                            InfoOrderDetailActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    btnSave_Edit.setText(R.string.edit);
+                                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.Update_order_detail_success), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull ApolloException e) {
+
+                }
+            });
+        }
+        else {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.Update_order_detail_fail), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void editOrder() {
-//        setStatusOrder();
+        setStatusOrder(DRAFT);
         btnSave_Edit.setText(getResources().getString(R.string.save));
         isClickClothesItem = true;
         initializeSchedule();
@@ -255,7 +331,6 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
         promotionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_LONG).show();
                 clickPromotion();
             }
         });
@@ -287,13 +362,24 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                 });
     }
 
-    private void setStatusOrder() {
-        GraphqlClient.getApolloClient(token, false).mutate(UpdateStatusDraftMutation.builder().idOrder(idOder).build())
-                .enqueue(new ApolloCall.Callback<UpdateStatusDraftMutation.Data>() {
+    private void setStatusOrder(String status) {
+        GraphqlClient.getApolloClient(token, false).mutate(UpdateStatusMutation.builder()
+                .idOrder(idOder)
+                .idcus(customer.id())
+                .status(status)
+                .build())
+                .enqueue(new ApolloCall.Callback<UpdateStatusMutation.Data>() {
                     @Override
-                    public void onResponse(@NotNull Response<UpdateStatusDraftMutation.Data> response) {
-                        if(response.data().updateCustomerOrderById().customerOrder().status().equals(DRAFT)){
-                            Log.i("SetStatusDraft", response.data().updateCustomerOrderById().customerOrder().status());
+                    public void onResponse(@NotNull Response<UpdateStatusMutation.Data> response) {
+                        if(response.data().updateCustomerOrderById().customerOrder().status().equals(DECLINED)){
+                           popup.createSuccessDialog(R.string.cancel_order_result, R.string.btn_ok, new View.OnClickListener() {
+                               @Override
+                               public void onClick(View view) {
+                                   // TODO route parent
+                                   finish();
+                                   popup.hide();
+                               }
+                           });
                         }
                     }
 
@@ -398,7 +484,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                     pickupTimeValue = response.data().customerOrderById().timeScheduleByPickUpTimeId().timeStart() + "-" + response.data().customerOrderById().timeScheduleByPickUpTimeId().timeEnd();
                     deliveryTimeValue = response.data().customerOrderById().timeScheduleByDeliveryTimeId().timeStart() + "-" + response.data().customerOrderById().timeScheduleByDeliveryTimeId().timeEnd();
                     if(response.data().customerOrderById().promotionByPromotionId() != null){
-                        promotionValue = response.data().customerOrderById().promotionByPromotionId().promotionCode();
+                        promotionValue = response.data().customerOrderById().promotionByPromotionId().sale();
                     }
                     List<GetOrdetailByOrderidQuery.Node> nodes = response.data().customerOrderById().orderDetailsByOrderId().nodes();
                     if(nodes.size() > 0) {
@@ -456,13 +542,14 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
             promotionLayout.setVisibility(View.GONE);
         } else {
             promotionLayout.setVisibility(View.VISIBLE);
-            promotion.setText(promotionValue);
+            salePercent = Integer.parseInt(promotionValue);
+            promotion.setText(promotionValue + "%");
         }
         if(!TextUtils.isEmpty(dateDeliveryValue)){
-            deliveryDate.setText(parseDate(dateDeliveryValue));
+            deliveryDate.setText(parseDate(dateDeliveryValue, "yyyy-MM-dd", "dd/MM/yyyy"));
         }
         if(!TextUtils.isEmpty(datePickupValue)){
-            pickUpdate.setText(parseDate(datePickupValue));
+            pickUpdate.setText(parseDate(datePickupValue, "yyyy-MM-dd", "dd/MM/yyyy"));
         }
         if(!TextUtils.isEmpty(deliveryTimeValue)){
             deliveryTime.setText(deliveryTimeValue);
@@ -480,24 +567,11 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
         adapter = new ListClothesAdapter(InfoOrderDetailActivity.this , orderDetailList, this);
         listClothes.setAdapter(adapter);
         countTotal.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
-        if(adapter.sumPrice() != 0) {
-            totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
+        if(adapter.sumPrice(salePercent) != 0) {
+            totalPrice.setText(dec.format(adapter.sumPrice(salePercent)) + " VND");
         } else {
             totalPrice.setText(getResources().getString(R.string.total_price));
         }
-    }
-
-    private String parseDate(String date) {
-        SimpleDateFormat sdfOld = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdfNew = new SimpleDateFormat("dd/MM/yyyy");
-        String result = "";
-        try {
-            Date d = sdfOld.parse(date);
-            result = sdfNew.format(d);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
     }
 
 
@@ -580,9 +654,6 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                         );
             }
         }
-        else {
-
-        }
     }
 
     @Override
@@ -605,6 +676,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
     @Override
     public void onItemPromotionClicked(int position) {
         promotion.setText(promotionList.get(position).getTitle());
+        salePercent = Integer.parseInt(promotionList.get(position).getSale());
         idPromotion = promotionList.get(position).getId();
     }
 
@@ -638,8 +710,8 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
             PreferenceUtil.setListOrderDetail(orderDetailList, this);
             Log.i("ListOrderDetail", "Size: " + orderDetailList.size());
             adapter.notifyDataSetChanged();
-            if(adapter.sumPrice() != 0) {
-                totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
+            if(adapter.sumPrice(salePercent) != 0) {
+                totalPrice.setText(dec.format(adapter.sumPrice(salePercent)) + " VND");
             } else {
                 totalPrice.setText(getResources().getString(R.string.total_price));
             }

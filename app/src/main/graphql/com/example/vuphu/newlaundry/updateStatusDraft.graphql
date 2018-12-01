@@ -1,5 +1,5 @@
-mutation updateStatusDraft($idOrder: BigFloat!) {
-  updateCustomerOrderById(input: {id: $idOrder, customerOrderPatch: {status: "DRAFT"}}) {
+mutation updateStatus($idOrder: BigFloat!, $status: String!, $idcus: BigFloat!, $timeUpdate: Datetime) {
+  updateCustomerOrderById(input: {id: $idOrder, customerOrderPatch: {status: $status, updateDate: $timeUpdate, updateBy: $idcus}}) {
     customerOrder {
       status
     }

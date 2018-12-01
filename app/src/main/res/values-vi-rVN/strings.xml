@@ -19,6 +19,7 @@
     <string name="login">Đăng nhập</string>
     <string name="btn_continue">Tiếp tục</string>
     <string name="btn_finish">Hoàn tất</string>
+    <string name="view_bill">Xem hóa đơn</string>
     <string name="service">Dịch vụ</string>
     <string name="title_service">Tên dịch vụ</string>
     <string name="service_sub_title">Mô tả</string>
@@ -125,8 +126,10 @@
     <string name="Cancel_order">HỦY ĐƠN HÀNG</string>
     <string name="err_not_found_branch">Lỗi! Cửa hàng không xác định</string>
     <string name="title_receipt">Thông tin biên nhận</string>
+    <string name="title_bill">Thông tin hóa đơn</string>
     <string name="view_reipt">Xem biên nhận</string>
     <string name="view_orderdetail">Xem đơn hàng</string>
+    <string name="cancel_order_result">Thành công! Đơn hàng của bạn đã được hủy.</string>
     <string name="order_result">Kết quả tạo đơn hàng</string>
     <string name="Set_up_information">Cập nhật thông tin cá nhân</string>
     <string name="email_password_wrong">Email/Mật khẩu của bạn không đúng</string>
@@ -154,15 +157,22 @@
     <string name="CONTENT_RECEIVED">đã lấy đồ thành công</string>
     <string name="CONTENT_DELIVERIED">đã giao đồ thành công</string>
     <string name="CONTENT_PENDING_RECEIPT">đã được tạo</string>
+    <string name="CONTENT_PENDING_RECEIPT_PICKUP">sẽ được lấy đồ</string>
+    <string name="CONTENT_PENDING_RECEIPT_PICKUP_TIME">vào lúc</string>
+    <string name="CONTENT_PENDING_RECEIPT_PICKUP_STAFF">bởi nhân viên </string>
     <string name="CONTENT_PENDING_SERVING">đang chờ xử lý</string>
     <string name="CONTENT_PENDING_DELIVERY">sẽ được giao đồ vào lúc </string>
     <string name="CONTENT_PENDING_DELIVERY_CONTINUE"> bởi nhân viên giao đồ </string>
-    
+    <string name="can_not_cancel_order">Bạn không thể hủy đơn hàng. bạn có thể hủy đơn hàng trước giờ lấy đồ tối thiểu là 2 giờ </string>
+
+
     <string name="Female">Nữ</string>
     <string name="Male">Nam</string>
     <string-array name="arr_gender">
         <item>Nam</item>
         <item>Nữ</item>
     </string-array>
+    <string name="Update_order_detail_fail">Thiếu một số thông tin</string>
+    <string name="Update_order_detail_success">Cập nhật đơn hàng thành công</string>
 
 </resources>

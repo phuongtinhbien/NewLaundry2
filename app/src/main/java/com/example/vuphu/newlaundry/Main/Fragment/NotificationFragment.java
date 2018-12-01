@@ -236,9 +236,21 @@ public class NotificationFragment extends Fragment {
         String result = "";
         switch (currentStatus) {
             case PENDING: {
-                result = getResources().getString(R.string.RECEIPT_OF) + " "
-                        + orderId + " "
-                        + getResources().getString(R.string.CONTENT_PENDING_RECEIPT);
+                if(!TextUtils.isEmpty(pickUpTime) && !TextUtils.isEmpty(pickUpDate) && !TextUtils.isEmpty(staffPickup)) {
+                    result = getResources().getString(R.string.ORDER_NUMBER) + " "
+                            + orderId + " "
+                            + getResources().getString(R.string.CONTENT_PENDING_RECEIPT_PICKUP) + " "
+                            + getResources().getString(R.string.CONTENT_PENDING_RECEIPT_PICKUP_TIME) + " "
+                            + pickUpTime + " - "
+                            + Util.parseDate(pickUpDate, "yyyy/MM/dd", "dd/MM/yyyy") + " "
+                            + getResources().getString(R.string.CONTENT_PENDING_RECEIPT_PICKUP_STAFF) + " "
+                            + staffPickup;
+                }
+                else {
+                    result = getResources().getString(R.string.RECEIPT_OF) + " "
+                            + orderId + " "
+                            + getResources().getString(R.string.CONTENT_PENDING_RECEIPT);
+                }
                 return result;
             }
             case RECEIVED: {
@@ -248,12 +260,15 @@ public class NotificationFragment extends Fragment {
                 return result;
             }
             case PENDING_DELIVERY:{
-                result  = getResources().getString(R.string.ORDER_NUMBER) + " "
-                        + orderId + " "
-                        + getResources().getString(R.string.CONTENT_PENDING_DELIVERY) + " "
-                        + deliveryTime + "-" + Util.parseDate(deliveryDate, "yyyy/MM/dd", "dd/MM/yyyy") + " "
-                        + getResources().getString(R.string.CONTENT_PENDING_DELIVERY_CONTINUE) + " "
-                        + staffDelivery;
+                if(!TextUtils.isEmpty(deliveryTime) && !TextUtils.isEmpty(deliveryDate) && !TextUtils.isEmpty(staffDelivery)) {
+                    result  = getResources().getString(R.string.ORDER_NUMBER) + " "
+                            + orderId + " "
+                            + getResources().getString(R.string.CONTENT_PENDING_DELIVERY) + " "
+                            + deliveryTime + " - "
+                            + Util.parseDate(deliveryDate, "yyyy/MM/dd", "dd/MM/yyyy") + " "
+                            + getResources().getString(R.string.CONTENT_PENDING_DELIVERY_CONTINUE) + " "
+                            + staffDelivery;
+                }
                 return result;
             }
             case DELIVERIED: {
@@ -289,7 +304,7 @@ public class NotificationFragment extends Fragment {
             case FINISHED_SERVING: {
                 result = getResources().getString(R.string.ORDER_NUMBER) + " "
                         + orderId + " "
-                        + getResources().getString(R.string.CONTENT_PENDING_SERVING);
+                        + getResources().getString(R.string.CONTENT_FINISHED_SERVING);
                 return result;
             }
             case FINISHED: {
