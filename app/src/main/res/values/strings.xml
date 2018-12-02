@@ -239,5 +239,24 @@
     <string name="CONTENT_PENDING_DELIVERY">will delievry in</string>
     <string name="CONTENT_PENDING_DELIVERY_CONTINUE">by staff</string>
     <string name="sale_off">Sale off</string>
+    <string name="bill_name">Infomation bill #</string>
+    <string name="name_customer">Customer name:</string>
+    <string name="phone_number">Phone</string>
+    <string name="branch_name">Branch:</string>
+    <string name="place_pickup">Place pickup:</string>
+    <string name="place_delivery">Place delivery:</string>
+    <string name="STT">No</string>
+    <string name="Service_type">Service type</string>
+    <string name="clothes">Clothes</string>
+    <string name="DVT">Unit</string>
+    <string name="Unit_price">Unit price</string>
+    <string name="KL_SL_R">Q/W received</string>
+    <string name="KL_SL_D">Q/W delivery</string>
+    <string name="Sum_temp">Temp Total:</string>
+    <string name="Sum">Total:</string>
+    <string name="Sum_price">Total price:</string>
+    <string name="promotion_bill">Sale off:</string>
+    <string name="err_get_id_receipt">Id Receipt undefine</string>
+
 </resources>
 

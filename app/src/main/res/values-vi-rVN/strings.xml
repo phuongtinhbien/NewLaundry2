@@ -174,5 +174,24 @@
     </string-array>
     <string name="Update_order_detail_fail">Thiếu một số thông tin</string>
     <string name="Update_order_detail_success">Cập nhật đơn hàng thành công</string>
+    <string name="bill_name">Thông tin hóa đơn #</string>
+    <string name="name_customer">Tên KH:</string>
+    <string name="phone_number">Số điện thoại:</string>
+    <string name="branch_name">Chi nhánh:</string>
+    <string name="place_pickup">Nơi lấy đồ:</string>
+    <string name="place_delivery">Nơi giao đồ:</string>
+    <string name="STT">STT</string>
+    <string name="Service_type">Loại dịch vụ</string>
+    <string name="clothes">Quần áo</string>
+    <string name="DVT">DVT</string>
+    <string name="Unit_price">Đơn giá</string>
+    <string name="KL_SL_R">SL/KL nhận</string>
+    <string name="KL_SL_D">SL/KL giao</string>
+    <string name="Sum_temp">Tổng tạm:</string>
+    <string name="Sum">Tổng:</string>
+    <string name="Sum_price">Tổng tiền:</string>
+    <string name="promotion_bill">Giảm giá:</string>
+    <string name="err_get_id_receipt">Id Receipt không xác định</string>
+
 
 </resources>

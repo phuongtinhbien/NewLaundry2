@@ -7,13 +7,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
+import com.example.vuphu.newlaundry.GetReceiptByOrderIdQuery;
+import com.example.vuphu.newlaundry.GetReceiptIdByOrderQuery;
+import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Main.BillActivity;
 import com.example.vuphu.newlaundry.Main.InfoOrderDetailActivity;
 import com.example.vuphu.newlaundry.Main.OBOrderFragment;
 import com.example.vuphu.newlaundry.Main.ReceiptActivity;
+import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
+import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.example.vuphu.newlaundry.Utils.Util;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,6 +36,7 @@ import static com.example.vuphu.newlaundry.Utils.StringKey.DATE_SYMBOL;
 import static com.example.vuphu.newlaundry.Utils.StringKey.FINISHED;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
+import static com.example.vuphu.newlaundry.Utils.StringKey.ID_RECEIPT;
 import static com.example.vuphu.newlaundry.Utils.StringKey.PENDING;
 import static com.example.vuphu.newlaundry.Utils.StringKey.STATUS;
 import static com.example.vuphu.newlaundry.Utils.Util.translateStatus;
@@ -55,18 +67,19 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
         holder.branchAdress.setText(obOrderFragment.getBranchAddress());
         holder.reciever.setText(obOrderFragment.getReciever());
         if(obOrderFragment.getStatus().equals(FINISHED)) {
-            holder.view_order.setText(R.string.view_bill);
+            holder.view_bill.setVisibility(View.VISIBLE);
             holder.view_receipt.setVisibility(View.GONE);
-            holder.view_order.setOnClickListener(new View.OnClickListener() {
+            holder.view_order.setVisibility(View.GONE);
+            holder.view_bill.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO route BillActivity.
-                    Intent intent = new Intent(context, BillActivity.class);
-                    context.startActivity(intent);
+                    // TODO get IdReceipt and route BillActivity.
+                    getIdReceipt(obOrderFragment.getId());
                 }
             });
         }
         else {
+            holder.view_order.setVisibility(View.VISIBLE);
             holder.view_order.setText(R.string.view_orderdetail);
             holder.view_order.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,6 +103,30 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
                 });
             }
         }
+    }
+
+    private void getIdReceipt(String id) {
+        String token = PreferenceUtil.getAuthToken(context);
+        GraphqlClient.getApolloClient(token, false).query(GetReceiptIdByOrderQuery.builder().order(id).build())
+                .enqueue(new ApolloCall.Callback<GetReceiptIdByOrderQuery.Data>() {
+                    @Override
+                    public void onResponse(@NotNull Response<GetReceiptIdByOrderQuery.Data> response) {
+                        if(response.data().allReceipts() != null) {
+                            String idReceipt = response.data().allReceipts().nodes().get(0).id();
+                            Intent intent = new Intent(context, BillActivity.class);
+                            intent.putExtra(ID_RECEIPT, idReceipt);
+                            context.startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(context, context.getResources().getString(R.string.err_get_id_receipt), Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull ApolloException e) {
+
+                    }
+                });
     }
 
     @Override

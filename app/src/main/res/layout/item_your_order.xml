@@ -131,11 +131,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:orientation="horizontal"
             android:weightSum="2">
             <Button
                 android:layout_marginRight="@dimen/card_margin"
                 android:layout_weight="1"
+                android:gravity="center_horizontal"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_gravity="center_vertical|end"
                 android:id="@+id/view_orderdetail"
@@ -157,6 +159,16 @@
                 android:textColor="@color/orange"
                 android:textSize="@dimen/font_size_text" />
         </LinearLayout>
+        <Button
+            android:visibility="gone"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_gravity="center_vertical|end"
+            android:id="@+id/view_bill"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/view_bill"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/font_size_text" />
 
 
     </LinearLayout>

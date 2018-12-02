@@ -1,0 +1,7 @@
+query getReceiptIdByOrder($order: BigFloat!) {
+  allReceipts(filter: {orderId: {equalTo: $order}}) {
+    nodes {
+      id
+    }
+  }
+}

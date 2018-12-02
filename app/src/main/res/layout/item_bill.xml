@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/card_elevation"
+    android:orientation="horizontal"
+    android:weightSum="100"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/txt_stt"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="7"
+        android:textAllCaps="true"
+        android:textSize="@dimen/font_size_bill"
+        android:text="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/txt_id_service"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_vertical"
+        android:textSize="@dimen/font_size_bill"
+        android:layout_weight="20"
+        android:text="Giặt nhanh"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/txt_clothes"
+        android:textSize="@dimen/font_size_bill"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="20"
+        android:text="Quần tây"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/txt_DVT"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="10"
+        android:text="Cái"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_bill"
+        />
+
+    <TextView
+        android:id="@+id/txt_Unit_price"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="10"
+        android:text="1.000 VND/Cái"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_bill"
+        />
+
+    <TextView
+        android:id="@+id/txt_amount_received"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="10"
+        android:text="20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_bill"
+        />
+    <TextView
+        android:id="@+id/txt_amount_delivery"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="10"
+        android:text="20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_bill"
+        />
+    <TextView
+        android:id="@+id/txt_total_temp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:layout_weight="13"
+        android:text="20.000 VND"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_size_bill"
+        />
+</LinearLayout>

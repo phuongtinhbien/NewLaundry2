@@ -10,6 +10,7 @@
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="card_margin">8dp</dimen>
     <dimen name="card_radius">8dp</dimen>
+    <dimen name="font_size_bill">12sp</dimen>
     <!--font size-->
     <dimen name="font_size_input">16sp</dimen>
     <dimen name="font_size_text">14sp</dimen>
@@ -44,5 +45,6 @@
     <dimen name="list_item_spacing">18dp</dimen>
     <dimen name="list_item_spacing_half">8dp</dimen>
     <dimen name="padding_vertical">24dp</dimen>
+    <dimen name="bill_padding">100dp</dimen>
 
 </resources>

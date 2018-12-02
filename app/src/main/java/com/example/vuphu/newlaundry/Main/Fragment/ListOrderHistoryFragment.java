@@ -134,8 +134,8 @@ public class ListOrderHistoryFragment extends Fragment{
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        adapterListOrder.refreshAdapter(listRefresh);
                         swipeRefreshLayout.setRefreshing(false);
+                        adapterListOrder.refreshAdapter(listRefresh);
                     }
 
                 });

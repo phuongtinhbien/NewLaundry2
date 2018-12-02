@@ -50,5 +50,6 @@ public interface StringKey {
     public static final String DELIVERIED = "DELIVERIED";
     public static final String TASK_CUSTOMER_ORDER = "TASK_CUSTOMER_ORDER";
     public static final String TASK_RECEIPT = "TASK_RECEIPT";
+    public static final String ID_RECEIPT = "ID_RECEIPT";
 
 }

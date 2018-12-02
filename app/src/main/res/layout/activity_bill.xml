@@ -1,14 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:layout_editor_absoluteY="25dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".Main.BillActivity">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:text="Bill"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/toolbar"></include>
+        <LinearLayout
+            android:padding="@dimen/card_elevation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txt_bill_name"
+                android:text="@string/bill_name"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_size_topic"
+                android:layout_weight="0.75"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_time_bill"
+                android:text="02/12/2018 05:03:01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-</LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:padding="@dimen/card_elevation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="@string/name_customer"
+                android:textStyle="bold"
+                android:layout_width="@dimen/bill_padding"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_name_customer"
+                android:text="Trần Hoàng Huân"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:padding="@dimen/card_elevation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="@string/phone_number"
+                android:textStyle="bold"
+                android:layout_width="@dimen/bill_padding"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_phone_number"
+                android:text="0397090445"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:padding="@dimen/card_elevation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="@string/branch_name"
+                android:textStyle="bold"
+                android:layout_width="@dimen/bill_padding"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_branch_name"
+                android:textAllCaps="true"
+                android:text="chi nhánh ninh kiều 1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="@dimen/card_elevation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="@string/branch_address"
+                android:layout_gravity="center_vertical"
+                android:textStyle="bold"
+                android:layout_width="@dimen/bill_padding"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_branch_address"
+                android:text="132/24 đường 3/2, phường Hưng Lợi, quận Ninh Kiều, TP.Cần Thơ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="@dimen/card_elevation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="@string/place_pickup"
+                android:layout_gravity="center_vertical"
+                android:textStyle="bold"
+                android:layout_width="@dimen/bill_padding"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_place_pickup"
+                android:text="112/14 đường 3/2, phường Hưng Lợi, quận Ninh Kiều, TP.Cần Thơ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:padding="@dimen/card_elevation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:text="@string/place_delivery"
+                android:textStyle="bold"
+                android:layout_width="@dimen/bill_padding"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txt_place_delivery"
+                android:text="112/14 đường 3/2, phường Hưng Lợi, quận Ninh Kiều, TP.Cần Thơ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:background="@color/colorAccent"
+            android:layout_height="@dimen/card_elevation" />
+
+        <LinearLayout
+            android:padding="@dimen/card_elevation"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="7"
+                android:textAllCaps="true"
+                android:textSize="@dimen/font_size_bill"
+                android:text="@string/STT"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/font_size_bill"
+                android:layout_weight="20"
+                android:text="@string/Service_type"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="@dimen/font_size_bill"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="20"
+                android:text="@string/clothes"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="10"
+                android:text="@string/DVT"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_bill"
+                />
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="10"
+                android:text="@string/Unit_price"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_bill"
+                />
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="10"
+                android:text="@string/KL_SL_R"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_bill"
+                />
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="10"
+                android:text="@string/KL_SL_D"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_bill"
+                />
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="13"
+                android:text="@string/Sum_temp"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_bill"
+                />
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/list_clothes_bill"
+            tools:listitem="@layout/item_bill">
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+    <include layout="@layout/part_temp_bill"></include>
+
+
+</RelativeLayout>

@@ -13,7 +13,7 @@ import com.robertlevonyan.views.chip.Chip;
 class OrderViewHolder extends RecyclerView.ViewHolder {
     Chip status;
     TextView date, branchAdress, branchName,reciever;
-    Button view_order, view_receipt;
+    Button view_order, view_receipt, view_bill;
 
     public OrderViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -24,5 +24,6 @@ class OrderViewHolder extends RecyclerView.ViewHolder {
         branchName = itemView.findViewById(R.id.item_order_branch_name);
         branchAdress =  itemView.findViewById(R.id.item_order_branch_address);
         reciever = itemView.findViewById(R.id.item_order_reciever);
+        view_bill = itemView.findViewById(R.id.view_bill);
     }
 }

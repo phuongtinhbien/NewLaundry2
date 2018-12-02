@@ -1,0 +1,46 @@
+query getBill($receipt: BigFloat!) {
+  allBills(condition: {receiptId: $receipt}) {
+    nodes {
+      id
+      createDate
+      updateDate
+      receiptByReceiptId {
+        customerOrderByOrderId {
+          promotionByPromotionId {
+            sale
+          }
+          customerByCustomerId {
+            fullName
+            phone
+          }
+          pickUpPlace
+          deliveryPlace
+          branchByBranchId {
+            branchName
+            address
+          }
+        }
+      }
+      billDetailsByBillId {
+        nodes {
+          unitPriceByUnitPrice {
+            price
+          }
+          productByProductId {
+            productName
+          }
+          serviceTypeByServiceTypeId {
+            serviceTypeName
+            id
+          }
+          unitByUnitId {
+            unitName
+            id
+          }
+          amount
+          receivedAmount
+        }
+      }
+    }
+  }
+}
