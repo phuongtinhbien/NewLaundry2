@@ -8,6 +8,7 @@ import android.widget.Spinner;
 
 import com.example.vuphu.newlaundry.R;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -111,6 +112,13 @@ public class Util {
         result  = context.getResources().getString(context.getResources().getIdentifier(status, "string", context.getPackageName()));
         return result;
 
+    }
+
+    public static String formatDecimal(double d) {
+        String result = "";
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###,###");
+        result = decimalFormat.format(d);
+        return result;
     }
 
 }

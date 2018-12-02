@@ -45,6 +45,8 @@ import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ITEM;
 import static com.example.vuphu.newlaundry.Utils.StringKey.KG;
 import static com.example.vuphu.newlaundry.Utils.StringKey.UNDEFINE;
+import static com.example.vuphu.newlaundry.Utils.Util.formatDecimal;
+import static com.example.vuphu.newlaundry.Utils.Util.parseDate;
 
 public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrder {
     private CircleImageView nav_img_avatar;
@@ -210,7 +212,7 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
                                         obService_weight.setIdService(obOrderDetail.getIdService());
                                         obService_weight.setPrice(obOrderDetail.getPrice());
                                         obService_weight.setServiceName(obOrderDetail.getServiceName());
-                                        if(obOrderDetail.getCount() > 0) {
+                                        if(obOrderDetail.getWeight() > 0) {
                                             obService_weight.setWeight(obOrderDetail.getWeight());
                                         } else {
                                             obService_weight.setWeight(0.0d);
@@ -241,8 +243,8 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
     private void intializeView() {
         info_order_pickup_place.setText(pickupPlaceValue);
         info_order_delivery_place.setText(deliveryPlaceValue);
-        receipt_date_delivery.setText(parseDate(dateDeliveryValue));
-        receipt_date_pick_up.setText(parseDate(datePickupValue));
+        receipt_date_delivery.setText(parseDate(dateDeliveryValue, "yyyy-MM-dd", "dd/MM/yyyy"));
+        receipt_date_pick_up.setText(parseDate(datePickupValue, "yyyy-MM-dd", "dd/MM/yyyy"));
         receipt_time_pick_up.setText(pickupTimeValue);
         receipt_time_delivery.setText(deliveryTimeValue);
         if(!TextUtils.isEmpty(promotionValue)) {
@@ -257,7 +259,7 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
         list_receipt_service_weight.setAdapter(adapterService);
         if(adapterClothes.sumPrice(0) +  adapterService.sumPrice() > 0) {
             double totalPrice = adapterClothes.sumPrice(0) + adapterService.sumPrice();
-            item_receipt_total.setText(totalPrice*(100-salePercent)/100 + " VND");
+            item_receipt_total.setText(formatDecimal(totalPrice*(100-salePercent)/100) + " VND");
         }
         else {
             item_receipt_total.setText(getResources().getString(R.string.total_price));
@@ -277,18 +279,6 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
 
     }
 
-    private String parseDate(String date) {
-        SimpleDateFormat sdfOld = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdfNew = new SimpleDateFormat("dd/MM/yyyy");
-        String result = "";
-        try {
-            Date d = sdfOld.parse(date);
-            result = sdfNew.format(d);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
     private void initToolbar() {
         toolbar =  findViewById(R.id.toolbar);

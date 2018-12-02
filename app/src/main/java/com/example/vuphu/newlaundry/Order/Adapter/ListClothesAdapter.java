@@ -91,7 +91,6 @@ public class ListClothesAdapter extends RecyclerView.Adapter<ListClothesViewHold
                 sum += obOrderDetail.getPrice()*obOrderDetail.getCount();
             } else if(!(obOrderDetail.getWeight() > 0)){
                 flag = true;
-                break;
             }
         }
         if(flag) {
