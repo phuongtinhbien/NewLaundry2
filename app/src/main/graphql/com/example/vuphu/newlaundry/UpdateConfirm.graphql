@@ -1,0 +1,7 @@
+mutation updateConfirm($idOrder: BigFloat!) {
+  updateCustomerOrderById(input: {id: $idOrder, customerOrderPatch: {confirmByCustomer: "true"}}) {
+    customerOrder {
+      confirmByCustomer
+    }
+  }
+}

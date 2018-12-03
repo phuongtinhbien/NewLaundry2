@@ -89,7 +89,7 @@ public class AccountFragment extends Fragment {
         if (customer!= null){
             name.setText(customer.fullName());
             email.setText(customer.email());
-            gender.setText(customer.gender()?getResources().getString(R.string.Female):getResources().getString(R.string.Female)); //Todo: translate vietnamese
+            gender.setText(customer.gender()?getResources().getString(R.string.Female):getResources().getString(R.string.Male)); //Todo: translate vietnamese
             phone.setText(customer.phone());
             address.setText(customer.address());
             Picasso.get().load(Uri.parse(customer.postByCustomerAvatar().headerImageFile())).into(avatar);

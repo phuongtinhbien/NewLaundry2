@@ -193,6 +193,8 @@
     <string name="promotion_bill">Giảm giá:</string>
     <string name="err_get_id_receipt">Id Receipt không xác định</string>
     <string name="your_address">Chọn Chi nhánh</string>
+    <string name="bnt_confirm_delievry">Đã nhận đồ</string>
+    <string name="confirm_order_success">Xác nhận thành công</string>
 
 
 </resources>

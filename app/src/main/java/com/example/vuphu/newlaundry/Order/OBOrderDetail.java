@@ -188,4 +188,25 @@ public class OBOrderDetail implements Serializable {
         this.count = count;
     }
 
+    @Override
+    public String toString() {
+        return "OBOrderDetail{" +
+                "product=" + product +
+                ", label='" + label + '\'' +
+                ", material='" + material + '\'' +
+                ", unit='" + unit + '\'' +
+                ", labelID='" + labelID + '\'' +
+                ", materialID='" + materialID + '\'' +
+                ", unitID='" + unitID + '\'' +
+                ", color='" + color + '\'' +
+                ", colorID='" + colorID + '\'' +
+                ", count=" + count +
+                ", idService='" + idService + '\'' +
+                ", note='" + note + '\'' +
+                ", serviceName='" + serviceName + '\'' +
+                ", price=" + price +
+                ", priceID='" + priceID + '\'' +
+                ", weight=" + weight +
+                '}';
+    }
 }

@@ -257,10 +257,10 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
 
     private void saveOrder() {
         // TODO: Update Customer_order and order detail
-        String delidate = dateDeliveryValue;
-        String pickdate = datePickupValue;
-//                    String delidate = parseDate(dateDeliveryValue, "dd/MM/yyyy", "yyyy/MM/dd");
-//                    String pickdate = parseDate(datePickupValue, "dd/MM/yyyy", "yyyy/MM/dd");
+//        String delidate = dateDeliveryValue;
+//        String pickdate = datePickupValue;
+        String delidate = parseDate(dateDeliveryValue, "dd/MM/yyyy", "yyyy/MM/dd");
+        String pickdate = parseDate(datePickupValue, "dd/MM/yyyy", "yyyy/MM/dd");
         if(!TextUtils.isEmpty(delidate) && !TextUtils.isEmpty(pickdate)) {
             CustomerOrderInput customerOrderInput = CustomerOrderInput.builder()
                     .customerId(customer.id())
@@ -287,6 +287,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                         .serviceTypeId(obOrderDetail.getIdService())
                         .note(obOrderDetail.getNote())
                         .build();
+                Log.i("UpdateOrderAndetail", obOrderDetail.toString());
                 list.add(orderDetailInput);
             }
 
@@ -297,7 +298,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
             ).enqueue(new ApolloCall.Callback<UpdateOrderAndDetailMutation.Data>() {
                 @Override
                 public void onResponse(@NotNull Response<UpdateOrderAndDetailMutation.Data> response) {
-                    Log.i("UpdateOrderAndetail", response.data().toString());
+                    Log.i("UpdateOrderAndetail", response.errors().toString());
                     if(response.data().updateOrderAndDetail().customerOrder() != null) {
                         if(!TextUtils.isEmpty(response.data().updateOrderAndDetail().customerOrder().id())) {
                             InfoOrderDetailActivity.this.runOnUiThread(new Runnable() {

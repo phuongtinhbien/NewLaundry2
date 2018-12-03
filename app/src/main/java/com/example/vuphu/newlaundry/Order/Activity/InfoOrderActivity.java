@@ -223,10 +223,10 @@ public class InfoOrderActivity extends AppCompatActivity implements
                 if(validate()){
                     popup.createLoadingDialog();
                     popup.show();
-                    String delidate = dateDeliveryValue;
-                    String pickdate = datePickupValue;
-//                    String delidate = parseDate(dateDeliveryValue, "dd/MM/yyyy", "yyyy/MM/dd");
-//                    String pickdate = parseDate(datePickupValue, "dd/MM/yyyy", "yyyy/MM/dd");
+//                    String delidate = dateDeliveryValue;
+//                    String pickdate = datePickupValue;
+                    String delidate = parseDate(dateDeliveryValue, "dd/MM/yyyy", "yyyy/MM/dd");
+                    String pickdate = parseDate(datePickupValue, "dd/MM/yyyy", "yyyy/MM/dd");
                     if(!TextUtils.isEmpty(delidate) && !TextUtils.isEmpty(pickdate)) {
                         CustomerOrderInput customerOrderInput = CustomerOrderInput.builder()
                                 .branchId(idBranch)

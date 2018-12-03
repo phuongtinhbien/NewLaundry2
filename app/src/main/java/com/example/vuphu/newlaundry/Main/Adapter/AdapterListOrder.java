@@ -21,6 +21,8 @@ import com.example.vuphu.newlaundry.Main.OBOrderFragment;
 import com.example.vuphu.newlaundry.Main.ReceiptActivity;
 import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
+import com.example.vuphu.newlaundry.UpdateConfirmMutation;
+import com.example.vuphu.newlaundry.UpdateStatusMutation;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.example.vuphu.newlaundry.Utils.Util;
 
@@ -38,6 +40,7 @@ import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_ORDER;
 import static com.example.vuphu.newlaundry.Utils.StringKey.ID_RECEIPT;
 import static com.example.vuphu.newlaundry.Utils.StringKey.PENDING;
+import static com.example.vuphu.newlaundry.Utils.StringKey.PENDING_DELIVERY;
 import static com.example.vuphu.newlaundry.Utils.StringKey.STATUS;
 import static com.example.vuphu.newlaundry.Utils.Util.translateStatus;
 
@@ -79,18 +82,29 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
             });
         }
         else {
-            holder.view_order.setVisibility(View.VISIBLE);
-            holder.view_order.setText(R.string.view_orderdetail);
-            holder.view_order.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, InfoOrderDetailActivity.class);
-                    intent.putExtra(ID_ORDER, obOrderFragment.getId());
-                    intent.putExtra(STATUS, obOrderFragment.getStatus());
-                    intent.putExtra(ID_BRANCH, obOrderFragment.getIdBranch());
-                    context.startActivity(intent);
-                }
-            });
+            if(obOrderFragment.getStatus().equals(PENDING_DELIVERY)) {
+                holder.view_order.setVisibility(View.VISIBLE);
+                holder.view_order.setText(R.string.bnt_confirm_delievry);
+                holder.view_order.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setConfirm(obOrderFragment.getId());
+                    }
+                });
+            } else {
+                holder.view_order.setVisibility(View.VISIBLE);
+                holder.view_order.setText(R.string.view_orderdetail);
+                holder.view_order.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, InfoOrderDetailActivity.class);
+                        intent.putExtra(ID_ORDER, obOrderFragment.getId());
+                        intent.putExtra(STATUS, obOrderFragment.getStatus());
+                        intent.putExtra(ID_BRANCH, obOrderFragment.getIdBranch());
+                        context.startActivity(intent);
+                    }
+                });
+            }
             if(!obOrderFragment.getStatus().equals(PENDING)) {
                 holder.view_receipt.setVisibility(View.VISIBLE);
                 holder.view_receipt.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +117,26 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
                 });
             }
         }
+    }
+
+    private void setConfirm(String id) {
+        String token = PreferenceUtil.getAuthToken(context);
+        GraphqlClient.getApolloClient(token, false).mutate(UpdateConfirmMutation.builder().idOrder(id).build())
+                .enqueue(new ApolloCall.Callback<UpdateConfirmMutation.Data>() {
+                    @Override
+                    public void onResponse(@NotNull Response<UpdateConfirmMutation.Data> response) {
+                        if(response.data().updateCustomerOrderById() != null) {
+                            if(response.data().updateCustomerOrderById().customerOrder().confirmByCustomer() != null) {
+                                Toast.makeText(context, context.getResources().getString(R.string.confirm_order_success), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull ApolloException e) {
+
+                    }
+                });
     }
 
     private void getIdReceipt(String id) {
