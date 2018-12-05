@@ -190,6 +190,7 @@
                         android:layout_height="45dp"
                         android:layout_marginLeft="@dimen/card_elevation"
                         android:layout_weight="1"
+                        android:backgroundTint="@color/color_red"
                         android:text="@string/Cancel_order"
                         android:textColor="@color/white"
                         android:textSize="@dimen/font_size_text" />

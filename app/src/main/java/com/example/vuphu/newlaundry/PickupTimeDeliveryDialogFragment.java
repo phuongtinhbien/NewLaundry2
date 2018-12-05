@@ -36,6 +36,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.vuphu.newlaundry.Utils.StringKey.DATEDELIVERY;
+import static com.example.vuphu.newlaundry.Utils.StringKey.DATEPICKUP;
+import static com.example.vuphu.newlaundry.Utils.StringKey.DATE_KEY;
+import static com.example.vuphu.newlaundry.Utils.StringKey.ID_BRANCH;
+import static com.example.vuphu.newlaundry.Utils.StringKey.OBTIMEDELIVERY;
+import static com.example.vuphu.newlaundry.Utils.StringKey.OBTIMEPICKUP;
 
 
 public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment implements PickupTimeDeliveryListener {
@@ -71,19 +77,19 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
         args.putParcelableArrayList(ARG_LIST_ITEM_PICKUP, listPick);
         args.putParcelableArrayList(ARG_LIST_ITEM_DELIVERY, listDeli);
         if(timePickup != null) {
-            args.putParcelable("OBTimePickup", timePickup);
+            args.putParcelable(OBTIMEPICKUP, timePickup);
         }
         if(timeDelivery != null) {
-            args.putParcelable("OBTimeDelivery", timeDelivery);
+            args.putParcelable(OBTIMEDELIVERY, timeDelivery);
         }
         if(datePickup != null) {
-            args.putString("datePickup", datePickup);
+            args.putString(DATEPICKUP, datePickup);
         }
         if(dateDelivery != null) {
-            args.putString("dateDelivery", dateDelivery);
+            args.putString(DATEDELIVERY, dateDelivery);
         }
         if(idBranch != null) {
-            args.putString("idBranch", idBranch);
+            args.putString(ID_BRANCH, idBranch);
         }
         fragment.setArguments(args);
         return fragment;
@@ -111,11 +117,7 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
         listDelivery = new ArrayList<>();
         listDelivery.clear();
         listDelivery.addAll(getArguments().<OBTimeSchedule>getParcelableArrayList(ARG_LIST_ITEM_DELIVERY));
-        Log.i("listPickup", listPickup.toString() + "---" + listDelivery.toString());
         initializePickup(view);
-
-
-
 
         submit = view.findViewById(R.id.input_dialog_confirm);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +142,7 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
     private void getTimeLimit(View view, Calendar calendar) {
         GraphqlClient.getApolloClient(token, false).query(GetTimeLimitDeliveryQuery.
                 builder().
-                branch(getArguments().getString("idBranch"))
+                branch(getArguments().getString(ID_BRANCH))
                 .build()
         ).enqueue(new ApolloCall.Callback<GetTimeLimitDeliveryQuery.Data>() {
             @Override
@@ -209,30 +211,30 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
         setUpDatePickup();
     }
 
-    private boolean checkTime(String timeStart, String timeStart1) {
-        int start = Integer.parseInt(timeStart.substring(0, 2));
-        int end = Integer.parseInt(timeStart1.substring(0, 2));
-        return (end - start) >= 5;
-    }
-
-
-
-    private boolean checkDate(String mDatePickup, String mDateDelivery) {
-        try {
-            Date dateEnd = sdf.parse(mDateDelivery);
-            Date dateStart = sdf.parse(mDatePickup);
-            return dateStart.before(dateEnd);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+//    private boolean checkTime(String timeStart, String timeStart1) {
+//        int start = Integer.parseInt(timeStart.substring(0, 2));
+//        int end = Integer.parseInt(timeStart1.substring(0, 2));
+//        return (end - start) >= 5;
+//    }
+//
+//
+//
+//    private boolean checkDate(String mDatePickup, String mDateDelivery) {
+//        try {
+//            Date dateEnd = sdf.parse(mDateDelivery);
+//            Date dateStart = sdf.parse(mDatePickup);
+//            return dateStart.before(dateEnd);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
 
 
     private void setUpDateDelivery(long timeLimit) {
         final Calendar calendar = Calendar.getInstance();
-        if(getArguments().get("dateDelivery") != null){
-            String date = getArguments().getString("dateDelivery");
+        if(getArguments().get(DATEDELIVERY) != null){
+            String date = getArguments().getString(DATEDELIVERY);
             try {
                 calendar.setTime(sdf.parse(date));
             } catch (ParseException e) {
@@ -456,10 +458,10 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
             final OBTimeSchedule timeOB = listTime.get(position);
             holder.time.setChipText(timeOB.getTimeStart() + " - " + timeOB.getTimeEnd());
             Log.i("abc", "onBindViewHolder: " + timeOB.isDisplay());
-            if(getArguments().containsKey("OBTimePickup") && getArguments().containsKey("OBTimeDelivery") && flag){
+            if(getArguments().containsKey(OBTIMEPICKUP) && getArguments().containsKey(OBTIMEDELIVERY) && flag){
                 switch (type) {
                     case PICKUP: {
-                        OBTimeSchedule obTimeSchedule = getArguments().getParcelable("OBTimePickup");
+                        OBTimeSchedule obTimeSchedule = getArguments().getParcelable(OBTIMEPICKUP);
                         if(!timeOB.getId().equals(obTimeSchedule.getId())) {
                            timeOB.setDisplay(false);
                         }
@@ -471,7 +473,7 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
                         break;
                     }
                     case DELIVERY: {
-                        OBTimeSchedule obTimeSchedule = getArguments().getParcelable("OBTimeDelivery");
+                        OBTimeSchedule obTimeSchedule = getArguments().getParcelable(OBTIMEDELIVERY);
                         if(!timeOB.getId().equals(obTimeSchedule.getId())) {
                             timeOB.setDisplay(false);
                         }
@@ -527,11 +529,6 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
             this.listTime.clear();
             this.listTime.addAll(list);
             notifyDataSetChanged();
-        }
-
-        public void setSelected(boolean select, int pos) {
-            this.isSelected = select;
-            this.pos = pos;
         }
 
         public boolean checkSelected(int position) {
