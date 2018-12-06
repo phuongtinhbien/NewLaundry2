@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apollographql.apollo.ApolloCall;
@@ -65,6 +66,7 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
     private ArrayList<OBTimeSchedule> listDelivery;
     private PickupTimeDeliveryAdapter adapterPickup, adapterDelivery;
     private  int yearPickup, monthPickup, dayPickup;
+    private TextView prepare_order_date_delivery, prepare_order_date_pick_up;
     private Calendar currentDate;
     GetPickupTimeDelivery mListener;
     private String token;
@@ -108,9 +110,21 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
         token = PreferenceUtil.getAuthToken(getActivity());
         sdf = new SimpleDateFormat(strDateFormat);
         sdf1 = new SimpleDateFormat(strDateSFormat);
+        prepare_order_date_pick_up = v.findViewById(R.id.prepare_order_date_pick_up);
+        prepare_order_date_delivery = v.findViewById(R.id.prepare_order_date_delivery);
         currentDate = Calendar.getInstance();
         dateDelivery = view.findViewById(R.id.date_delivery);
         dateDelivery.setVisibility(View.INVISIBLE);
+        if(getArguments().containsKey(OBTIMEDELIVERY) && getArguments().containsKey(OBTIMEPICKUP) && getArguments().containsKey(DATEPICKUP) && getArguments().containsKey(DATEDELIVERY)) {
+            OBTimeSchedule obPickup = getArguments().getParcelable(OBTIMEPICKUP);
+            OBTimeSchedule obDelivery = getArguments().getParcelable(OBTIMEDELIVERY);
+            String datePick = getArguments().getString(DATEPICKUP);
+            String dateDeli = getArguments().getString(DATEDELIVERY);
+            prepare_order_date_delivery.setVisibility(View.VISIBLE);
+            prepare_order_date_pick_up.setVisibility(View.VISIBLE);
+            prepare_order_date_pick_up.setText(obPickup.getTimeStart() + "-" + obPickup.getTimeEnd() + "-" + datePick);
+            prepare_order_date_delivery.setText(obDelivery.getTimeStart() + "-" + obDelivery.getTimeEnd() + "-" + dateDeli);
+        }
         listPickup = new ArrayList<>();
         listPickup.clear();
         listPickup.addAll(getArguments().<OBTimeSchedule>getParcelableArrayList(ARG_LIST_ITEM_PICKUP));
@@ -211,25 +225,6 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
         setUpDatePickup();
     }
 
-//    private boolean checkTime(String timeStart, String timeStart1) {
-//        int start = Integer.parseInt(timeStart.substring(0, 2));
-//        int end = Integer.parseInt(timeStart1.substring(0, 2));
-//        return (end - start) >= 5;
-//    }
-//
-//
-//
-//    private boolean checkDate(String mDatePickup, String mDateDelivery) {
-//        try {
-//            Date dateEnd = sdf.parse(mDateDelivery);
-//            Date dateStart = sdf.parse(mDatePickup);
-//            return dateStart.before(dateEnd);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
-
 
     private void setUpDateDelivery(long timeLimit) {
         final Calendar calendar = Calendar.getInstance();
@@ -300,18 +295,7 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
                 calendar.set(year, monthOfYear, dayOfMonth, 0, 0, 0);
                 mDatePickup = sdf.format(calendar.getTime());
                 if(calendar.getTime().compareTo(currentDate.getTime()) > 0) {
-//                    ArrayList<OBTimeSchedule> list = new ArrayList<>();
-//                    list.addAll(getArguments().getParcelableArrayList(ARG_LIST_ITEM_DELIVERY));
-//                    for (OBTimeSchedule ob : list) {
-//                        if(!ob.isDisplay()) {
-//                            ob.setDisplay(true);
-//                            Log.i("isDisplay", "yes");
-//                        }
-//                        else if(ob.isDisplay()) {
-//                            adapterPickup.setSelected(true, list.indexOf(ob));
-//                        }
-//                    }
-                    adapterPickup.refreshAdapter(getArguments().getParcelableArrayList(ARG_LIST_ITEM_DELIVERY));
+                    adapterPickup.refreshAdapter(getArguments().getParcelableArrayList(ARG_LIST_ITEM_PICKUP));
                 } else if(calendar.getTime().compareTo(currentDate.getTime()) == 0) {
                     int h = Integer.parseInt(ObPickup.getTimeStart().substring(0,2));
                     filterListOBPickup(h, calendar);
@@ -374,10 +358,12 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
 
 
     @Override
-    public void onPickupTimeDeliveryClicked(OBTimeSchedule obTimeSchedule, String type) {
+    public void onPickupTimeDeliveryClicked(OBTimeSchedule obTimeSchedule, String type, int pos) {
         switch (type) {
             case PICKUP: {
                 ObPickup = new OBTimeSchedule(obTimeSchedule);
+                prepare_order_date_pick_up.setVisibility(View.VISIBLE);
+                prepare_order_date_pick_up.setText(ObPickup.getTimeStart() + "-" + ObPickup.getTimeEnd() + "-" + mDatePickup);
                 Calendar calendar = Calendar.getInstance();
                 Date d = new Date();
                 try {
@@ -393,7 +379,9 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
                 break;
             }
             case DELIVERY: {
-               ObDelivery = new OBTimeSchedule(obTimeSchedule);
+                ObDelivery = new OBTimeSchedule(obTimeSchedule);
+                prepare_order_date_delivery.setVisibility(View.VISIBLE);
+                prepare_order_date_delivery.setText(ObDelivery.getTimeStart() + "-" + ObDelivery.getTimeEnd() + "-" + mDateDelivery);
                 Log.i("delivery", ObDelivery.getTimeEnd());
                 break;
             }
@@ -406,9 +394,11 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
         switch (type) {
             case PICKUP: {
                 ObPickup = null;
+                prepare_order_date_pick_up.setVisibility(View.GONE);
                 break;
             }
             case DELIVERY: {
+                prepare_order_date_delivery.setVisibility(View.GONE);
                 ObDelivery = null;
                 break;
             }
@@ -468,7 +458,7 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
                         else {
                             holder.time.setSelected(true);
                             timeOB.setDisplay(true);
-                            pickupTimeDeliveryListener.onPickupTimeDeliveryClicked(timeOB, type);
+                            pickupTimeDeliveryListener.onPickupTimeDeliveryClicked(timeOB, type, position);
                         }
                         break;
                     }
@@ -480,7 +470,7 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
                         else {
                             holder.time.setSelected(true);
                             timeOB.setDisplay(true);
-                            pickupTimeDeliveryListener.onPickupTimeDeliveryClicked(timeOB, type);
+                            pickupTimeDeliveryListener.onPickupTimeDeliveryClicked(timeOB, type, position);
                         }
                         break;
                     }
@@ -500,7 +490,7 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
                     Log.i("select", "select: " + selected);
                     if(selected){
                         setDisplayItem(position, !selected);
-                        pickupTimeDeliveryListener.onPickupTimeDeliveryClicked(timeOB, type);
+                        pickupTimeDeliveryListener.onPickupTimeDeliveryClicked(timeOB, type, position);
                         flag = false;
                     }
                     else {
