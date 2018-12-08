@@ -115,6 +115,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
     private ArrayList<OBPromotion> promotionList = new ArrayList<>();
     private String idPromotion;
     private int salePercent = 0;
+    private boolean edit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,9 +205,11 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
             @Override
             public void onClick(View view) {
                 if(btnSave_Edit.getText().toString().equals(getResources().getString(R.string.edit))) {
+                    edit = true;
                     editOrder();
                 }
                 else if(btnSave_Edit.getText().toString().equals(getResources().getString(R.string.save))) {
+                    edit = false;
                     saveOrder();
                 }
             }
@@ -597,13 +600,20 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId() == android.R.id.home){
             onBackPressed();
             finish();
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(edit) {
+            setStatusOrder(status);
+        }
+        super.onBackPressed();
     }
 
     @Override
