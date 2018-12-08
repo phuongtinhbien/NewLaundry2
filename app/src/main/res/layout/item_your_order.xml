@@ -159,16 +159,34 @@
                 android:textColor="@color/orange"
                 android:textSize="@dimen/font_size_text" />
         </LinearLayout>
-        <Button
-            android:visibility="gone"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_gravity="center_vertical|end"
-            android:id="@+id/view_bill"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/view_bill"
-            android:textColor="@color/orange"
-            android:textSize="@dimen/font_size_text" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <Button
+                android:layout_weight="1"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_gravity="center_vertical|end"
+                android:id="@+id/view_bill"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/view_bill"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/font_size_text" />
+            <Button
+                android:layout_weight="1"
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_gravity="center_vertical|end"
+                android:id="@+id/confirm_receiver"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/bnt_confirm_delievry"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_size_text" />
+        </LinearLayout>
 
 
     </LinearLayout>

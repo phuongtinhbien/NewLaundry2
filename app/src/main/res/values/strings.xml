@@ -265,6 +265,19 @@
     <string name="wl_start">Start</string>
     <string name="wl_choose_clothes">Choose Clothes</string>
     <string name="wl_choose_clothes_Content">Áo sơ mi, Áo khoác, Quần tây, Quần Jean, Chăn Màn, ...</string>
+    <string name="name_item">Item</string>
+    <string name="wl_choose_service_content">Cotton Wash, Blanket Wash, Regular Wash, Fast Wash, Soak Wash, Wool Wash, ...</string>
+    <string name="wl_choose_clothes_detail">Clothes detail</string>
+    <string name="wl_choose_clothes_Content_detail">Unit, amount, material, color, label, note</string>
+    <string name="wl_bag">Bag</string>
+    <string name="wl_bag_content">Edit or delete Clothes. Then submit.</string>
+    <string name="wl_choose_branch">Choose branch</string>
+    <string name="wl_choose_branch_content">pickup-delivery place default is your address. Choose banch in google map by choose icon washing machine.</string>
+    <string name="wl_choose_time">Choose time schedule pickup-delivery</string>
+    <string name="wl_choose_time_content">Choose time schedule pickup before choose time schedule delivery</string>
+    <string name="wl_choose_promotion">Choose promotion</string>
+    <string name="wl_edit_cancel">Edit or cancel order</string>
+    <string name="wl_edit_cancel_content">My order -> View Order -> Edit or Cancel Order</string>
 
 </resources>
 

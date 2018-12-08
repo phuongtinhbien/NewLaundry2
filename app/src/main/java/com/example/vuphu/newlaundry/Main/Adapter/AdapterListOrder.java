@@ -71,8 +71,6 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
         holder.reciever.setText(obOrderFragment.getReciever());
         if(obOrderFragment.getStatus().equals(FINISHED)) {
             holder.view_bill.setVisibility(View.VISIBLE);
-            holder.view_receipt.setVisibility(View.GONE);
-            holder.view_order.setVisibility(View.GONE);
             holder.view_bill.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -80,31 +78,29 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
                     getIdReceipt(obOrderFragment.getId());
                 }
             });
+            holder.confirm_receiver.setVisibility(View.VISIBLE);
+            holder.confirm_receiver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setConfirm(obOrderFragment.getId());
+                }
+            });
+            holder.view_order.setVisibility(View.GONE);
+            holder.view_receipt.setVisibility(View.GONE);
         }
         else {
-            if(obOrderFragment.getStatus().equals(PENDING_DELIVERY)) {
-                holder.view_order.setVisibility(View.VISIBLE);
-                holder.view_order.setText(R.string.bnt_confirm_delievry);
-                holder.view_order.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        setConfirm(obOrderFragment.getId());
-                    }
-                });
-            } else {
-                holder.view_order.setVisibility(View.VISIBLE);
-                holder.view_order.setText(R.string.view_orderdetail);
-                holder.view_order.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(context, InfoOrderDetailActivity.class);
-                        intent.putExtra(ID_ORDER, obOrderFragment.getId());
-                        intent.putExtra(STATUS, obOrderFragment.getStatus());
-                        intent.putExtra(ID_BRANCH, obOrderFragment.getIdBranch());
-                        context.startActivity(intent);
-                    }
-                });
-            }
+            holder.view_order.setVisibility(View.VISIBLE);
+            holder.view_order.setText(R.string.view_orderdetail);
+            holder.view_order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, InfoOrderDetailActivity.class);
+                    intent.putExtra(ID_ORDER, obOrderFragment.getId());
+                    intent.putExtra(STATUS, obOrderFragment.getStatus());
+                    intent.putExtra(ID_BRANCH, obOrderFragment.getIdBranch());
+                    context.startActivity(intent);
+                }
+            });
             if(!obOrderFragment.getStatus().equals(PENDING)) {
                 holder.view_receipt.setVisibility(View.VISIBLE);
                 holder.view_receipt.setOnClickListener(new View.OnClickListener() {
