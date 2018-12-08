@@ -276,7 +276,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
                 .position(new LatLng(latitude, longitude))
                 .title(branchName)
                 .snippet(branchAddress + SPECIAL_STRING + price)
-                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("ic_item_service",80,80)))
+                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("icon_app",80,80)))
         );
         builder.include(new LatLng(latitude, longitude));
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(getApplication()));

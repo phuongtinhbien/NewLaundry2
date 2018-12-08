@@ -32,7 +32,7 @@ import okhttp3.RequestBody;
 
 
 public class GraphqlClient extends Activity {
-    private static final String BASE_URL = "http://192.168.1.13:5000/graphql";
+    private static final String BASE_URL = "http://192.168.43.162:5000/graphql";
 //    private static final String BASE_URL = "http://" + PreferenceUtil.getIpconfig(this) + "/graphql";
     private static final int TIME_OUT = 30000;
     private static OkHttpClient okHttpClient;

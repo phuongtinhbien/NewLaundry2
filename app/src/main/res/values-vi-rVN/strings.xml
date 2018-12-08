@@ -195,6 +195,24 @@
     <string name="your_address">Chọn Chi nhánh</string>
     <string name="bnt_confirm_delievry">Đã nhận đồ</string>
     <string name="confirm_order_success">Xác nhận thành công</string>
-
+    <string name="wl_login">Đăng nhập</string>
+    <string name="wl_choose_service">Chọn dịch vụ</string>
+    <string name="wl_choose_service_content">Giặt cotton, Giặt chăn màn,Giặt thường, Giặt nhanh, Giặt ngâm, Giặt len, ...</string>
+    <string name="wl_login_content">Nhập email và mật khẩu như hình phía trên và nhấn đăng nhập</string>
+    <string name="wl_start">Bắt đầu</string>
+    <string name="wl_choose_clothes">Chọn quần áo</string>
+    <string name="wl_choose_clothes_Content">Áo sơ mi, Áo khoác, Quần tây, Quần Jean, Chăn Màn, ...</string>
+    <string name="wl_choose_clothes_detail">Chi tiết quần áo</string>
+    <string name="wl_choose_clothes_Content_detail">Đơn vị tính, Số lượng, Chất liệu, Màu sắc, Nhãn hiệu, Ghi chú</string>
+    <string name="wl_bag">Giỏ đồ</string>
+    <string name="wl_bag_content">Sửa hoặc xóa quần áo. Sau đó Hoàn tất</string>
+    <string name="wl_choose_branch">Chọn chi nhánh</string>
+    <string name="wl_choose_branch_content">Địa điểm giao nhận mặc định là địa chỉ của bạn. Chọn chi nhánh trên bản đồ bằng cách chọn vào biểu tượng "máy giặt"</string>
+    <string name="wl_choose_time">Chọn thời gian giao-nhận đồ</string>
+    <string name="wl_choose_time_content">Chọn thời gian nhận đồ trước tiên. Sau đó chọn thời gian giao đồ</string>
+    <string name="wl_choose_promotion">Chọn khuyến mãi</string>
+    <string name="wl_choose_promotion_content"></string>
+    <string name="wl_edit_cancel">Sửa hoặc hủy đơn hàng</string>
+    <string name="wl_edit_cancel_content">Đơn hàng của tôi -> Xem đơn hàng -> Sửa hoặc Hủy đơn hàng</string>
 
 </resources>

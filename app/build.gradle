@@ -72,6 +72,8 @@ dependencies {
     implementation 'com.apollographql.apollo:apollo-rx2-support:1.0.0-alpha2'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.zxing:core:3.2.1'
+    // welcome
+    implementation 'com.github.Shashank02051997:FancyWalkthrough-Android:2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -259,6 +259,12 @@
     <string name="err_get_id_receipt">Id Receipt undefine</string>
     <string name="bnt_confirm_delievry">received</string>
     <string name="confirm_order_success">Comfirm succesful</string>
+    <string name="wl_login">Login</string>
+    <string name="wl_login_content">Enter email and password same above picture</string>
+    <string name="wl_choose_service">Choose service</string>
+    <string name="wl_start">Start</string>
+    <string name="wl_choose_clothes">Choose Clothes</string>
+    <string name="wl_choose_clothes_Content">Áo sơ mi, Áo khoác, Quần tây, Quần Jean, Chăn Màn, ...</string>
 
 </resources>
 
