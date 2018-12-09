@@ -59,7 +59,7 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
     private RecyclerView listChooseClothes;
     private ListOrderDetailAdapter adapter;
     private ArrayList<OBOrderDetail> list;
-    private TextView countTotal, totalPrice;
+    private TextView countTotal, totalPrice, no_sum;
     private String token;
     private int position;
     private DecimalFormat dec;
@@ -80,6 +80,7 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
         dec = new DecimalFormat("##,###,###,###");
         countTotal = findViewById(R.id.item_prepare_order_total_items);
         totalPrice = findViewById(R.id.item_prepare_order_total);
+        no_sum = findViewById(R.id.no_sum);
         listChooseClothes = findViewById(R.id.list_choose_cloth);
         list = PreferenceUtil.getListOrderDetail(BagActivity.this);
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
@@ -88,8 +89,15 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
         adapter = new ListOrderDetailAdapter(list, BagActivity.this, this);
         listChooseClothes.setAdapter(adapter);
         if(adapter.sumPrice() != 0) {
+            no_sum.setVisibility(View.GONE);
             totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
         } else {
+            if(adapter.getItemCount() > 0) {
+                no_sum.setVisibility(View.VISIBLE);
+            }
+            else {
+                no_sum.setVisibility(View.GONE);
+            }
             totalPrice.setText(getResources().getString(R.string.total_price));
         }
         countTotal.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
@@ -144,6 +152,7 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
                 intent.putExtra(LATITUDE, p1.latitude);
                 intent.putExtra(LONGITUDE, p1.longitude);
                 startActivity(intent);
+                finish();
             }
         }
     }
@@ -273,8 +282,15 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
             Log.i("ListOrderDetail", "Size: " + list.size());
             adapter.notifyDataSetChanged();
             if(adapter.sumPrice() != 0) {
+                no_sum.setVisibility(View.GONE);
                 totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
             } else {
+                if(adapter.getItemCount() > 0) {
+                    no_sum.setVisibility(View.VISIBLE);
+                }
+                else {
+                    no_sum.setVisibility(View.GONE);
+                }
                 totalPrice.setText(getResources().getString(R.string.total_price));
             }
             countTotal.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
@@ -289,8 +305,15 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
         PreferenceUtil.setListOrderDetail(list, BagActivity.this);
         countTotal.setText(adapter.sumCount() + " " + getResources().getString(R.string.item));
         if(adapter.sumPrice() != 0) {
+            no_sum.setVisibility(View.GONE);
             totalPrice.setText(dec.format(adapter.sumPrice()) + " VND");
         } else {
+            if(adapter.getItemCount() > 0) {
+                no_sum.setVisibility(View.VISIBLE);
+            }
+            else {
+                no_sum.setVisibility(View.GONE);
+            }
             totalPrice.setText(getResources().getString(R.string.total_price));
         }
     }

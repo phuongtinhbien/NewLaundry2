@@ -179,8 +179,7 @@ public class ReceiptActivity extends AppCompatActivity implements IFOBPrepareOrd
                                             obOrderDetail.setCount(node1.recievedAmount().longValue());
                                         }
                                         else {
-                                            obOrderDetail.setCount(node1.amount());
-                                        }
+                                            obOrderDetail.setCount(node1.amount().longValue());                                        }
                                         obOrderDetail.setUnitID(node1.unitId());
                                         obOrderDetail.setUnit(getResources().getString(R.string.item));
                                     }

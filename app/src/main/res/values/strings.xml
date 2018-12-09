@@ -278,6 +278,9 @@
     <string name="wl_choose_promotion">Choose promotion</string>
     <string name="wl_edit_cancel">Edit or cancel order</string>
     <string name="wl_edit_cancel_content">My order -> View Order -> Edit or Cancel Order</string>
-
+    <string name="no_sum">Total price will calculate when pick up order</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="title_check_fisrt_open">See the instructions</string>
 </resources>
 

@@ -371,11 +371,16 @@ public class DetailPrepareOrderClothesActivity extends AppCompatActivity impleme
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId() == android.R.id.home){
             onBackPressed();
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 
     public Boolean validate() {

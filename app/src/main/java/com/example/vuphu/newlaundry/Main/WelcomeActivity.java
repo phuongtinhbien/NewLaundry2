@@ -1,11 +1,19 @@
 package com.example.vuphu.newlaundry.Main;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+
 
 import com.example.vuphu.newlaundry.Authen.LoginActivity;
+
 import com.example.vuphu.newlaundry.R;
+import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.shashank.sony.fancywalkthroughlib.FancyWalkthroughActivity;
 import com.shashank.sony.fancywalkthroughlib.FancyWalkthroughCard;
 
@@ -16,6 +24,8 @@ public class WelcomeActivity extends FancyWalkthroughActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkFirstOpenApp();
+
         FancyWalkthroughCard fancyWalkthroughCardLogin = new FancyWalkthroughCard(R.string.wl_login, R.string.wl_login_content, R.drawable.dangnhap );
         fancyWalkthroughCardLogin.setBackgroundColor(R.color.white);
         fancyWalkthroughCardLogin.setIconLayoutParams(1000,1000,0,0,0,0);
@@ -90,9 +100,40 @@ public class WelcomeActivity extends FancyWalkthroughActivity {
         setFinishButtonDrawableStyle(getDrawable(R.drawable.btn));
         setOnboardPages(pages);
 
-
     }
 
+    private void checkFirstOpenApp() {
+        boolean isFistOpen = PreferenceUtil.isFirstOpen(getApplicationContext());
+        Log.i("isFistOpen", isFistOpen + "");
+        if(isFistOpen) {
+            PreferenceUtil.setIsFirstOpen(getApplicationContext(), false);
+        }
+        else {
+            Dialog dialog = new Dialog(WelcomeActivity.this);
+            dialog.setTitle(R.string.title_check_fisrt_open);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.welcome_dialog);
+            Button btnYes = dialog.findViewById(R.id.btn_yes);
+            Button btnNo = dialog.findViewById(R.id.btn_no);
+            btnYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                }
+            });
+            btnNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                }
+            });
+
+            dialog.show();
+            Window window = dialog.getWindow();
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        }
+    }
 
     @Override
     public void onFinishButtonPressed() {

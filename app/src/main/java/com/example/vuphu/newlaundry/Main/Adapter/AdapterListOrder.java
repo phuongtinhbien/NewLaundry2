@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Main.BillActivity;
 import com.example.vuphu.newlaundry.Main.InfoOrderDetailActivity;
 import com.example.vuphu.newlaundry.Main.OBOrderFragment;
+import com.example.vuphu.newlaundry.Main.RatingActivity;
 import com.example.vuphu.newlaundry.Main.ReceiptActivity;
 import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
@@ -78,13 +80,17 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
                     getIdReceipt(obOrderFragment.getId());
                 }
             });
-            holder.confirm_receiver.setVisibility(View.VISIBLE);
-            holder.confirm_receiver.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    setConfirm(obOrderFragment.getId());
-                }
-            });
+
+            if(!obOrderFragment.isConfirm()) {
+                holder.confirm_receiver.setVisibility(View.VISIBLE);
+                holder.confirm_receiver.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setConfirm(obOrderFragment.getId());
+                    }
+                });
+            }
+
             holder.view_order.setVisibility(View.GONE);
             holder.view_receipt.setVisibility(View.GONE);
         }
@@ -123,7 +129,9 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
                     public void onResponse(@NotNull Response<UpdateConfirmMutation.Data> response) {
                         if(response.data().updateCustomerOrderById() != null) {
                             if(response.data().updateCustomerOrderById().customerOrder().confirmByCustomer() != null) {
-                                Toast.makeText(context, context.getResources().getString(R.string.confirm_order_success), Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(context, RatingActivity.class);
+                                intent.putExtra(ID_ORDER, id);
+                                context.startActivity(intent);
                             }
                         }
                     }

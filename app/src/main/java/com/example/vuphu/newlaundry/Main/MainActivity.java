@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     setTitle(R.string.notification);
                     toolbar.getMenu().findItem(R.id.menu_search_action).setVisible(false);
                     toolbar.getMenu().findItem(R.id.menu_bag_action).setVisible(false);
+                    toolbar.getMenu().findItem(R.id.menu_read_action).setVisible(false);
                     fragment = NotificationFragment.newInstance();
                     break;
                 case R.id.navigation_person:

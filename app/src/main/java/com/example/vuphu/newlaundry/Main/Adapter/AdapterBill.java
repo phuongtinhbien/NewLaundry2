@@ -39,16 +39,16 @@ public class AdapterBill extends RecyclerView.Adapter<BillViewHolder> {
         holder.txt_id_service.setText(obBill.getServicename());
         holder.txt_clothes.setText(obBill.getNameClothes());
         holder.txt_DVT.setText(obBill.getUnitName());
-        holder.txt_Unit_price.setText(obBill.getUnitprice() +  " " + "VND/" + obBill.getUnitName());
+        holder.txt_Unit_price.setText(Double.toString(obBill.getUnitprice()));
         if(obBill.getUnitId().equals(ITEM)) {
             holder.txt_amount_received.setText(Long.toString(obBill.getAmountReceived()));
             holder.txt_amount_delivery.setText(Long.toString(obBill.getAmount()));
-            holder.txt_total_temp.setText(formatDecimal(obBill.getAmount()*obBill.getUnitprice()) + " VND");
+            holder.txt_total_temp.setText(formatDecimal(obBill.getAmount()*obBill.getUnitprice()));
         }
         else if(obBill.getUnitId().equals(KG)){
             holder.txt_amount_received.setText(Double.toString(obBill.getWeightReceived()));
             holder.txt_amount_delivery.setText(Double.toString(obBill.getWeight()));
-            holder.txt_total_temp.setText(formatDecimal(obBill.getWeight()*obBill.getUnitprice()) + " VND");
+            holder.txt_total_temp.setText(formatDecimal(obBill.getWeight()*obBill.getUnitprice()));
         }
     }
 

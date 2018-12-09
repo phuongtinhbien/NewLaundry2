@@ -187,7 +187,7 @@
     <string name="Unit_price">Đơn giá</string>
     <string name="KL_SL_R">SL/KL nhận</string>
     <string name="KL_SL_D">SL/KL giao</string>
-    <string name="Sum_temp">Tổng tạm:</string>
+    <string name="Sum_temp">Tổng tạm</string>
     <string name="Sum">Tổng:</string>
     <string name="Sum_price">Tổng tiền:</string>
     <string name="promotion_bill">Giảm giá:</string>
@@ -214,5 +214,9 @@
     <string name="wl_choose_promotion_content"></string>
     <string name="wl_edit_cancel">Sửa hoặc hủy đơn hàng</string>
     <string name="wl_edit_cancel_content">Đơn hàng của tôi -> Xem đơn hàng -> Sửa hoặc Hủy đơn hàng</string>
+    <string name="no_sum">Tổng tiền sẽ được tính khi nhận đồ</string>
+    <string name="Yes">Có</string>
+    <string name="No">Không</string>
+    <string name="title_check_fisrt_open">Xem hướng dẫn</string>
 
 </resources>

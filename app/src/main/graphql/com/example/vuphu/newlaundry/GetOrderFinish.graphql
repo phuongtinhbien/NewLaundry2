@@ -1,17 +1,18 @@
-query getOrderFinish($id: BigFloat!){
-  allCustomerOrders(orderBy:CREATE_DATE_DESC, filter:{customerId:{equalTo: $id}, status:{equalTo:"FINISHED"}}) {
+query getOrderFinish($id: BigFloat!) {
+  allCustomerOrders(orderBy: CREATE_DATE_DESC, filter: {customerId: {equalTo: $id}, status: {equalTo: "FINISHED"}}) {
     nodes {
       id
       status
-      branchByBranchId{
+      confirmByCustomer
+      branchByBranchId {
         id
         address
         branchName
       }
       createDate
-      receiptsByOrderId{
-        nodes{
-          staffByStaffPickUp{
+      receiptsByOrderId {
+        nodes {
+          staffByStaffPickUp {
             fullName
           }
         }

@@ -66,8 +66,7 @@
         <activity
             android:name=".Authen.LoginActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Authen.SignUpActivity"
             android:configChanges="orientation"
@@ -82,7 +81,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity android:name=".Main.ReceiptActivity" />
-        <activity android:name=".ConfigIPPort" />
         <activity android:name=".Main.BillActivity" />
         <activity android:name=".Main.WelcomeActivity">
             <intent-filter>
@@ -91,6 +89,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Main.RatingActivity" />
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,6 +125,9 @@ public class ListOrderHistoryFragment extends Fragment{
                         obOrderFragment.setBranchAddress(node.branchByBranchId().address());
                         obOrderFragment.setBranchName(node.branchByBranchId().branchName());
                         obOrderFragment.setIdBranch(node.branchByBranchId().id());
+                        if(!TextUtils.isEmpty(node.confirmByCustomer())) {
+                            obOrderFragment.setConfirm(Boolean.parseBoolean(node.confirmByCustomer()));
+                        }
                         if(node.receiptsByOrderId().nodes().size() > 0) {
                             obOrderFragment.setReciever(node.receiptsByOrderId().nodes().get(0).staffByStaffPickUp().fullName());
                         }

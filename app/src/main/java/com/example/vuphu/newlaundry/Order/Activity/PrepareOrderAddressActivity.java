@@ -146,6 +146,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
 
                     intent.putExtra(TOTAL_PRICE, price);
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     Toast.makeText(getApplicationContext() ,getResources().getString(R.string.choose_map), Toast.LENGTH_LONG).show();
@@ -339,6 +340,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(R.string.your_address);
+        toolbar.getMenu().findItem(R.id.menu_location_action).setVisible(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
@@ -346,9 +348,6 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
 
         if (item.getItemId() == android.R.id.home){
             onBackPressed();
-        }
-        if (item.getItemId() == R.id.menu_location_action){
-
         }
         return true;
     }

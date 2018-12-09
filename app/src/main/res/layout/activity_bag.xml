@@ -7,14 +7,25 @@
     tools:context=".Order.Activity.BagActivity"
     android:orientation="vertical">
 
-
     <LinearLayout
+        android:id="@+id/list_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_layout"
         android:orientation="vertical">
         <include layout="@layout/toolbar"></include>
-
+        <TextView
+            android:visibility="gone"
+            android:padding="@dimen/card_elevation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/no_sum"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/endGradientFail"
+            android:text="@string/no_sum"
+            />
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,8 +34,8 @@
 
         </android.support.v7.widget.RecyclerView>
 
-
     </LinearLayout>
+
     <include layout="@layout/part_temp_order"></include>
 
 </RelativeLayout>

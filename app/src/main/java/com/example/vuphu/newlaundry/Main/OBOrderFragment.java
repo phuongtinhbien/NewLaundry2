@@ -10,6 +10,7 @@ public class OBOrderFragment implements Serializable {
     private String reciever;
     private String branchName;
     private String idBranch;
+    private boolean confirm;
 
     public OBOrderFragment() {
 
@@ -23,6 +24,14 @@ public class OBOrderFragment implements Serializable {
         this.reciever = reciever;
         this.branchName = branchName;
         this.idBranch = idBranch;
+    }
+
+    public boolean isConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
     }
 
     public String getIdBranch() {

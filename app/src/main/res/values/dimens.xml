@@ -10,7 +10,7 @@
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="card_margin">8dp</dimen>
     <dimen name="card_radius">8dp</dimen>
-    <dimen name="font_size_bill">12sp</dimen>
+    <dimen name="font_size_bill">11sp</dimen>
     <!--font size-->
     <dimen name="font_size_input">16sp</dimen>
     <dimen name="font_size_text">14sp</dimen>

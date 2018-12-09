@@ -21,8 +21,8 @@ import java.util.List;
 import static com.facebook.stetho.inspector.network.PrettyPrinterDisplayType.JSON;
 
 public class PreferenceUtil {
-    public static final String CONFIG = "CONFIG";
-    public static final String IPCONFIG = "IPCONFIG";
+    public static final String IS_FIRST_OPEN = "IS_FIRST_OPEN";
+    public static final String WELCOME = "WELCOME";
     public static final String PREFERENCE = "CUSTOMER";
     private static final String AUTH_TOKEN_TIME = "AUTH_TOKEN_TIME";
     private static final String AUTH_TOKEN = "AUTH_TOKEN";
@@ -30,7 +30,6 @@ public class PreferenceUtil {
     private static final String CURRENT_USER = "CURRENT_USER";
     private static final String LIST_ORDER = "LIST_ORDER";
     private static final String ID_USER = "ID_USER";
-    private static final String IS_ALLOW_ADD = "IS_ALLOW_ADD";
 
 
     public static Long getLastCheckedAuthTokenTime(@NonNull Context context) {
@@ -147,16 +146,16 @@ public class PreferenceUtil {
         removeKey(context, LIST_ORDER);
     }
 
-    public static void setIpconfig(Context context, String ip_port){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(CONFIG, Context.MODE_PRIVATE);
+    public static void setIsFirstOpen(Context context, boolean isFirstOpen){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(WELCOME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(IPCONFIG, ip_port);
+        editor.putBoolean(IS_FIRST_OPEN, isFirstOpen);
         editor.apply();
     }
 
-    public static String getIpconfig(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(CONFIG, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(IPCONFIG, "");
+    public static Boolean isFirstOpen(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(WELCOME, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(IS_FIRST_OPEN, true);
     }
 
 }
