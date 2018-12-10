@@ -340,7 +340,6 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(R.string.your_address);
-        toolbar.getMenu().findItem(R.id.menu_location_action).setVisible(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override

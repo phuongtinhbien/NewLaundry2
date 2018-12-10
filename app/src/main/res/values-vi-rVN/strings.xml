@@ -113,7 +113,7 @@
     <string name="date_delivery_pickup">Ngày nhận đồ phải trước ngày giao đồ</string>
     <string name="order_fail">Tạo đơn hàng thất bại!</string>
     <string name="use_now">Truy cập ngay</string>
-    <string name="input_unit">Đơn vị tính</string>
+    <string name="input_unit">Đơn vị tính*</string>
     <string name="validate_unit">Vui lòng chọn đơn vị tính</string>
     <string name="total_price">_.000 VND</string>
     <string name="other_service">Dịch vụ khác</string>
@@ -218,5 +218,17 @@
     <string name="Yes">Có</string>
     <string name="No">Không</string>
     <string name="title_check_fisrt_open">Xem hướng dẫn</string>
+    <string name="title_subrating">Đánh giá và góp ý của bạn sẽ giúp chúng tôi hoàn thiện hơn</string>
+    <string name="rating_5">Rất tốt</string>
+    <string name="rating_4">Tốt</string>
+    <string name="rating_3">Khá tốt</string>
+    <string name="rating_2">Cần cải thiện</string>
+    <string name="rating_1">Rất tệ</string>
+    <string name="comment">Nhận xét</string>
+    <string name="title_rating_comment"> Nhận xét và đánh giá</string>
+    <string name="send_feedback">Gửi phản hồi</string>
+    <string name="err_rating">Vui lòng chọn mức độ hài lòng của bạn</string>
+    <string name="err_comment">Vui lòng điền nhận xét vào ô phía trên</string>
+    <string name="result_send_feedback">Gửi phản hồi thành công</string>
 
 </resources>

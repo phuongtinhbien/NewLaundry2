@@ -64,7 +64,7 @@
     <string name="category_price">VND 10.000</string>
     <string name="input_material">Material</string>
     <string name="input_production">Label</string>
-    <string name="input_unit">Unit</string>
+    <string name="input_unit">Unit*</string>
     <string name="input_note">Note</string>
     <string name="input_color">Color</string>
     <string name="input_number">1</string>
@@ -282,5 +282,18 @@
     <string name="Yes">Yes</string>
     <string name="No">No</string>
     <string name="title_check_fisrt_open">See the instructions</string>
+    <string name="title_subrating">Đánh giá và góp ý của bạn sẽ giúp chúng tôi hoàn thiện hơn</string>
+    <string name="rating_5">Very Good</string>
+    <string name="rating_4">Good</string>
+    <string name="rating_3">Pretty Good</string>
+    <string name="rating_2">Need some improvement</string>
+    <string name="rating_1">Very bad</string>
+    <string name="comment">Comment</string>
+    <string name="title_rating_comment"> Comment and Rating</string>
+    <string name="send_feedback">Send feedback</string>
+    <string name="err_rating">Please select your level of satisfaction</string>
+    <string name="err_comment">Please fill comment in box in above</string>
+    <string name="result_send_feedback">Send Feedback success</string>
+
 </resources>
 

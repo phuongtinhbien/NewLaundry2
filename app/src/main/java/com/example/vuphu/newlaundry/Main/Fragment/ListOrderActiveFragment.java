@@ -19,6 +19,7 @@ import com.example.vuphu.newlaundry.GetOrderActiveQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Main.Adapter.AdapterListOrder;
 import com.example.vuphu.newlaundry.Main.OBOrderFragment;
+import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 
@@ -26,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PrimitiveIterator;
 
 public class ListOrderActiveFragment extends Fragment{
     private RecyclerView listOrderActive;
@@ -34,6 +36,7 @@ public class ListOrderActiveFragment extends Fragment{
     private String token;
     private String idUser;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private Popup popup;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,6 +47,9 @@ public class ListOrderActiveFragment extends Fragment{
     }
 
     private void getListOrderFromServer() {
+        list.clear();
+        popup.createLoadingDialog();
+        popup.show();
         token = PreferenceUtil.getAuthToken(getActivity());
         idUser = PreferenceUtil.getIdUser(getActivity());
         GraphqlClient.getApolloClient(token, false).query(GetOrderActiveQuery.builder()
@@ -72,6 +78,7 @@ public class ListOrderActiveFragment extends Fragment{
                     @Override
                     public void run() {
                         initializeListOrder();
+                        popup.hide();
                     }
                 });
 
@@ -103,9 +110,11 @@ public class ListOrderActiveFragment extends Fragment{
         });
         listOrderActive = v.findViewById(R.id.list_order_active);
         list = new ArrayList<>();
+        popup = new Popup(getActivity());
     }
 
     private void refresh() {
+        list.clear();
         token = PreferenceUtil.getAuthToken(getActivity());
         idUser = PreferenceUtil.getIdUser(getActivity());
         ArrayList<OBOrderFragment> listRefresh = new ArrayList<>();
@@ -148,10 +157,10 @@ public class ListOrderActiveFragment extends Fragment{
         });
     }
 
-//    @Override
-//    public void onResume() {
-//        refresh();
-//        super.onResume();
-//    }
+    @Override
+    public void onResume() {
+        refresh();
+        super.onResume();
+    }
 
 }

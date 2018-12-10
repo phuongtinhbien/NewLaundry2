@@ -1,0 +1,7 @@
+mutation UpdateRatingAndComment($id: BigFloat!, $rating: Int!, $comment: String) {
+  updateCustomerOrderById(input: {id: $id, customerOrderPatch: {rating: $rating, comment: $comment}}) {
+    customerOrder {
+      id
+    }
+  }
+}

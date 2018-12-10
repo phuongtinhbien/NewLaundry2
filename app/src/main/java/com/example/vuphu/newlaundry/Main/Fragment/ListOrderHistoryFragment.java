@@ -46,6 +46,7 @@ public class ListOrderHistoryFragment extends Fragment{
     }
 
     private void getListOrderFromServer() {
+        list.clear();
         token = PreferenceUtil.getAuthToken(getActivity());
         idUser = PreferenceUtil.getIdUser(getActivity());
         GraphqlClient.getApolloClient(token, false).query(GetOrderFinishQuery.builder()
@@ -63,10 +64,17 @@ public class ListOrderHistoryFragment extends Fragment{
                         obOrderFragment.setBranchAddress(node.branchByBranchId().address());
                         obOrderFragment.setBranchName(node.branchByBranchId().branchName());
                         obOrderFragment.setIdBranch(node.branchByBranchId().id());
+                        if(!TextUtils.isEmpty(node.confirmByCustomer())) {
+                            obOrderFragment.setConfirm(Boolean.parseBoolean(node.confirmByCustomer()));
+                        }
+                        else {
+                            obOrderFragment.setConfirm(false);
+                        }
                         if(node.receiptsByOrderId().nodes().size() > 0) {
                             obOrderFragment.setReciever(node.receiptsByOrderId().nodes().get(0).staffByStaffPickUp().fullName());
                         }
                         obOrderFragment.setStatus(node.status());
+                        Log.i("obOrderFragmentHistory", obOrderFragment.toString());
                         list.add(obOrderFragment);
                     }
                 }
@@ -107,6 +115,7 @@ public class ListOrderHistoryFragment extends Fragment{
     }
 
     private void refresh() {
+        list.clear();
         token = PreferenceUtil.getAuthToken(getActivity());
         idUser = PreferenceUtil.getIdUser(getActivity());
         ArrayList<OBOrderFragment> listRefresh = new ArrayList<>();
@@ -127,6 +136,9 @@ public class ListOrderHistoryFragment extends Fragment{
                         obOrderFragment.setIdBranch(node.branchByBranchId().id());
                         if(!TextUtils.isEmpty(node.confirmByCustomer())) {
                             obOrderFragment.setConfirm(Boolean.parseBoolean(node.confirmByCustomer()));
+                        }
+                        else {
+                            obOrderFragment.setConfirm(false);
                         }
                         if(node.receiptsByOrderId().nodes().size() > 0) {
                             obOrderFragment.setReciever(node.receiptsByOrderId().nodes().get(0).staffByStaffPickUp().fullName());
@@ -153,9 +165,9 @@ public class ListOrderHistoryFragment extends Fragment{
         });
     }
 
-//    @Override
-//    public void onResume() {
-//        refresh();
-//        super.onResume();
-//    }
+    @Override
+    public void onResume() {
+        refresh();
+        super.onResume();
+    }
 }

@@ -126,6 +126,7 @@ public class WelcomeActivity extends FancyWalkthroughActivity {
                 public void onClick(View view) {
                     dialog.cancel();
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    finish();
                 }
             });
 

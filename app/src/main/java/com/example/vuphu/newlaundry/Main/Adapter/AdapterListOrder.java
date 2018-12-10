@@ -89,6 +89,8 @@ public class AdapterListOrder extends RecyclerView.Adapter<OrderViewHolder> {
                         setConfirm(obOrderFragment.getId());
                     }
                 });
+            } else {
+                holder.confirm_receiver.setVisibility(View.GONE);
             }
 
             holder.view_order.setVisibility(View.GONE);

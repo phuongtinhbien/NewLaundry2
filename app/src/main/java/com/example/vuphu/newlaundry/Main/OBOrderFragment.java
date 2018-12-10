@@ -89,4 +89,18 @@ public class OBOrderFragment implements Serializable {
     public void setReciever(String reciever) {
         this.reciever = reciever;
     }
+
+    @Override
+    public String toString() {
+        return "OBOrderFragment{" +
+                "id='" + id + '\'' +
+                ", date='" + date + '\'' +
+                ", status='" + status + '\'' +
+                ", branchAddress='" + branchAddress + '\'' +
+                ", reciever='" + reciever + '\'' +
+                ", branchName='" + branchName + '\'' +
+                ", idBranch='" + idBranch + '\'' +
+                ", confirm=" + confirm +
+                '}';
+    }
 }

@@ -21,6 +21,7 @@ import com.example.vuphu.newlaundry.GetNotificationCustomerQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Notification.ListNotificationAdapter;
 import com.example.vuphu.newlaundry.Notification.OBNotification;
+import com.example.vuphu.newlaundry.Popup.Popup;
 import com.example.vuphu.newlaundry.R;
 import com.example.vuphu.newlaundry.Utils.PreferenceUtil;
 import com.example.vuphu.newlaundry.Utils.Util;
@@ -54,6 +55,7 @@ public class NotificationFragment extends Fragment {
     ListNotificationAdapter adapter;
     private String token;
     private String customerID;
+    private Popup popup;
     public NotificationFragment() {
     }
 
@@ -71,6 +73,7 @@ public class NotificationFragment extends Fragment {
         notificationList.setLayoutManager(layoutManager);
         token = PreferenceUtil.getAuthToken(v.getContext());
         customerID = PreferenceUtil.getIdUser(v.getContext());
+        popup = new Popup(getActivity());
         createList(v);
         return v;
     }
@@ -83,6 +86,8 @@ public class NotificationFragment extends Fragment {
     }
 
     private void createList(View view){
+        popup.createLoadingDialog();
+        popup.show();
         list = new ArrayList<>();
         GraphqlClient.getApolloClient(token, false).query(GetNotificationCustomerQuery.builder().cusId(customerID).build())
                 .enqueue(new ApolloCall.Callback<GetNotificationCustomerQuery.Data>() {
@@ -164,6 +169,7 @@ public class NotificationFragment extends Fragment {
                 refresh();
             }
         });
+        popup.hide();
     }
 
     private void refresh() {
