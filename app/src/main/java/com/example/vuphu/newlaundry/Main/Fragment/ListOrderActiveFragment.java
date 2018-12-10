@@ -144,7 +144,9 @@ public class ListOrderActiveFragment extends Fragment{
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-                        adapterListOrder.refreshAdapter(listRefresh);
+                        if(!listRefresh.isEmpty() && adapterListOrder != null) {
+                            adapterListOrder.refreshAdapter(listRefresh);
+                        }
                     }
                 });
 
@@ -159,8 +161,8 @@ public class ListOrderActiveFragment extends Fragment{
 
     @Override
     public void onResume() {
-        refresh();
         super.onResume();
+        refresh();
     }
 
 }

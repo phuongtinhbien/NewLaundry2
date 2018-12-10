@@ -3,6 +3,7 @@ package com.example.vuphu.newlaundry.Order.Adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.vuphu.newlaundry.R;

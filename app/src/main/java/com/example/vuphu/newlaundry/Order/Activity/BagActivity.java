@@ -104,25 +104,25 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
         checkOut = findViewById(R.id.see_your_bag);
         checkOut.setText(R.string.checkout);
         checkOut.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                  if(list.size() > 0){
-                      convertAddressToLocation();
-                  }
-                  else {
-                      Popup popup = new Popup(BagActivity.this);
-                      popup.createFailDialog(getResources().getString(R.string.bag_empty), getResources().getString(R.string.order), new View.OnClickListener() {
-                          @Override
-                          public void onClick(View view) {
-                              onBackPressed();
-                              finish();
-                          }
-                      });
-                      popup.show();
-                  }
+                                        @Override
+                                        public void onClick(View view) {
+                                            if(list.size() > 0){
+                                                convertAddressToLocation();
+                                            }
+                                            else {
+                                                Popup popup = new Popup(BagActivity.this);
+                                                popup.createFailDialog(getResources().getString(R.string.bag_empty), getResources().getString(R.string.order), new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        onBackPressed();
+                                                        finish();
+                                                    }
+                                                });
+                                                popup.show();
+                                            }
 
-              }
-          }
+                                        }
+                                    }
 
         );
     }
@@ -179,8 +179,8 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
                 return true;
             }
             case R.id.menu_other_service: {
-               startActivity(new Intent(BagActivity.this, MainActivity.class));
-               finish();
+                startActivity(new Intent(BagActivity.this, MainActivity.class));
+                finish();
             }
             default: return false;
         }
@@ -212,38 +212,38 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
                     .list(list)
                     .build())
                     .enqueue(new ApolloCall.Callback<GetListUnitPriceMutation.Data>() {
-                  @Override
-                  public void onResponse(@NotNull Response<GetListUnitPriceMutation.Data> response) {
-                      List<GetListUnitPriceMutation.UnitPrice> unitPrices = response.data().getlistproductprice().unitPrices();
-                      if(unitPrices.size() > 0) {
-                          if(obOrderDetail.getUnitID().equals(ITEM)) {
-                              OBPrice obPriceKg = new OBPrice(unitPrices.get(0).id(), unitPrices.get(0).price());
-                              OBPrice obPriceItem = new OBPrice(obOrderDetail.getPriceID(), obOrderDetail.getPrice());
-                              Intent intent = new Intent(BagActivity.this, DetailPrepareOrderClothesActivity.class);
-                              intent.putExtra(OB_ORDERDETAIL, obOrderDetail);
-                              intent.putExtra(EDIT, true);
-                              intent.putExtra(OB_UNIT_PRICE_ITEM, obPriceItem);
-                              intent.putExtra(OB_UNIT_PRICE_KG, obPriceKg);
-                              startActivityForResult(intent, REQUEST_CODE);
-                          } else if(obOrderDetail.getUnitID().equals(KG)) {
-                              OBPrice obPriceItem = new OBPrice(unitPrices.get(0).id(), unitPrices.get(0).price());
-                              OBPrice obPriceKg = new OBPrice(obOrderDetail.getPriceID(), obOrderDetail.getPrice());
-                              Intent intent = new Intent(BagActivity.this, DetailPrepareOrderClothesActivity.class);
-                              intent.putExtra(OB_ORDERDETAIL, obOrderDetail);
-                              intent.putExtra(EDIT, true);
-                              intent.putExtra(OB_UNIT_PRICE_ITEM, obPriceItem);
-                              intent.putExtra(OB_UNIT_PRICE_KG, obPriceKg);
-                              startActivityForResult(intent, REQUEST_CODE);
-                          }
-                      }
-                  }
+                                 @Override
+                                 public void onResponse(@NotNull Response<GetListUnitPriceMutation.Data> response) {
+                                     List<GetListUnitPriceMutation.UnitPrice> unitPrices = response.data().getlistproductprice().unitPrices();
+                                     if(unitPrices.size() > 0) {
+                                         if(obOrderDetail.getUnitID().equals(ITEM)) {
+                                             OBPrice obPriceKg = new OBPrice(unitPrices.get(0).id(), unitPrices.get(0).price());
+                                             OBPrice obPriceItem = new OBPrice(obOrderDetail.getPriceID(), obOrderDetail.getPrice());
+                                             Intent intent = new Intent(BagActivity.this, DetailPrepareOrderClothesActivity.class);
+                                             intent.putExtra(OB_ORDERDETAIL, obOrderDetail);
+                                             intent.putExtra(EDIT, true);
+                                             intent.putExtra(OB_UNIT_PRICE_ITEM, obPriceItem);
+                                             intent.putExtra(OB_UNIT_PRICE_KG, obPriceKg);
+                                             startActivityForResult(intent, REQUEST_CODE);
+                                         } else if(obOrderDetail.getUnitID().equals(KG)) {
+                                             OBPrice obPriceItem = new OBPrice(unitPrices.get(0).id(), unitPrices.get(0).price());
+                                             OBPrice obPriceKg = new OBPrice(obOrderDetail.getPriceID(), obOrderDetail.getPrice());
+                                             Intent intent = new Intent(BagActivity.this, DetailPrepareOrderClothesActivity.class);
+                                             intent.putExtra(OB_ORDERDETAIL, obOrderDetail);
+                                             intent.putExtra(EDIT, true);
+                                             intent.putExtra(OB_UNIT_PRICE_ITEM, obPriceItem);
+                                             intent.putExtra(OB_UNIT_PRICE_KG, obPriceKg);
+                                             startActivityForResult(intent, REQUEST_CODE);
+                                         }
+                                     }
+                                 }
 
-                  @Override
-                  public void onFailure(@NotNull ApolloException e) {
-                      Log.e("getListUnitPrice", e.getCause() +" - "+e);
-                  }
-              }
-            );
+                                 @Override
+                                 public void onFailure(@NotNull ApolloException e) {
+                                     Log.e("getListUnitPrice", e.getCause() +" - "+e);
+                                 }
+                             }
+                    );
         }
     }
 

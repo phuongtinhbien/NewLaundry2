@@ -49,7 +49,7 @@ public class RatingActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 rating = (int) v;
-                setTextRating(v);
+                setTextRating();
             }
         });
 
@@ -101,7 +101,7 @@ public class RatingActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setTextRating(float v) {
+    private void setTextRating() {
         switch ((int) ratingBar.getRating()) {
             case 1:
                 txt_RatingText.setText(R.string.rating_1);

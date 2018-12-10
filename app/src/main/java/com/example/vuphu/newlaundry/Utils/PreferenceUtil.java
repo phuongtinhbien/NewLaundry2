@@ -7,6 +7,7 @@ import android.util.JsonReader;
 
 import com.apollographql.apollo.api.ResponseReader;
 import com.example.vuphu.newlaundry.GetCustomerQuery;
+import com.example.vuphu.newlaundry.Order.OBBranch;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,6 +30,7 @@ public class PreferenceUtil {
     private static final String SET_UP_INFO = "SET_UP_INFO";
     private static final String CURRENT_USER = "CURRENT_USER";
     private static final String LIST_ORDER = "LIST_ORDER";
+    private static final String LIST_BRANCH = "LIST_BRANCH";
     private static final String ID_USER = "ID_USER";
 
 
@@ -114,6 +116,26 @@ public class PreferenceUtil {
         Gson gson = new Gson();
         editor.putString(LIST_ORDER, gson.toJson(list));
         editor.apply();
+    }
+
+    public static void setListBranch(ArrayList<OBBranch> listBranch, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(LIST_BRANCH, gson.toJson(listBranch));
+        editor.apply();
+    }
+
+    public static ArrayList<OBBranch> getListBranch(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        ArrayList<OBBranch> listBranch = new ArrayList<>();
+        String serializedObject = sharedPreferences.getString(LIST_BRANCH, null);
+        if (serializedObject != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<OBBranch>>(){}.getType();
+            listBranch = gson.fromJson(serializedObject, type);
+        }
+        return listBranch;
     }
 
     public static void removeKey(Context context, String key) {

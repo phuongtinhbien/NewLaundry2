@@ -9,6 +9,7 @@ public class OBBranch implements Serializable {
     private String latitude;
     private String longitude;
     private float distance;
+    private int rating;
 
     public OBBranch() {
 
@@ -21,6 +22,23 @@ public class OBBranch implements Serializable {
         this.longitude = longitude;
         this.branchAddress = branchAddress;
         this.distance = distance;
+    }
+
+    public OBBranch(String id, String branchName, String latitude, String longitude, String branchAddress) {
+        this.id = id;
+        this.branchName = branchName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.branchAddress = branchAddress;
+        this.distance = 0;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public float getDistance() {
@@ -69,5 +87,18 @@ public class OBBranch implements Serializable {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    @Override
+    public String toString() {
+        return "OBBranch{" +
+                "id='" + id + '\'' +
+                ", branchName='" + branchName + '\'' +
+                ", branchAddress='" + branchAddress + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", distance=" + distance +
+                ", rating=" + rating +
+                '}';
     }
 }

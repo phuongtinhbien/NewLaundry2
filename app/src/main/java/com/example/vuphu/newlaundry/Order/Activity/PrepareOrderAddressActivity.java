@@ -80,8 +80,7 @@ import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_WEIGHT;
 
 
 public class PrepareOrderAddressActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private boolean mPermissionDenied = false;
+
     private GoogleMap mMap;
     private ArrayList<String> listService;
     private EditText pickUp,dropOff;
@@ -126,6 +125,10 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
         location = new LatLng(latitude, longitude);
         pickUp = findViewById(R.id.prepare_order_address_pick_up);
         dropOff = findViewById(R.id.prepare_order_address_drop_off);
+        pickUp.setFocusable(false);
+        pickUp.setClickable(false);
+        dropOff.setFocusable(false);
+        dropOff.setClickable(false);
         customerName = findViewById(R.id.item_prepare_order_your_name);
         customerAddress = findViewById(R.id.item_prepare_order_your_address);
         prepareNext = findViewById(R.id.prepare_order_next);
@@ -175,25 +178,25 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
 
     private void getCustomerInfo() {
         customer = PreferenceUtil.getCurrentUser(getApplicationContext());
-            customerName.setText(customer.fullName());
-            customerAddress.setText(customer.address());
-            pickUp.setText(customer.address());
-            dropOff.setText(customer.address());
-            if(location != null) {
-                initMap();
-            }
+        customerName.setText(customer.fullName());
+        customerAddress.setText(customer.address());
+        pickUp.setText(customer.address());
+        dropOff.setText(customer.address());
+        if(location != null) {
+            initMap();
+        }
     }
 
 
     private void initMap() {
         popup.createLoadingDialog();
         popup.show();
-       ArrayList<OBOrderDetail> list = PreferenceUtil.getListOrderDetail(PrepareOrderAddressActivity.this);
-       for(OBOrderDetail obOrderDetail : list) {
-           if(!listService.contains(obOrderDetail.getIdService())) {
-               listService.add(obOrderDetail.getIdService());
-           }
-       }
+        ArrayList<OBOrderDetail> list = PreferenceUtil.getListOrderDetail(PrepareOrderAddressActivity.this);
+        for(OBOrderDetail obOrderDetail : list) {
+            if(!listService.contains(obOrderDetail.getIdService())) {
+                listService.add(obOrderDetail.getIdService());
+            }
+        }
         GraphqlClient.getApolloClient(token, false).query(GetServiceBranchQuery.builder().list(listService).build()).enqueue(new ApolloCall.Callback<GetServiceBranchQuery.Data>() {
             @Override
             public void onResponse(@NotNull Response<GetServiceBranchQuery.Data> response) {
@@ -234,6 +237,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
         sortListBanch();
         initMarkerBranch();
     }
+
 
     private void sortListBanch() {
         Collections.sort(listBranch, new Comparator<OBBranch>() {
@@ -276,7 +280,7 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
         Marker marker = mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
                 .title(branchName)
-                .snippet(branchAddress + SPECIAL_STRING + price)
+                .snippet(branchAddress + SPECIAL_STRING + price + SPECIAL_STRING)
                 .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("icon_app",80,80)))
         );
         builder.include(new LatLng(latitude, longitude));
@@ -372,11 +376,6 @@ public class PrepareOrderAddressActivity extends AppCompatActivity implements On
                     .title("My Address")
             );
             builder.include(location);
-//            mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-//            Circle circle = mMap.addCircle(new CircleOptions()
-//                    .center(location)
-//                    .radius(5000)
-//                    .strokeColor(Color.RED));
         } else {
             Toast.makeText(PrepareOrderAddressActivity.this, "Adrress null", Toast.LENGTH_LONG).show();
         }

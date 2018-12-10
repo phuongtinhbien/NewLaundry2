@@ -6,6 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/info_window_nameBranch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

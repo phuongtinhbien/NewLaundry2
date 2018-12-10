@@ -29,7 +29,8 @@ apollo {
             "BigFloat": "java.lang.String",
             "Datetime": "java.lang.String",
             "Time"    : "java.lang.String",
-            "Date"    : "java.lang.String"
+            "Date"    : "java.lang.String",
+            "BigInt"  : "java.lang.String"
     ]
     suppressRawTypesWarning = true
 }

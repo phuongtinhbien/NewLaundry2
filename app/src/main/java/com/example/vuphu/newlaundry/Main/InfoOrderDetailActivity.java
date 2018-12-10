@@ -29,7 +29,6 @@ import com.example.vuphu.newlaundry.GetPromotionBranchsQuery;
 import com.example.vuphu.newlaundry.GetTimeSchedulesQuery;
 import com.example.vuphu.newlaundry.Graphql.GraphqlClient;
 import com.example.vuphu.newlaundry.Order.Activity.DetailPrepareOrderClothesActivity;
-import com.example.vuphu.newlaundry.Order.Activity.InfoOrderActivity;
 import com.example.vuphu.newlaundry.Order.Adapter.ListClothesAdapter;
 import com.example.vuphu.newlaundry.Order.IFOBPrepareOrder;
 import com.example.vuphu.newlaundry.Order.OBOrderDetail;
@@ -250,6 +249,13 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
         calendar1.set(Calendar.MINUTE, 0);
         calendar1.set(Calendar.SECOND, 0);
         calendar1.set(Calendar.MILLISECOND, 0);
+        if(calendar1.get(Calendar.HOUR_OF_DAY) >= 17 && calendar.get(Calendar.HOUR_OF_DAY) < 7) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            calendar.set(Calendar.HOUR_OF_DAY, 7);
+            calendar1.set(Calendar.MINUTE, 0);
+            calendar1.set(Calendar.SECOND, 0);
+            calendar1.set(Calendar.MILLISECOND, 0);
+        }
         long timeCondition = calendar1.getTimeInMillis() - calendar.getTimeInMillis();
         Log.i("timeCondition", timeCondition + " ms");
         if(timeCondition > 2*3600000) {
@@ -518,7 +524,9 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                                 obOrderDetail.setCount(node.amount().longValue());
                             }
                             obOrderDetail.setUnitID(node.unitId());
-                            obOrderDetail.setPrice(node.unitPriceByUnitPrice().price());
+                            if(node.unitPriceByUnitPrice() != null) {
+                                obOrderDetail.setPrice(node.unitPriceByUnitPrice().price());
+                            }
                             obOrderDetail.setServiceName(node.serviceTypeByServiceTypeId().serviceTypeName());
                             obOrderDetail.setIdService(node.serviceTypeByServiceTypeId().id());
                             if(node.colorByColorId() != null) {

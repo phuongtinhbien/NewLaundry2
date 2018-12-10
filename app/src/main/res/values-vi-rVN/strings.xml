@@ -230,5 +230,11 @@
     <string name="err_rating">Vui lòng chọn mức độ hài lòng của bạn</string>
     <string name="err_comment">Vui lòng điền nhận xét vào ô phía trên</string>
     <string name="result_send_feedback">Gửi phản hồi thành công</string>
-
+    <string name="address_pickup_deli_undefine">Địa chỉ giao và nhận đồ không tìm thấy.Vui lòng điền địa chỉ khác!</string>
+    <string name="address_pickup_undefine">Địa chỉ nhận đồ không tìm thấy.Vui lòng điền địa chỉ khác!</string>
+    <string name="address_delivery_undefine">Địa chỉ giao đồ không tìm thấy.Vui lòng điền địa chỉ khác!</string>
+    <string name="no_branch_in_there">Không có cửa hàng gần khu vực của bạn. Vui lòng nhập địa chỉ khác!</string>
+    <string name="title_pickup">Nơi nhận đồ</string>
+    <string name="title_delivery">Nơi giao đồ</string>
+    <string name="title_pickup_deli">Địa chỉ của bạn</string>
 </resources>
