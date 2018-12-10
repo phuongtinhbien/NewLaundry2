@@ -1,5 +1,6 @@
 package com.example.vuphu.newlaundry.Main;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -14,6 +15,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -219,7 +223,7 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
             public void onClick(View view) {
                 // TODO: check (time pickup - current time) > 2h
                 if(checkTime()){
-                    setStatusOrder(DECLINED);
+                    confirm();
                 }
                 else {
                     popup.createFailDialog(getResources().getString(R.string.can_not_cancel_order), getResources().getString(R.string.btn_fail), new View.OnClickListener() {
@@ -232,6 +236,34 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                 }
             }
         });
+    }
+
+    private void confirm() {
+        Dialog dialog = new Dialog(InfoOrderDetailActivity.this);
+        dialog.setTitle(R.string.title_check_fisrt_open);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.confirm_cancel_del_dialog);
+        TextView txtCancel = dialog.findViewById(R.id.content_dialog);
+        txtCancel.setText(R.string.Content_cancel);
+        Button btnYes = dialog.findViewById(R.id.btn_yes_dialog);
+        Button btnNo = dialog.findViewById(R.id.btn_no_dialog);
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setStatusOrder(DECLINED);
+                dialog.dismiss();
+            }
+        });
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
     private boolean checkTime() {

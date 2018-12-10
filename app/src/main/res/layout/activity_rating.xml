@@ -19,7 +19,8 @@
             android:layout_margin="10dp"
             android:gravity="center_horizontal"
             android:text="@string/title_subrating"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"
             android:textStyle="italic|bold" />
 
         <RatingBar
@@ -80,8 +81,7 @@
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
             android:textColor="@color/white"
             android:text="@string/send_feedback"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:textSize="20sp"
             android:fontFamily="sans-serif"
             android:letterSpacing="0.3"
             android:id="@+id/btn_send_feedback"

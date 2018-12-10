@@ -1,5 +1,6 @@
 package com.example.vuphu.newlaundry.Order.Activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -300,6 +303,36 @@ public class BagActivity extends AppCompatActivity implements IFOBPrepareOrder {
 
     @Override
     public void clickDel(int position) {
+        String name = list.get(position).getProduct().getTitle();
+        Dialog dialog = new Dialog(BagActivity.this);
+        dialog.setTitle(R.string.title_check_fisrt_open);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.confirm_cancel_del_dialog);
+        TextView txtCancel = dialog.findViewById(R.id.content_dialog);
+        txtCancel.setText(getResources().getString(R.string.Content_delete_1) + " " + name + " " + getResources().getString(R.string.Content_delete_2) );
+        Button btnYes = dialog.findViewById(R.id.btn_yes_dialog);
+        Button btnNo = dialog.findViewById(R.id.btn_no_dialog);
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delClothes(position);
+                dialog.dismiss();
+            }
+        });
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+    }
+
+
+    public void delClothes(int position) {
         list.remove(position);
         adapter.notifyDataSetChanged();
         PreferenceUtil.setListOrderDetail(list, BagActivity.this);

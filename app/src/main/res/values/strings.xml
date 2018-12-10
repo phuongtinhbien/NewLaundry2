@@ -301,6 +301,9 @@
     <string name="title_pickup">Pickup Place</string>
     <string name="title_delivery">Delivery Place</string>
     <string name="title_pickup_deli">My location</string>
+    <string name="Content_cancel">Are you want to cancel this order?</string>
+    <string name="Content_delete_1">Are you want to delete</string>
+    <string name="Content_delete_2">from bag</string>
 
 </resources>
 

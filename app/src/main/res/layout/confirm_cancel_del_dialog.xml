@@ -14,13 +14,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:layout_margin="@dimen/margin_item"
+            android:layout_margin="@dimen/card_elevation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
             android:gravity="center"
+            android:id="@+id/content_dialog"
             android:text="Bạn có muốn xem lại hướng dẫn hay không ?"
             />
         <LinearLayout
@@ -30,7 +31,7 @@
             android:weightSum="2">
             <Button
                 android:layout_weight="1"
-                android:id="@+id/btn_yes"
+                android:id="@+id/btn_yes_dialog"
                 android:textAllCaps="true"
                 android:text="@string/Yes"
                 android:textColor="@color/orange"
@@ -40,7 +41,7 @@
                 />
             <Button
                 android:layout_weight="1"
-                android:id="@+id/btn_no"
+                android:id="@+id/btn_no_dialog"
                 android:textAllCaps="true"
                 android:text="@string/No"
                 android:textColor="@color/orange"
@@ -52,4 +53,3 @@
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
-
