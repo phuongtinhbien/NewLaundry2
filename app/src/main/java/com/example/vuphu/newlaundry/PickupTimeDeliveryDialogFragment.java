@@ -120,6 +120,7 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
             OBTimeSchedule obDelivery = getArguments().getParcelable(OBTIMEDELIVERY);
             String datePick = getArguments().getString(DATEPICKUP);
             String dateDeli = getArguments().getString(DATEDELIVERY);
+
             prepare_order_date_delivery.setVisibility(View.VISIBLE);
             prepare_order_date_pick_up.setVisibility(View.VISIBLE);
             prepare_order_date_pick_up.setText(obPickup.getTimeStart() + "-" + obPickup.getTimeEnd() + "-" + datePick);
@@ -228,20 +229,11 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
 
     private void setUpDateDelivery(long timeLimit) {
         final Calendar calendar = Calendar.getInstance();
-        if(getArguments().get(DATEDELIVERY) != null){
-            String date = getArguments().getString(DATEDELIVERY);
-            try {
-                calendar.setTime(sdf.parse(date));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        else {
             calendar.setTimeInMillis(timeLimit);
             int h = calendar.get(Calendar.HOUR_OF_DAY);
             Log.i("HourDeli", h + " h" + " date: " + calendar.getTime());
             filterListOBDelivery(h, calendar);
-        }
+
         mDateDelivery = sdf.format(calendar.getTime());
         int year = calendar.get(calendar.YEAR);
         int month = calendar.get(calendar.MONTH);
@@ -271,19 +263,9 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
 
     private void setUpDatePickup() {
         final Calendar calendar = Calendar.getInstance();
-
-        if(getArguments().get("datePickup") != null){
-            String date = getArguments().getString("datePickup");
-            try {
-                calendar.setTime(sdf.parse(date));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } else {
-            int h = calendar.get(Calendar.HOUR_OF_DAY);
-            Log.i("HourPick", h + " h");
-            filterListOBPickup(h, calendar);
-        }
+        int h = calendar.get(Calendar.HOUR_OF_DAY);
+        Log.i("HourPick", h + " h");
+        filterListOBPickup(h, calendar);
         mDatePickup = sdf.format(calendar.getTime());
         yearPickup = calendar.get(calendar.YEAR);
         monthPickup = calendar.get(calendar.MONTH);
@@ -375,7 +357,7 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
                 calendar.setTimeInMillis(day);
                 pickupClick = true;
                 getTimeLimit(v, calendar);
-                Log.i("pickup", ObPickup.getTimeEnd());
+                Log.i("pickup", calendar.getTime().toString());
                 break;
             }
             case DELIVERY: {
@@ -448,34 +430,6 @@ public class PickupTimeDeliveryDialogFragment extends BottomSheetDialogFragment 
             final OBTimeSchedule timeOB = listTime.get(position);
             holder.time.setChipText(timeOB.getTimeStart() + " - " + timeOB.getTimeEnd());
             Log.i("abc", "onBindViewHolder: " + timeOB.isDisplay());
-            if(getArguments().containsKey(OBTIMEPICKUP) && getArguments().containsKey(OBTIMEDELIVERY) && flag){
-                switch (type) {
-                    case PICKUP: {
-                        OBTimeSchedule obTimeSchedule = getArguments().getParcelable(OBTIMEPICKUP);
-                        if(!timeOB.getId().equals(obTimeSchedule.getId())) {
-                           timeOB.setDisplay(false);
-                        }
-                        else {
-                            holder.time.setSelected(true);
-                            timeOB.setDisplay(true);
-                            pickupTimeDeliveryListener.onPickupTimeDeliveryClicked(timeOB, type, position);
-                        }
-                        break;
-                    }
-                    case DELIVERY: {
-                        OBTimeSchedule obTimeSchedule = getArguments().getParcelable(OBTIMEDELIVERY);
-                        if(!timeOB.getId().equals(obTimeSchedule.getId())) {
-                            timeOB.setDisplay(false);
-                        }
-                        else {
-                            holder.time.setSelected(true);
-                            timeOB.setDisplay(true);
-                            pickupTimeDeliveryListener.onPickupTimeDeliveryClicked(timeOB, type, position);
-                        }
-                        break;
-                    }
-                }
-            }
             if(timeOB.isDisplay()) {
                 holder.itemView.setVisibility(View.VISIBLE);
                 if(checkSelected(position)) {
