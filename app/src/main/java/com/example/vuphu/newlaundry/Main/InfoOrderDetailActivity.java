@@ -249,12 +249,12 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
         calendar1.set(Calendar.MINUTE, 0);
         calendar1.set(Calendar.SECOND, 0);
         calendar1.set(Calendar.MILLISECOND, 0);
-        if(calendar1.get(Calendar.HOUR_OF_DAY) >= 17 && calendar.get(Calendar.HOUR_OF_DAY) < 7) {
+        if(calendar.get(Calendar.HOUR_OF_DAY) >= 17 && calendar.get(Calendar.HOUR_OF_DAY) <= 23) {
             calendar.add(Calendar.DAY_OF_YEAR, 1);
             calendar.set(Calendar.HOUR_OF_DAY, 7);
-            calendar1.set(Calendar.MINUTE, 0);
-            calendar1.set(Calendar.SECOND, 0);
-            calendar1.set(Calendar.MILLISECOND, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
         }
         long timeCondition = calendar1.getTimeInMillis() - calendar.getTimeInMillis();
         Log.i("timeCondition", timeCondition + " ms");
