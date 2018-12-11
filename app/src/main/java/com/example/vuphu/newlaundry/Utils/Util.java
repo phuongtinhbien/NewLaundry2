@@ -1,6 +1,7 @@
 package com.example.vuphu.newlaundry.Utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -121,4 +122,25 @@ public class Util {
         return result;
     }
 
+
+    public static boolean checkPromotion(String start, String end) {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        Date dStart = null;
+        Date dEnd = null;
+        try {
+            dStart = simpleDateFormat.parse(start);
+            dEnd = simpleDateFormat.parse(end);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.i("promotion_date", dStart.toString() + dEnd.toString());
+        if((dStart.compareTo(calendar.getTime()) == 0 ||  dStart.compareTo(calendar.getTime()) == -1) &&  (dEnd.compareTo(calendar.getTime()) == 0 ||dEnd.compareTo(calendar.getTime()) == 1)) {
+            return true;
+        }
+
+        return false;
+    }
 }

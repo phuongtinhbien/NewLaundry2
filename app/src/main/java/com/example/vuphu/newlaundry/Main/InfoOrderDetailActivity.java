@@ -88,6 +88,7 @@ import static com.example.vuphu.newlaundry.Utils.StringKey.STATUS;
 import static com.example.vuphu.newlaundry.Utils.StringKey.UNIT_NAME_ITEM;
 import static com.example.vuphu.newlaundry.Utils.StringKey.UNIT_NAME_KG;
 import static com.example.vuphu.newlaundry.Utils.Util.checkDuplicateClothes;
+import static com.example.vuphu.newlaundry.Utils.Util.checkPromotion;
 import static com.example.vuphu.newlaundry.Utils.Util.parseDate;
 
 public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPrepareOrder,
@@ -387,18 +388,35 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
                 .enqueue(new ApolloCall.Callback<GetPromotionBranchsQuery.Data>() {
                     @Override
                     public void onResponse(@NotNull Response<GetPromotionBranchsQuery.Data> response) {
-                        promotionList.clear();
                         List<GetPromotionBranchsQuery.Node> nodes = response.data().allPromotionBranches().nodes();
-                        for(GetPromotionBranchsQuery.Node node : nodes) {
-                            promotionList.add(new OBPromotion(node.promotionByPromotionId().id(), node.promotionByPromotionId().promotionName(), null, node.promotionByPromotionId().promotionCode(),node.promotionByPromotionId().dateStart(),node.promotionByPromotionId().dateEnd() ,node.promotionByPromotionId().sale()));
-                        }
-                        InfoOrderDetailActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ItemPromotionListDialogFragment promotionListDialogFragment = ItemPromotionListDialogFragment.newInstance(promotionList);
-                                promotionListDialogFragment.show(getSupportFragmentManager(),promotionListDialogFragment.getTag());
+                        for(GetPromotionBranchsQuery.Node node :nodes) {
+                            if(checkPromotion(node.promotionByPromotionId().dateStart(), node.promotionByPromotionId().dateEnd())) {
+                                promotionList.add(new OBPromotion(node.promotionByPromotionId().id(), node.promotionByPromotionId().promotionName(), null, node.promotionByPromotionId().promotionCode(),node.promotionByPromotionId().dateStart(),node.promotionByPromotionId().dateEnd() ,node.promotionByPromotionId().sale()));
                             }
-                        });
+                        }
+                        if(!promotionList.isEmpty()) {
+                            InfoOrderDetailActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    promotionLayout.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            ItemPromotionListDialogFragment promotionListDialogFragment = ItemPromotionListDialogFragment.newInstance(promotionList);
+                                            promotionListDialogFragment.show(getSupportFragmentManager(),promotionListDialogFragment.getTag());
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            InfoOrderDetailActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    promotion.setText(R.string.no_promotion);
+                                }
+                            });
+                        }
+
                     }
 
                     @Override
@@ -741,6 +759,11 @@ public class InfoOrderDetailActivity extends AppCompatActivity implements IFOBPr
         promotion.setText(promotionList.get(position).getSale() + "%");
         salePercent = Integer.parseInt(promotionList.get(position).getSale());
         idPromotion = promotionList.get(position).getId();
+        if(adapter.sumPrice(salePercent) != 0) {
+            totalPrice.setText(dec.format(adapter.sumPrice(salePercent)) + " VND");
+        } else {
+            totalPrice.setText(getResources().getString(R.string.total_price));
+        }
     }
 
     @Override

@@ -304,6 +304,7 @@
     <string name="Content_cancel">Are you want to cancel this order?</string>
     <string name="Content_delete_1">Are you want to delete</string>
     <string name="Content_delete_2">from bag</string>
+    <string name="no_promotion">No promotion</string>
 
 </resources>
 

@@ -20,8 +20,7 @@
             android:gravity="center_horizontal"
             android:text="@string/title_subrating"
             android:textSize="18sp"
-            android:textColor="@color/colorAccent"
-            android:textStyle="italic|bold" />
+            android:textStyle="italic" />
 
         <RatingBar
             android:theme="@style/AppTheme"
@@ -66,7 +65,7 @@
                 app:boxBackgroundColor="@android:color/transparent">
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:id="@+id/txt_comment"
                     android:hint="@string/comment"
                     android:textSize="@dimen/font_size_text"
@@ -74,6 +73,7 @@
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
         <Button
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_width="match_parent"

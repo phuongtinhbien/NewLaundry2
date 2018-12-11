@@ -60,6 +60,7 @@ import java.text.SimpleDateFormat;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -80,6 +81,7 @@ import static com.example.vuphu.newlaundry.Utils.StringKey.PICKUP_KEY;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_PRICE;
 import static com.example.vuphu.newlaundry.Utils.StringKey.TOTAL_WEIGHT;
 import static com.example.vuphu.newlaundry.Utils.Util.checkDuplicateClothes;
+import static com.example.vuphu.newlaundry.Utils.Util.checkPromotion;
 import static com.example.vuphu.newlaundry.Utils.Util.parseDate;
 
 public class InfoOrderActivity extends AppCompatActivity implements
@@ -339,20 +341,33 @@ public class InfoOrderActivity extends AppCompatActivity implements
                     public void onResponse(@NotNull Response<GetPromotionBranchsQuery.Data> response) {
                         List<GetPromotionBranchsQuery.Node> nodes = response.data().allPromotionBranches().nodes();
                         for(GetPromotionBranchsQuery.Node node :nodes) {
-                            promotionList.add(new OBPromotion(node.promotionByPromotionId().id(), node.promotionByPromotionId().promotionName(), null, node.promotionByPromotionId().promotionCode(),node.promotionByPromotionId().dateStart(),node.promotionByPromotionId().dateEnd() ,node.promotionByPromotionId().sale()));
-                        }
-                        InfoOrderActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                promotion.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        ItemPromotionListDialogFragment promotionListDialogFragment = ItemPromotionListDialogFragment.newInstance(promotionList);
-                                        promotionListDialogFragment.show(getSupportFragmentManager(),promotionListDialogFragment.getTag());
-                                    }
-                                });
+                            if(checkPromotion(node.promotionByPromotionId().dateStart(), node.promotionByPromotionId().dateEnd())) {
+                                promotionList.add(new OBPromotion(node.promotionByPromotionId().id(), node.promotionByPromotionId().promotionName(), null, node.promotionByPromotionId().promotionCode(),node.promotionByPromotionId().dateStart(),node.promotionByPromotionId().dateEnd() ,node.promotionByPromotionId().sale()));
                             }
-                        });
+                        }
+                        if(!promotionList.isEmpty()) {
+                            InfoOrderActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    promotion.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            ItemPromotionListDialogFragment promotionListDialogFragment = ItemPromotionListDialogFragment.newInstance(promotionList);
+                                            promotionListDialogFragment.show(getSupportFragmentManager(),promotionListDialogFragment.getTag());
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            InfoOrderActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    promotionValue.setText(R.string.no_promotion);
+                                }
+                            });
+                        }
+
                     }
 
                     @Override
@@ -361,6 +376,8 @@ public class InfoOrderActivity extends AppCompatActivity implements
                     }
                 });
     }
+
+
 
     private void fetchData() {
         GraphqlClient.getApolloClient(token, false).query(GetTimeSchedulesQuery.builder().build())
@@ -409,6 +426,11 @@ public class InfoOrderActivity extends AppCompatActivity implements
         salePercent = Integer.parseInt(promotionList.get(position).getSale());
         promotionValue.setText(promotionList.get(position).getSale() + "%");
         idPromotion = promotionList.get(position).getId();
+        if(adapter.sumPrice(salePercent) != 0) {
+            priceTotal.setText(dec.format(adapter.sumPrice(salePercent)) + " VND");
+        } else {
+            priceTotal.setText(getResources().getString(R.string.total_price));
+        }
     }
 
     @Override

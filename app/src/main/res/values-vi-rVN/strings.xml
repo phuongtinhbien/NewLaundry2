@@ -240,4 +240,5 @@
     <string name="Content_cancel">Bạn có muốn hủy đơn hàng này không?</string>
     <string name="Content_delete_1">"Bạn có muốn xóa "</string>
     <string name="Content_delete_2">ra khỏi giỏ đồ</string>
+    <string name="no_promotion">Không có khuyến mãi</string>
 </resources>
